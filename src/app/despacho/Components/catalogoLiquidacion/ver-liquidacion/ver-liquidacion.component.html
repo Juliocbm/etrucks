@@ -1,0 +1,61 @@
+<app-layout title="Detalle de Liquidación">
+  <app-toolbar [showCreateButton]="false" [showFilter]="false" [showExportButton]="false" [showSaveButton]="false" (editClicked)="goToEditarLiquidacion(liquidacion)"></app-toolbar>
+  <div class="card mt-4">
+    <div class="card-header">
+      <h2>Detalle de la liquidación: {{ liquidacion.no_liquidacion }}</h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+
+        <div class="col-md-6">
+          <h3>Detalles de la liquidación</h3>
+          <p><strong>No. Liquidación: </strong>{{ liquidacion.no_liquidacion }}</p>
+          <p><strong>Periodo Bitácora: </strong>{{ liquidacion.periodo_bitacora }}</p>
+          <p><strong>Operador: </strong>{{ liquidacion.operador }}</p>
+          <p><strong>Monto: </strong>{{ liquidacion.monto }}</p>
+          <p><strong>IVA: </strong>{{ liquidacion.iva }}</p>
+          <p><strong>Total: </strong>{{ liquidacion.total }}</p>
+          <p><strong>Liquidado por: </strong>{{ liquidacion.liquidado_por }}</p>
+          <p><strong>Fecha Liquidación: </strong>{{ liquidacion.fecha_liquidacion }}</p>
+          <p><strong>Fecha Aceptación: </strong>{{ liquidacion.fecha_aceptacion }}</p>
+        </div>
+
+        <div class="col-md-6">
+          <h3>Detalles de Modificación</h3>
+          <p><strong>No. Liquidación: </strong>{{ liquidacion.no_liquidacion }}</p>
+          <p><strong>Periodo Bitácora: </strong>{{ liquidacion.periodo_bitacora }}</p>
+          <p><strong>Fecha Liquidación: </strong>{{ liquidacion.fecha_liquidacion }}</p>
+          <p><strong>Fecha Aceptación: </strong>{{ liquidacion.fecha_aceptacion }}</p>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <table id="catalogoPrincipal" class="table table-striped table-hover sticky-header" >
+            <thead class="thead-dark superponer">
+              <tr>
+                <th>ID Concepto: </th>
+                <th>Monto Concepto: </th>
+                <th>IVA Concepto: </th>
+                <th>Cantidad</th>
+                <th>Total Concepto</th>
+                <th>Descripción Concepto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detalle of detalleLiquidacion">
+                <td>{{ detalle.id_concepto }}</td>
+                <td>{{ detalle.monto_concepto }}</td>
+                <td>{{ detalle.iva_concepto }}</td>
+                <td>{{ detalle.cantidad }}</td>
+                <td>{{ detalle.total_concepto }}</td>
+                <td>{{ detalle.desc_concepto }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</app-layout>

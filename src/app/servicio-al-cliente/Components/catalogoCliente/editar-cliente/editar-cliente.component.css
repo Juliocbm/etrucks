@@ -1,0 +1,13 @@
+.form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-control {
+    border-radius: 0.25rem;
+    border-color: #ced4da;
+  }
+  
+  .btn {
+    margin-top: 1rem;
+  }
+  

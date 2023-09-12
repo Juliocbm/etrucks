@@ -1,0 +1,31 @@
+<app-layout title="Detalle de Unidad">
+  <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showFilter]="false" [showExportButton]="false" [showSaveButton]="false"  (editClicked)="goToEditarUnidad()"></app-toolbar>
+  <div class="card mt-4">
+    <div class="card-header">
+      <h2>Detalle de la unidad: {{ unidad.descripcion }}</h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>ID Unidad: </strong>{{ unidad.idUnidad }}</p>
+          <p><strong>ID Compania: </strong>{{ unidad.idCompania }}</p>
+          <p><strong>Clave: </strong>{{ unidad.clave }}</p>
+          <p><strong>Descripción: </strong>{{ unidad.descripcion }}</p>
+          <p><strong>No. de Serie: </strong>{{ unidad.noSerie }}</p>
+          <p><strong>Modelo: </strong>{{ unidad.modelo }}</p>
+          <p><strong>Placas: </strong>{{ unidad.placas }}</p>
+          <p><strong>ID Marca: </strong>{{ unidad.idMarca }}</p>
+          <p><strong>ID Tipo de Unidad: </strong>{{ unidad.idTipoUnidad }}</p>
+          <p><strong>Activo: </strong>{{ unidad.activo ? 'Si' : 'No' }}</p>
+        </div>
+        <div class="col-md-6">
+          <h3>Detalles de Modificación</h3>
+          <p><strong>Creado por: </strong>{{ unidad.creadoPor }}</p>
+          <p><strong>Fecha de Creación: </strong>{{ unidad.fechaCreacion | date }}</p>
+          <p><strong>Modificado por: </strong>{{ unidad.modificadoPor }}</p>
+          <p><strong>Fecha de Modificación: </strong>{{ unidad.fechaModificacion | date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-layout>

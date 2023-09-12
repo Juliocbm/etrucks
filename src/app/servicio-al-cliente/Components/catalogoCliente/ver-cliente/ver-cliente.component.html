@@ -1,0 +1,40 @@
+<app-layout  title="Detalle cliente">
+    <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showFilter]="false" [showExportButton]="false" [showSaveButton]="false" 
+   
+    (editClicked)="goToEditarCliente()" ></app-toolbar>
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Detalle del Cliente: {{ cliente.nombre }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">               
+                <div class="col-md-6">
+                    <p><strong>ID Cliente: </strong>{{ cliente.idCliente }}</p>
+                    <p><strong>No. Cliente: </strong>{{ cliente.noCliente }}</p>
+                    <p><strong>Razón Social: </strong>{{ cliente.razonSocial }}</p>
+                    <p><strong>RFC: </strong>{{ cliente.rfc }}</p>
+                    <p><strong>Fecha de Creación: </strong>{{ cliente.fechaCreacion }}</p>
+                    <p><strong>Fecha de Modificación: </strong>{{ cliente.fechaModificacion }}</p>
+                    <p><strong>Creado por: </strong>{{ cliente.creadoPor }}</p>
+                    <p><strong>Modificado por: </strong>{{ cliente.modificadoPor }}</p>
+                    <p><strong>Activo: </strong>{{ cliente.activo ? 'Si' : 'No' }}</p>
+                    <p><strong>Logo Path: </strong>{{ cliente.logoPath }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Dirección</h3>
+                    <p><strong>Calle: </strong>{{ cliente.dirCalle }}</p>
+                    <p><strong>Colonia: </strong>{{ cliente.dirColonia }}</p>
+                    <p><strong>Código Postal: </strong>{{ cliente.dirCodigoP }}</p>
+                    <p><strong>Estado: </strong>{{ cliente.dirEstado }}</p>
+                    <p><strong>Localidad: </strong>{{ cliente.dirLocalidad }}</p>
+                    <p><strong>Municipio: </strong>{{ cliente.dirMunicipio }}</p>
+                    <p><strong>No. Exterior: </strong>{{ cliente.dirNoExt }}</p>
+                    <p><strong>No. Interior: </strong>{{ cliente.dirNoInt }}</p>
+                    <p><strong>Referencias: </strong>{{ cliente.dirReferencias }}</p>
+                    <p><strong>Teléfono: </strong>{{ cliente.dirTelefono }}</p>
+                    <p><strong>Correo: </strong>{{ cliente.dirCorreo }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-layout>

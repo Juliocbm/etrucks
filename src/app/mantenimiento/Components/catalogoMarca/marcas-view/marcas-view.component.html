@@ -1,0 +1,54 @@
+<app-layout title="Catálogo de marcas">
+  <app-toolbar 
+  createRoute="/marcas/crearMarca" 
+  (onFiltrar)="filtrarDatos($event)" 
+  (onFiltrarActivos)="filtrarActivos($event)" 
+  (dateRangeChanged)="filtrarPorFecha($event)"
+  (dateRangeCleared)="onDateRangeCleared()" 
+  [showSaveButton]="false" 
+  [showEditButton]="false" 
+  [excelFileName]="'CatalogoMarcas'" 
+  [idTablaExport]="'catalogoPrincipal'"></app-toolbar>
+
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <!-- Estos botones llaman a la función triggerAlert con diferentes mensajes cuando se hace click en ellos
+  <button (click)="triggerAlert('¡Éxito! Esta es tu alerta de éxito.')">Mostrar alerta de éxito</button>
+  <button (click)="triggerAlert('¡Advertencia! Esta es tu alerta de advertencia.')">Mostrar alerta de advertencia</button>-->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div style="height: 600px; overflow: auto;">
+        <table id="catalogoPrincipal" class="table table-striped table-hover sticky-header">
+          <thead class="thead-dark superponer">
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Estatus</th>
+              <th>Fecha creación</th>
+              <th>Creado por</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dato of datosFiltrados">
+              <td>{{ dato.nombre }}</td>
+              <td>{{ dato.descripcion }}</td>
+              <td>{{ dato.activo ? 'Activo' : 'Inactivo' }}</td>
+              <td>{{ dato.fechaCreacion | date:'dd/MM/yyyy' }}</td>
+              <td>{{ dato.creadoPor }}</td>
+              <td>
+                <!-- Grupo de botones para ver, editar y eliminar el elemento -->
+                <div class="btn-group" role="group" aria-label="Grupo de botones">
+                  <button class="btn btn-secondary mr-1" (click)="goToVerMarca(dato)">Ver</button>
+                  <button class="btn btn-secondary mr-1" (click)="goToEditarMarca(dato)">Editar</button>
+                  <button class="btn btn-dark" (click)="cambiarEstadoMarca(dato)">{{ dato.activo == true ? 'Desactivar' : 'Activar'  }}</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</app-layout>

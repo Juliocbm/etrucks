@@ -1,0 +1,25 @@
+<app-layout title="Detalle marca">
+    <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showFilter]="false" [showExportButton]="false" [showSaveButton]="false" (editClicked)="goToEditarMarca()"></app-toolbar>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Detalle de la Marca: {{ marca.nombre }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">               
+                <div class="col-md-6">
+                    <p><strong>ID Marca: </strong>{{ marca.idMarca }}</p>
+                    <p><strong>Nombre: </strong>{{ marca.nombre }}</p>
+                    <p><strong>Descripción: </strong>{{ marca.descripcion }}</p>
+                    <p><strong>ID Tipo Marca: </strong>{{ marca.idTipoMarca }}</p>
+                    <p><strong>Fecha de Creación: </strong>{{ marca.fechaCreacion | date }}</p>
+                    <p><strong>Fecha de Modificación: </strong>{{ marca.fechaModificacion | date }}</p>
+                    <p><strong>Creado por: </strong>{{ marca.creadoPor }}</p>
+                    <p><strong>Modificado por: </strong>{{ marca.modificadoPor }}</p>
+                    <p><strong>Activo: </strong>{{ marca.activo ? 'Si' : 'No' }}</p>
+                </div>
+                <!-- Como la estructura de "marca" no tiene dirección, he eliminado esa parte. Si tienes una sección específica o detalles adicionales que quisieras agregar para la marca, puedes hacerlo en la segunda columna (col-md-6). -->
+            </div>
+        </div>
+    </div>
+</app-layout>

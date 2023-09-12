@@ -1,0 +1,19 @@
+.sticky-header thead {
+    position: sticky;
+    top: 0;
+    background-color: #f5f5f5; 
+  }
+
+.superponer{
+    z-index: 1;
+}
+
+.small-font{
+  height: 600px; overflow: auto;
+  font-size: 13px;
+}
+
+.small-buttons .btn {
+  padding: 5px 10px; /* Ajusta el relleno según tu preferencia */
+  font-size: 10px;  /* Ajusta el tamaño de la fuente según tu preferencia */
+}

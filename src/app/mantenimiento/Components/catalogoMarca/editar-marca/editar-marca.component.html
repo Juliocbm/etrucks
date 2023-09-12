@@ -1,0 +1,40 @@
+<app-layout title="Editar marca">
+    <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false" [showFilter]="false" [showExportButton]="false" (saveClicked)="onSubmit()"></app-toolbar>
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+    <form [formGroup]="marcaForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <!-- Columna Izquierda -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="idMarca">ID Marca</label>
+                    <input type="text" id="idMarca" class="form-control" formControlName="idMarca">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" class="form-control" formControlName="nombre">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" class="form-control" formControlName="descripcion"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="idTipoMarca">ID Tipo Marca</label>
+                    <input type="text" id="idTipoMarca" class="form-control" formControlName="idTipoMarca">
+                </div>              
+            </div>
+
+            <!-- Columna Derecha -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="activo">Estatus</label>
+                    <select id="activo" class="form-control" formControlName="activo">
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                    </select>
+                </div>
+              
+            </div>
+        </div>
+    </form>
+</app-layout>

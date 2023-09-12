@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <img style="padding-top: 0px !important; padding-bottom: 5px !important;" class="navbar-brand logo"
+    src="../../../assets/logo-hg.png" asp-controller="Home" asp-action="Index">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li>
+        <div class="center-block container-combobox">
+          <select id="selectDB" id="companySelect" (change)="onCompanyChange($event)">
+            <option selected="Selected" value="1">HG Apodaca</option>
+            <option value="2">Charqueño</option>
+            <option value="3">RL Transportaciones</option>
+            <option value="4">Linda</option>
+          </select>
+        </div>
+      </li>
+      <ng-container *ngIf="username;">
+        <ng-container *ngFor="let item of menuItems">
+          <ng-container *ngIf="!item.IdPadre">
+            <li *ngIf="hasSubItems(item.Id); else noDropdown" dropdown class="nav-item dropdown">
+              <a dropdownToggle class="nav-link dropdown-toggle" role="button">
+                {{ item.Nombre }}
+              </a>
+              <ul *dropdownMenu class="dropdown-menu">
+                <ng-container *ngFor="let subItem of authService.menuItems">
+                  <li *ngIf="subItem.IdPadre === item.Id">
+                    <a class="dropdown-item" [routerLink]="subItem.Url">{{ subItem.Nombre }}</a>
+                  </li>
+                </ng-container>
+              </ul>
+            </li>
+            <ng-template #noDropdown>
+              <li class="nav-item">
+                <a class="nav-link" *ngIf="item.Url" [routerLink]="item.Url">{{ item.Nombre }}</a>
+                <ng-container *ngIf="!item.Url">{{ item.Nombre }}</ng-container>
+              </li>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/marcas/">Marcas</a>
+      </li>
+      
+      <li class="nav-item active">
+          <a class="nav-link" routerLink="/liquidaciones/">Liquidaciones</a>
+        </li>
+    </ul>
+
+    <ul class="navbar-nav right-align">
+      <li *ngIf="username; else notLoggedIn" dropdown class="nav-item dropdown">
+        <a dropdownToggle class="nav-link dropdown-toggle" id="userDropdown" role="button" aria-haspopup="true"
+          aria-expanded="false">
+          {{ username }}
+        </a>
+        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" (click)="authService.logout()">Cerrar sesión</a></li>
+        </ul>
+      </li>
+      <ng-template #notLoggedIn><a [routerLink]="['/login']" class="nav-link">Log in</a></ng-template>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,240 @@
+<app-layout title="Nueva liquidación">
+
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+    <br>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Información del Operador</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 flex-column justify-content-between">
+                        <label for="dropdownOperador" class="form-label mb-2">Operador</label>
+                        <div class="">
+                            <app-seleccion-operador
+                                (operadorSelect)="getOperadorSelected($event)"></app-seleccion-operador>
+                        </div>
+                    </div>
+                    <div class="col-md-4  flex-column justify-content-between">
+                        <label class="form-label mb-2">Id del Operador</label>
+                        <div class="border p-2 rounded">
+                            <span>{{operadorSelected.id_personal}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4  flex-column justify-content-between">
+                        <label class="form-label mb-2">Tipo</label>
+                        <div class="border p-2 rounded">
+                            <span class="placeholder-text">{{ operadorSelected.nom_categoria || 'Sin categoría'
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+            <div style="margin: 16px;">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                            aria-selected="true">Viajes</button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                            type="button" role="tab" aria-controls="nav-profile"
+                            aria-selected="false">Anticipos</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                            type="button" role="tab" aria-controls="nav-contact"
+                            aria-selected="false">Conceptos</button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <app-seleccion-viajes [ViajesTotales]="viajesTotales"
+                            (viajesSeleccionados)="verViajes($event)"></app-seleccion-viajes>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <ng-template #noDataTemplate>
+                            <p style="text-align: center;
+                            margin: 73px;
+                            font-size: 22px;
+                            color: #919090;">Ningun viaje seleccionado contiene anticipos o no hay viajes seleccionados
+                            </p>
+                        </ng-template>
+                        <div class="table-container">
+                            <table *ngIf="todosLosAnticipos.length > 0; else noDataTemplate" id="todosLosAnticipos"
+                                class="table table-striped table-hover sticky-header">
+                                <thead class="thead-dark superponer" style="white-space:nowrap;">
+                                    <tr>
+                                        <th>No. anticipo</th>
+                                        <th>tipo</th>
+                                        <th>No. viaje</th>
+                                        <th>Fecha de anticipo</th>
+                                        <th>Monto</th>
+                                        <th>Iva</th>
+                                        <th>Estatus</th>
+                                        <th>Observaciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let anticipo of todosLosAnticipos">
+                                        <td>{{ anticipo.no_anticipo }}</td>
+                                        <td>{{ anticipo.tipo_anticipo }}</td>
+                                        <td>{{ anticipo.no_viaje }}</td>
+                                        <td>{{ anticipo.fecha_anticipo }}</td>
+                                        <td>{{ anticipo.monto_anticipo }}</td>
+                                        <td>{{ anticipo.monto_anticipo_iva }}</td>
+                                        <td>{{ anticipo.status_anticipo }}</td>
+                                        <td>{{ anticipo.observaciones }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+
+                        <ng-template #noConceptosTemplate>
+                            <p style="text-align: center;
+                            margin: 73px;
+                            font-size: 22px;
+                            color: #919090;">Ningun viaje seleccionado contiene anticipos o no hay viajes seleccionados
+                            </p>
+                        </ng-template>
+
+                        <div class="table-container">
+                            <table *ngIf="conceptos.length > 0; else noConceptosTemplate" id="todosLosConceptos"
+                                class="table table-striped table-hover sticky-header">
+                                <thead class="thead-dark superponer" style="white-space:nowrap;">
+                                    <tr>
+                                        <th>Id concepto</th>
+                                        <th>Descripcion</th>
+                                        <th>Monto</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let concepto of conceptos">
+                                        <td>{{ concepto.id_concepto }}</td>
+                                        <td>{{ concepto.desc_concepto }}</td>
+                                        <td>{{ concepto.monto }}</td>
+                                        <td>
+                                            <div class="toolbar btn-group small-buttons">
+
+                                                <button class="btn btn-secondary mr-1" data-bs-toggle="modal" data-bs-target="#editModal"
+                                                data-bs-whatever="@getbootstrap" type="button"
+                                                    (click)="modalEdicionConcepto(concepto)">Editar</button>
+                                                <button class="btn btn-secondary mr-1"
+                                                    (click)="eliminarConcepto(concepto.id_concepto)">Eliminar</button>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                        <button *ngIf="conceptos.length > 0;" type="button" class="btn btn-primary"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            data-bs-whatever="@getbootstrap">Agregar concepto</button>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Nuevo concepto</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="desc_concepto" class="col-form-label">Nombre:</label>
+                                                <input type="text" class="form-control" name="desc_concepto"
+                                                    id="desc_concepto" [(ngModel)]="nuevoConcepto.desc_concepto">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="cantidad" class="col-form-label">Cantidad:</label>
+                                                <input type="number" class="form-control" name="cantidad" id="cantidad"
+                                                    [(ngModel)]="nuevoConcepto.cantidad">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="monto" class="col-form-label">Monto:</label>
+                                                <input type="number" class="form-control" name="monto" id="monto"
+                                                    [(ngModel)]="nuevoConcepto.monto">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="total" class="col-form-label">Total:</label>
+                                                <input type="number" class="form-control" name="total" id="total"
+                                                    [(ngModel)]="nuevoConcepto.total_concepto">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary"
+                                            (click)="agregarConcepto()">Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Nuevo concepto</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="desc_concepto" class="col-form-label">Nombre:</label>
+                                                <input type="text" class="form-control" name="desc_concepto"
+                                                    id="desc_concepto" [(ngModel)]="nuevoConcepto.desc_concepto">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="cantidad" class="col-form-label">Cantidad:</label>
+                                                <input type="number" class="form-control" name="cantidad" id="cantidad"
+                                                    [(ngModel)]="nuevoConcepto.cantidad">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="monto" class="col-form-label">Monto:</label>
+                                                <input type="number" class="form-control" name="monto" id="monto"
+                                                    [(ngModel)]="nuevoConcepto.monto">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="total" class="col-form-label">Total:</label>
+                                                <input type="number" class="form-control" name="total" id="total"
+                                                    [(ngModel)]="nuevoConcepto.total_concepto">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary"
+                                            (click)="editarConcepto()">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</app-layout>

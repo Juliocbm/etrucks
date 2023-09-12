@@ -1,0 +1,183 @@
+<app-layout title="Liquidaciones">
+
+  <div class="row">
+    <div class="col-md-8">
+      <app-toolbar createRoute="/liquidaciones/crearLiquidacion" (onFiltrar)="filtrarDatos($event)" (onFiltrarActivos)="filtrarActivos($event)"   (dateRangeChanged)="filtrarPorFecha($event)"
+      (dateRangeCleared)="onDateRangeCleared()" [showSaveButton]="false" [showEditButton]="false" [excelFileName]="'CatalogoLiquidaciones'" [idTablaExport]="'catalogoPrincipal'"></app-toolbar>
+    </div>
+
+    <div class="col-md-4" style="display: flex;justify-content:flex-end;align-items:center;">
+      <!-- <button class="btn btn-secondary" (click)="openCrearModal('crear')" >Crear</button>   -->
+      <button class="btn btn-primary" (click)="openFirstModal()">Crear</button>
+    </div>
+
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div style="height: 600px; overflow: auto;">
+        <table id="catalogoPrincipal" class="table table-striped table-hover sticky-header">
+          <thead class="thead-dark superponer">
+            <tr>
+              <th>No. Liquidación</th>
+              <th>Periodo Bitácora</th>
+              <th>Operador</th>
+              <th>Monto</th>
+              <th>IVA</th>
+              <th>Total</th>
+              <th>Liquidado por</th>
+              <th>Fecha Liquidación</th>
+              <th>Fecha Aceptación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of datosFiltrados">
+              <td>{{ item.no_liquidacion }}</td>
+              <td>{{ item.periodo_bitacora }}</td>
+              <td>{{ item.operador }}</td>
+              <td>{{ item.monto }}</td>
+              <td>{{ item.iva }}</td>
+              <td>{{ item.total }}</td>
+              <td>{{ item.liquidado_por }}</td>
+              <td>{{ item.fecha_liquidacion }}</td>
+              <td>{{ item.fecha_aceptacion }}</td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Grupo de botones">
+                  <button class="btn btn-secondary mr-1" (click)="goToVerLiquidacion(item)">Ver</button>
+                  <button class="btn btn-secondary mr-1" (click)="goToEditarLiquidacion(item)">Editar</button>
+                  <!--  <button class="btn btn-dark mr-1" (click)="openCrearModal('editar',item)">Liquidar</button>   -->
+
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PARA ABRIR LIQUIDACIONES DEL OPERADOR-->
+  <div class="modal fade" id="exampleModalTog1" tabindex="-1" [ngClass]="{ 'show': firstModalIsOpen, 'd-block': firstModalIsOpen }">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Liquidar Operador</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeFirstModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="row"> 
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="exampleDataList" class="form-label">Operador:</label>
+                  <input class="form-control" (input)="filtrarDatosOperadores($event)" enable>
+                </div>
+              </div>
+              <!-- -->
+              <div class="row mt-4">
+                <div class="col-md-12">
+                  <div  class="table-responsive" style="max-height: calc(80vh - 300px); overflow-y: auto;">
+                    <table id="catalogoPrincipal" class="table table-striped table-hover sticky-header">
+                      <thead class="thead-dark superponer"  style="white-space:nowrap;">
+                        <tr>
+                          <th></th>
+                          <th># </th>
+                          <th>Nombre Operador</th>
+                          <th>Tipo Operador</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let detalle of datosFiltradosOperadores">
+                          <td>
+                            <input type="checkbox" (change)="onOperadorSelectedChange($event, detalle)">
+                          </td>
+                          <td>{{ detalle.id_personal }}</td>
+                          <td>{{ detalle.nom_operador }}</td>
+                          <td>{{ detalle.nom_categoria }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" (click)="openSecondModall()">Open second modal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Segundo Modal-->
+  <div class="modal fade" id="exampleModalTog2" tabindex="-1" [ngClass]="{ 'show': secondModalIsOpen, 'd-block': secondModalIsOpen }">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Seleccionar Viajes a liquidar</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeSecondModall()"></button>
+        </div>
+
+        <div class="modal-body">
+          <form>
+            <div class="row">
+              <h6 style="display: flex;">
+                <div class="col-md-4" style="display: flex; justify-content:center;">ID:  {{ selectedOperador?.id_personal }}</div>
+                <div class="col-md-4" style="display: flex; justify-content:center;">OPERADOR:  {{ selectedOperador?.nom_operador }}</div>
+                <div class="col-md-4" style="display: flex; justify-content:center;">TIPO:  {{ selectedOperador?.nom_categoria }}</div>
+              </h6>
+            </div>
+            <div class="row">
+              <div class="row mt-4">
+                <div class="col-md-12">
+                  <div  class="table-responsive" style="max-height: calc(80vh - 300px); overflow-y: auto;">
+                    <table id="catalogoPrincipal" class="table table-striped table-hover sticky-header">
+                      <thead class="thead-dark superponer" style="white-space:nowrap;">
+                        <tr>
+                          <th></th>
+                          <th>Guia</th>
+                          <th>No Viaje</th>
+                          <th>Fecha</th>
+                          <th>Ruta</th>
+                          <th>No Unidad</th>
+                          <th>Anticipos</th>
+                          <th>Vales</th>
+                          <th>Pagar Viaje</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let detalle of datosFiltradosOperadores">
+                          <td>
+                            <input type="checkbox" (change)="onOperadorSelectedChange($event, detalle)">
+                          </td>
+                          <td>{{ detalle.id_area }}</td>
+                          <td>{{ detalle.id_personal }}</td>
+                          <td>{{ selectedDate | date:'dd/MM/yyyy' }}</td>
+                          <td>{{ detalle.nom_departamento }}</td>
+                          <td>{{ detalle.id_personal }}</td>
+                          <td>{{ detalle.id_area }}</td>
+                          <td>{{ detalle.id_personal }}</td>
+                          <td>{{ detalle.id_area }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary" (click)="openFirstModal()">Regresar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</app-layout>

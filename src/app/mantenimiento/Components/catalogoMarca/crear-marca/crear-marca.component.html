@@ -1,0 +1,36 @@
+<app-layout title="Nueva marca">
+    <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false" [showFilter]="false" [showExportButton]="false" (saveClicked)="onSubmit(marcaForm)"></app-toolbar>
+
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+    <div class="card mt-5">
+        <div class="card-body">
+            <form #marcaForm="ngForm" (ngSubmit)="onSubmit(marcaForm)">
+            
+
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="marca.nombre"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="marca.descripcion"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="idTipoMarca">ID Tipo Marca:</label>
+                    <input type="text" class="form-control" id="idTipoMarca" name="idTipoMarca" [(ngModel)]="marca.idTipoMarca" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="activo">Activo:</label>
+                    <input type="checkbox" class="form-control" id="activo" name="activo" [(ngModel)]="marca.activo">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</app-layout>

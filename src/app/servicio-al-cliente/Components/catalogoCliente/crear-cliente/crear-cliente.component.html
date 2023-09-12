@@ -1,0 +1,118 @@
+<app-layout title="Nuevo cliente">
+    <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false" [showFilter]="false" [showExportButton]="false" (saveClicked)="onSubmit(clienteForm)"></app-toolbar>
+
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+    <!-- Estos botones llaman a la función triggerAlert con diferentes mensajes cuando se hace click en ellos 
+<button (click)="triggerAlert('¡Éxito! Esta es tu alerta de éxito.')">Mostrar alerta de éxito</button>
+<button (click)="triggerAlert('¡Advertencia! Esta es tu alerta de advertencia.')">Mostrar alerta de advertencia</button>
+-->
+
+    <div class="card mt-5">
+        <div class="card-body">
+            <form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)">
+                <div class="form-group">
+                    <label for="idCliente">No Cliente:</label>
+                    <input type="number" class="form-control" id="idCliente" name="idCliente"
+                        [(ngModel)]="cliente.noCliente" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="cliente.nombre"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="razonSocial">Razon social:</label>
+                    <input type="text" class="form-control" id="rrazonSocialfc" name="razonSocial"
+                        [(ngModel)]="cliente.razonSocial" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rfc">RFC:</label>
+                    <input type="text" class="form-control" id="rfc" name="rfc" [(ngModel)]="cliente.rfc" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="activo">Activo:</label>
+                    <input type="checkbox" class="form-control" id="activo" name="activo" [(ngModel)]="cliente.activo">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="dirCalle">Calle:</label>
+                    <input type="text" class="form-control" id="dirCalle" name="dirCalle"
+                        [(ngModel)]="cliente.dirCalle">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirCodigoP">Codigo Postal:</label>
+                    <input type="text" class="form-control" id="dirCodigoP" name="dirCodigoP"
+                        [(ngModel)]="cliente.dirCodigoP">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirColonia">Colonia:</label>
+                    <input type="text" class="form-control" id="dirColonia" name="dirColonia"
+                        [(ngModel)]="cliente.dirColonia">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirCorreo">Correo:</label>
+                    <input type="email" class="form-control" id="dirCorreo" name="dirCorreo"
+                        [(ngModel)]="cliente.dirCorreo">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirEstado">Estado:</label>
+                    <input type="text" class="form-control" id="dirEstado" name="dirEstado"
+                        [(ngModel)]="cliente.dirEstado">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirLocalidad">Localidad:</label>
+                    <input type="text" class="form-control" id="dirLocalidad" name="dirLocalidad"
+                        [(ngModel)]="cliente.dirLocalidad">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirMunicipio">Municipio:</label>
+                    <input type="text" class="form-control" id="dirMunicipio" name="dirMunicipio"
+                        [(ngModel)]="cliente.dirMunicipio">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirNoExt">Numero Exterior:</label>
+                    <input type="text" class="form-control" id="dirNoExt" name="dirNoExt"
+                        [(ngModel)]="cliente.dirNoExt">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirNoInt">Numero Interior:</label>
+                    <input type="text" class="form-control" id="dirNoInt" name="dirNoInt"
+                        [(ngModel)]="cliente.dirNoInt">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirReferencias">Referencias:</label>
+                    <input type="text" class="form-control" id="dirReferencias" name="dirReferencias"
+                        [(ngModel)]="cliente.dirReferencias">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirTelefono">Telefono:</label>
+                    <input type="tel" class="form-control" id="dirTelefono" name="dirTelefono"
+                        [(ngModel)]="cliente.dirTelefono">
+                </div>
+
+                <div class="form-group">
+                    <label for="logoPath">Logo Path:</label>
+                    <input type="text" class="form-control" id="logoPath" name="logoPath"
+                        [(ngModel)]="cliente.logoPath">
+                </div>
+            </form>
+
+        </div>
+    </div>
+</app-layout>

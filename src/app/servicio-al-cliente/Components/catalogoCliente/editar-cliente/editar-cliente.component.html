@@ -1,0 +1,89 @@
+<app-layout title="Editar cliente">
+    <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false" [showFilter]="false" [showExportButton]="false" (saveClicked)="onSubmit()"></app-toolbar>
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+    <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <!-- Columna Izquierda -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" class="form-control" formControlName="nombre">
+                </div>
+
+                <div class="form-group">
+                    <label for="rfc">RFC</label>
+                    <input type="text" id="rfc" class="form-control" formControlName="rfc">
+                </div>
+
+                <div class="form-group">
+                    <label for="razonSocial">Razón Social</label>
+                    <input type="text" id="razonSocial" class="form-control" formControlName="razonSocial">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirCalle">Calle</label>
+                    <input type="text" id="dirCalle" class="form-control" formControlName="dirCalle">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirCodigoP">Código Postal</label>
+                    <input type="text" id="dirCodigoP" class="form-control" formControlName="dirCodigoP">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirColonia">Colonia</label>
+                    <input type="text" id="dirColonia" class="form-control" formControlName="dirColonia">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirCorreo">Correo</label>
+                    <input type="text" id="dirCorreo" class="form-control" formControlName="dirCorreo">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirEstado">Estado</label>
+                    <input type="text" id="dirEstado" class="form-control" formControlName="dirEstado">
+                </div>
+            </div>
+
+            <!-- Columna Derecha -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="dirLocalidad">Localidad</label>
+                    <input type="text" id="dirLocalidad" class="form-control" formControlName="dirLocalidad">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirMunicipio">Municipio</label>
+                    <input type="text" id="dirMunicipio" class="form-control" formControlName="dirMunicipio">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirNoExt">No. Externo</label>
+                    <input type="text" id="dirNoExt" class="form-control" formControlName="dirNoExt">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirNoInt">No. Interno</label>
+                    <input type="text" id="dirNoInt" class="form-control" formControlName="dirNoInt">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirReferencias">Referencias</label>
+                    <input type="text" id="dirReferencias" class="form-control" formControlName="dirReferencias">
+                </div>
+
+                <div class="form-group">
+                    <label for="dirTelefono">Teléfono</label>
+                    <input type="text" id="dirTelefono" class="form-control" formControlName="dirTelefono">
+                </div>
+
+                <div class="form-group">
+                    <label for="logoPath">Ruta del Logo</label>
+                    <input type="text" id="logoPath" class="form-control" formControlName="logoPath">
+                </div>
+            </div>
+        </div>
+    </form>
+</app-layout>

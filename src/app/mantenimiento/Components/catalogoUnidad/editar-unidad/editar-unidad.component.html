@@ -1,0 +1,91 @@
+<app-layout title="Editar Unidad">
+  <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false"  [showFilter]="false" [showExportButton]="false" (saveClicked)="onSubmit()"></app-toolbar>
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+
+
+  <form [formGroup]="unidadForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <!-- Columna Izquierda -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="idUnidad">No Unidad</label>
+          <input type="number" id="idUnidad" class="form-control" formControlName="idUnidad">
+        </div>
+
+        <div class="form-group">
+          <label for="idCompania">No Compania</label>
+          <input type="text" id="idCompania" class="form-control" formControlName="idCompania">
+        </div>
+
+        <div class="form-group">
+          <label for="clave">Clave</label>
+          <input type="text" id="clave" class="form-control" formControlName="clave">
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <input type="text" id="descripcion" class="form-control" formControlName="descripcion">
+        </div>
+
+        <div class="form-group">
+          <label for="noSerie">No. de Serie</label>
+          <input type="text" id="noSerie" class="form-control" formControlName="noSerie">
+        </div>
+
+        <div class="form-group">
+          <label for="modelo">Modelo</label>
+          <input type="number" id="modelo" class="form-control" formControlName="modelo">
+        </div>
+
+        <div class="form-group">
+          <label for="placas">Placas</label>
+          <input type="text" id="placas" class="form-control" formControlName="placas">
+        </div>
+
+        <div class="form-group">
+          <label for="idMarca">ID Marca</label>
+          <input type="text" id="idMarca" class="form-control" formControlName="idMarca">
+        </div>
+
+        <div class="form-group">
+          <label for="idTipoUnidad">ID Tipo de Unidad</label>
+          <input type="text" id="idTipoUnidad" class="form-control" formControlName="idTipoUnidad">
+        </div>
+      </div>
+
+      <!-- Columna Derecha -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="creadoPor">Creado por</label>
+          <input type="text" id="creadoPor" class="form-control" formControlName="creadoPor">
+        </div>
+
+        <div class="form-group">
+          <label for="modificadoPor">Modificado por</label>
+          <input type="text" id="modificadoPor" class="form-control" formControlName="modificadoPor">
+        </div>
+
+        <div class="form-group">
+          <label for="fechaCreacion">Fecha creación</label>
+          <input type="text" id="fechaCreacion" class="form-control" formControlName="fechaCreacion">
+        </div>
+
+        <div class="form-group">
+          <label for="fechaModificacion">Fecha modificación</label>
+          <input type="text" id="fechaModificacion" class="form-control" formControlName="fechaModificacion">
+        </div>
+
+        <div class="form-group">
+          <div class="form-check form-switch">
+            <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
+            <input type="checkbox" id="activo" class="form-check-input" formControlName="activo"  checked>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </form>
+</app-layout>

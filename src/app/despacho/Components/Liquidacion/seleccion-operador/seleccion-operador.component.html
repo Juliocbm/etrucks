@@ -1,0 +1,44 @@
+<!-- <app-layout title="Nueva liquidación">
+
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+    <br>
+
+    <div class="row">
+        <div class="col-4">
+            <label for="dropdownOperador"> Operador </label>
+            <div class="dropdown input-group mb-3">
+                <input type="text" class="form-control dropdown-toggle" id="dropdownOperador"
+                    placeholder="Escribe numero o nombre de operador..." (input)="filtrarDatosOperadores($event)"
+                    [value]="selectedOperador?.nom_operador" data-bs-toggle="dropdown" aria-expanded="false">
+        
+                <ul class="dropdown-menu scrollable-dropdown" aria-labelledby="dropdownOperador">
+                    <li *ngFor="let detalle of datosFiltradosOperadores">
+                        <a class="dropdown-item" (click)="onOperadorSelectedChange(detalle)">{{ detalle.id_personal }} - {{
+                            detalle.nom_operador }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+    </div>
+
+    <button class="btn btn-dark" type="button" (click)="getViajes()"> getViajes</button>
+   
+</app-layout> -->
+
+
+
+<div class="dropdown input-group mb-3">
+    <input type="text" class="form-control dropdown-toggle" id="dropdownOperador"
+        placeholder="Escribe numero o nombre de operador..." (input)="filtrarDatosOperadores($event)"
+        [value]="selectedOperador?.nom_operador" data-bs-toggle="dropdown" aria-expanded="false">
+
+    <ul class="dropdown-menu scrollable-dropdown" aria-labelledby="dropdownOperador">
+        <li *ngFor="let operador of datosFiltradosOperadores">
+            <a class="dropdown-item" (click)="onOperadorSelectedChange(operador)">{{ operador.id_personal }} - {{
+                operador.nom_operador }}</a>
+        </li>
+    </ul>
+</div>

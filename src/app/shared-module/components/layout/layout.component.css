@@ -1,0 +1,49 @@
+.container {
+    padding: 1rem;
+}
+
+h2 {
+    color: #007bff;
+    /* Azul Bootstrap */
+    margin-bottom: 1rem;
+}
+
+.breadcrumb .active {
+    color: #474849c0;
+    
+    /* Azul Bootstrap */
+}
+
+.breadcrumb{
+    margin: 2px 0px 2px 9px;
+    font-size: 12px;
+}
+
+nav{
+    padding: 5px;
+    background-color: #9c9c9c10;
+    border-radius: 10px;
+}
+
+.title {
+    font-size: 19px;
+    text-decoration: none;
+    color: RGBA(0, 0, 0, 0.87);
+    display: inline-block;
+    margin-top: 12px;
+
+}
+
+.flex-container {
+    display: flex;
+    align-items: center; /* Para centrar verticalmente los elementos */
+  }
+
+p{
+    margin-top: 11px !important;
+    margin-right: 10px;;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+  }

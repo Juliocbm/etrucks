@@ -1,0 +1,69 @@
+<app-toolbar *ngIf="datosFiltradosViajes.length > 0;" [showSaveButton]="false" [showEditButton]="false"
+  [showCreateButton]="false" [showFilterDate]="false" [showFilter]="true" [showExportButton]="false"
+  [showFilterActivos]="false" (onFiltrar)="filtrarDatos($event)"></app-toolbar>
+
+<ng-template #noViajesTemplate>
+  <p style="text-align: center;
+    margin: 73px;
+    font-size: 22px;
+    color: #919090;">El operador no tiene viajes por liquidar</p>
+</ng-template>
+
+<div *ngIf="datosFiltradosViajes.length > 0; else noViajesTemplate" class="row">
+  <div class="col-6">
+    <ng-template #noDataTemplate>
+      <p style="text-align: center;
+        margin: 73px;
+        font-size: 22px;
+        color: #919090;">Ningun viaje seleccionado contiene anticipos o no hay viajes seleccionados</p>
+    </ng-template>
+    <div class="table-container">
+      <table *ngIf="datosFiltradosViajes.length > 0; else noDataTemplate" id="viajesTotales"
+        class="table table-striped table-hover sticky-header">
+        <thead class="thead-dark superponer" style="white-space:nowrap;">
+          <tr>
+            <th></th>
+            <th>No. viaje</th>
+            <th>Descripcion ruta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let viaje of datosFiltradosViajes">
+            <td>
+              <input type="checkbox" (change)="toggleSelection(viaje, $event)">
+            </td>
+            <td>{{ viaje.no_viaje }}</td>
+            <td>{{ viaje.desc_ruta }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="col-6">
+    <ng-template #noDataTemplate>
+      <p style="text-align: center;
+        margin: 73px;
+        font-size: 22px;
+        color: #919090;">Ningun viaje seleccionado</p>
+    </ng-template>
+    <div class="table-container">
+      <table *ngIf="viajesCheck.length > 0; else noDataTemplate" id="viajesSeleccionados"
+        class="table table-striped table-hover sticky-header">
+        <thead class="thead-dark superponer" style="white-space:nowrap;">
+          <tr>
+            <th>No. viaje</th>
+            <th>Descripcion ruta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let viaje of viajesCheck">
+            <td>{{ viaje.no_viaje }}</td>
+            <td>{{ viaje.desc_ruta }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

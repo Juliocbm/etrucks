@@ -1,0 +1,30 @@
+<div class="mt-3">
+    <div class="toolbar btn-group small-buttons">
+
+        <a *ngIf="showCreateButton" href="#" class="btn btn-secondary" [routerLink]="createRoute">Crear</a>
+
+        <button *ngIf="showEditButton" class="btn btn-secondary mr-1" (click)="edit()">Editar</button>
+
+        <button *ngIf="showExportButton" class="btn btn-secondary" (click)="exportTable()">Exportar</button>
+
+        <button *ngIf="showSaveButton" class="btn btn-secondary" (click)="saveData()">Guardar</button>
+
+        <input *ngIf="showFilter" [(ngModel)]="filtro" (keyup)="filtrar()" placeholder="Buscar..." class="form-control">
+
+        <div *ngIf="showFilterDate" class="date-picker-group">
+            <input style="width: 158px;" bsDaterangepicker placeholder="Rango de fechas" class="form-control" type="text"
+                [bsConfig]="bsConfig" [(ngModel)]="selectedRange" (bsValueChange)="filtrarPorFecha($event)" />
+            <button class="btn btn-secondary clear-date" (click)="clearDateRange()">Borrar</button>
+          </div>
+
+          <div *ngIf="showFilterActivos" class="filter-container">
+            <div class="form-check form-switch">
+                <label class="form-check-label" for="flexSwitchCheckChecked" style="white-space:nowrap;" >Mostrar Inactivos</label>
+                <input  [(ngModel)]="filtroActivosBool" (click)="filtrarActivos()" type="checkbox"
+                    class="form-check-input">
+            </div>
+        </div>
+    </div>
+</div>
+
+

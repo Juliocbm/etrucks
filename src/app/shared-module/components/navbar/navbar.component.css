@@ -1,0 +1,36 @@
+.logo{
+    padding-top: 0px !important;
+    padding-bottom: 5px !important;
+}
+
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.container-combobox{
+    display:flex; 
+    justify-content: center; 
+    align-items:flex-end; 
+    height:40px;
+}
+
+select {
+    height: 35px; 
+    border-radius: 10px; 
+    font-weight: bold; 
+    color: rgb(49 49 49 / 73%);
+    font-size: 13px;
+    border-color: rgba(116, 115, 114, 0.507); 
+    cursor: pointer; 
+    border-width: 1px; 
+}
+
+.right-align {
+    margin-left: auto !important;
+    margin-right: 25px;
+  }
+  
