@@ -59,14 +59,16 @@ export class ListadoLiquidacionesComponent implements OnInit {
       title: 'Descargar XML',
       icon: 'file_download',
       tooltip: 'Descarga XML',
-      callback: (item: Liquidacion) => this.descargaXml(item)
+      callback: (item: Liquidacion) => this.descargaXml(item),
+      isVisible: (item: Liquidacion) => item.estatus === 3
     },
     {
       name: 'Descarga',
       title: 'Descargar PDF',
       icon: 'file_download',
       tooltip: 'Descarga PDF',
-      callback: (item: Liquidacion) => this.descargaPdf(item)
+      callback: (item: Liquidacion) => this.descargaPdf(item),
+      isVisible: (item: Liquidacion) => item.estatus === 3
     },
     {
       name: 'Timbrar',
@@ -74,7 +76,9 @@ export class ListadoLiquidacionesComponent implements OnInit {
       icon: 'receipt_long',
       tooltip: 'Timbrar',
       callback: (item: Liquidacion) => this.timbrarLiquidacion(item),
-      showCondition: (item: Liquidacion) => !this.timbradoEnProceso[item.idLiquidacion]
+      showCondition: (item: Liquidacion) =>
+        !this.timbradoEnProceso[item.idLiquidacion],
+      isVisible: (item: Liquidacion) => [0, 2, 4, 5].includes(item.estatus)
 
     }
   ];

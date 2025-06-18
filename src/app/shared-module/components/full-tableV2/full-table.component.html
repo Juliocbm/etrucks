@@ -253,15 +253,12 @@
             </div>
           </th>
 
-          <td
-            mat-cell
-            *matCellDef="let element"
-            [ngClass]="{
-              'disabled-record': shouldBlockRow(element),
-              registroEliminado: shouldHideText(element)
-            }"
-            (click)="!shouldBlockRow(element) ? enviarItem(element) : null"
-          >
+            <td
+              mat-cell
+              *matCellDef="let element"
+              [ngClass]="{ registroEliminado: shouldHideText(element) }"
+              (click)="enviarItem(element)"
+            >
             <div *ngIf="!isLoading && !isDataEmpty">
               <ng-container *ngIf="columnConfigs[column]?.type === 'boolean'">
                 <ng-container

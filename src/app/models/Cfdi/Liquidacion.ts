@@ -3,6 +3,8 @@ export interface Liquidacion {
   nombre: string;
   rfc: string;
   fecha: Date;
+  estatus: number;
+  mensaje: string;
   intentos: number;
   proximoIntento: Date | null;
   uuid: string | null;
