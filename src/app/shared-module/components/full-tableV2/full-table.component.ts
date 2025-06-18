@@ -70,7 +70,8 @@ export class FullTableV2Component
   @ViewChild('matTableWrapper') matTableWrapper!: ElementRef;
 
   get columnKeys() {
-    return Object.keys(this.columnConfigs);
+    /* return Object.keys(this.columnConfigs); */
+    return Object.keys(this.columnConfigs).filter((key) => key !== 'select');
   }
 
   //Se reciben los datos que mostrará la tabla
@@ -269,14 +270,14 @@ export class FullTableV2Component
     });
   }
 
-  //Actualiza el arreglo de columnas a renderizar
+    //Actualiza el arreglo de columnas a renderizar
   updateDisplayedColumns() {
     /*  if (this.columnConfigs.activo !== undefined)
       this.columnConfigs.activo.visible = false; */
 
-    const visibleColumns = Object.keys(this.columnConfigs).filter(
-      (key) => this.columnConfigs[key].visible
-    );
+    const visibleColumns = Object.keys(this.columnConfigs)
+      .filter((key) => key !== 'select')
+      .filter((key) => this.columnConfigs[key].visible);
 
     if (this.actions.length === 0) {
       this.displayedColumns = [...visibleColumns];
@@ -284,7 +285,7 @@ export class FullTableV2Component
       this.displayedColumns = [...visibleColumns, 'acciones'];
     }
 
-    if (this.selectable && !this.displayedColumns.includes('select')) {
+    if (this.selectable) {
       this.displayedColumns = ['select', ...this.displayedColumns];
     }
   }
