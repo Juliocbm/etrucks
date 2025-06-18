@@ -42,6 +42,20 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
         visible: true,
         widthColumn: '100px'
     },
+    estatus: {
+        displayName: 'Estatus',
+        type: 'number',
+        showFilter: true,
+        visible: true,
+        widthColumn: '10px'
+    },
+    mensaje: {
+        displayName: 'Mensaje',
+        type: 'default',
+        showFilter: false,
+        visible: true,
+        widthColumn: '10px'
+    },
     intentos: {
         displayName: 'Intentos',
         type: 'number',
@@ -49,13 +63,13 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
         visible: true,
         widthColumn: '10px'
     },
-   /*  proximoIntento: {
-        displayName: 'Próximo Intento',
-        type: 'date',
-        showFilter: false,
-        visible: true,
-        widthColumn: '100px'
-    }, */
+    /*  proximoIntento: {
+         displayName: 'Próximo Intento',
+         type: 'date',
+         showFilter: false,
+         visible: true,
+         widthColumn: '100px'
+     }, */
     proximoIntento: {
         displayName: 'Próximo Intento',
         type: 'default',
@@ -63,16 +77,16 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
         visible: true,
         widthColumn: '100px',
         customRender: (rowData) =>
-        rowData.proximoIntento == null
-          ? 'No programado'
-          : new Date(rowData.proximoIntento).toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-          }),
+            rowData.proximoIntento == null
+                ? 'No programado'
+                : new Date(rowData.proximoIntento).toLocaleDateString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                }),
     },
     uuid: {
         displayName: 'UUID',
@@ -81,11 +95,11 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
         visible: true,
         widthColumn: '100px',
         customRender: (rowData) =>
-        rowData.uuid == null
-          ? 'Sin UUID'
-          : rowData.uuid,
+            rowData.uuid == null
+                ? 'Sin UUID'
+                : rowData.uuid,
     },
-    estatus: {
+    estatus2: {
         displayName: 'Estatus',
         type: 'default',
         showFilter: false,
