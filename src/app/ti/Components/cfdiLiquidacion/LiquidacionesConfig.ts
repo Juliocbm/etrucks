@@ -40,7 +40,9 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
         type: 'number',
         showFilter: true,
         visible: true,
-        widthColumn: '10px'
+        widthColumn: '10px',
+        bloquearSeleccion: (item) =>
+            ![0, 2, 4, 5].includes(item.estatus)
     },
     mensaje: {
         displayName: 'Mensaje',

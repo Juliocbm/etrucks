@@ -535,8 +535,13 @@ export class FullTableV2Component
   }
 
   toggleRowSelection(row: any, checked: boolean) {
+    if (this.shouldBlockRow(row)) {
+      return;
+    }
     if (checked) {
       this.selectedRows.add(row);
+      const eligibleRows = this.dataSource.data.filter(r => !this.shouldBlockRow(r));
+      this.isSelectAll = this.selectedRows.size === eligibleRows.length;
     } else {
       this.selectedRows.delete(row);
       this.isSelectAll = false;
@@ -737,7 +742,11 @@ console.log(items);
     this.isSelectAll = event.checked;
     if (this.selectable) {
       if (this.isSelectAll) {
-        this.dataSource.data.forEach((row) => this.selectedRows.add(row));
+        this.dataSource.data.forEach((row) => {
+          if (!this.shouldBlockRow(row)) {
+            this.selectedRows.add(row);
+          }
+        });
       } else {
         this.selectedRows.clear();
       }
