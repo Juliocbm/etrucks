@@ -7,13 +7,6 @@ export const tableConfigsLiquidaciones: TableConfig = {
 };
 
 export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
-    select: {
-        displayName: '',
-        type: 'default',
-        showFilter: false,
-        visible: true,
-        widthColumn: '40px'
-    },
     idLiquidacion: {
         displayName: 'No. Liquidación',
         type: 'default',
@@ -63,13 +56,6 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
         visible: true,
         widthColumn: '10px'
     },
-    /*  proximoIntento: {
-         displayName: 'Próximo Intento',
-         type: 'date',
-         showFilter: false,
-         visible: true,
-         widthColumn: '100px'
-     }, */
     proximoIntento: {
         displayName: 'Próximo Intento',
         type: 'default',
