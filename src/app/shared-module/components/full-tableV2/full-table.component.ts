@@ -175,6 +175,14 @@ export class FullTableV2Component
     this.selectedRowsChange.emit(Array.from(this.selectedRows));
   }
 
+  clearSelection(): void {
+    if (this.selectable) {
+      this.selectedRows.clear();
+      this.isSelectAll = false;
+      this.emitSelectedRows();
+    }
+  }
+
   constructor(
     private excelService: ExportTableExcelService,
     public dialog: MatDialog,
