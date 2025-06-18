@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 import { ColumnConfigsLiquidaciones, tableConfigsLiquidaciones } from '../../LiquidacionesConfig';
-import { ApiInterfacesLisService } from 'src/app/DataAccess/api-interfaces-lis';
 import { ApiCfdiService } from '../../../../../DataAccess/api-cfdi.service';
 import { TableAction } from '../../../../../shared-module/Interfaces/TableAction';
+import { LoadingService } from 'src/app/Services/loading.service';
 
 @Component({
   selector: 'app-listado-liquidaciones',
@@ -10,6 +11,9 @@ import { TableAction } from '../../../../../shared-module/Interfaces/TableAction
   styleUrls: ['./listado-liquidaciones.component.css']
 })
 export class ListadoLiquidacionesComponent implements OnInit {
+  // Mapa para controlar las liquidaciones en proceso de timbrado
+  private timbradoEnProceso: { [id: number]: boolean } = {};
+
   descargaPdf(item: any): void {
     throw new Error('Method not implemented.');
   }
@@ -18,7 +22,23 @@ export class ListadoLiquidacionesComponent implements OnInit {
   }
 
   timbrarLiquidacion(idLiquidacion: number): void {
-    this.apiCfdiLiq.timbrarLiquidacion(idLiquidacion).subscribe({
+    // Evitar múltiples peticiones para la misma liquidación
+    if (this.timbradoEnProceso[idLiquidacion]) {
+      return;
+    }
+
+    this.timbradoEnProceso[idLiquidacion] = true;
+    this.loading.open();
+
+    this.apiCfdiLiq
+      .timbrarLiquidacion(idLiquidacion)
+      .pipe(
+        finalize(() => {
+          this.loading.close();
+          this.timbradoEnProceso[idLiquidacion] = false;
+        })
+      )
+      .subscribe({
       next: (response) => {
         console.log('Liquidación timbrada exitosamente:', response);
       },
@@ -48,15 +68,16 @@ export class ListadoLiquidacionesComponent implements OnInit {
       title: 'Timbrar',
       icon: 'receipt_long',
       tooltip: 'Timbrar',
-      callback: (item) => this.timbrarLiquidacion(item.idLiquidacion)
-      
+      callback: (item) => this.timbrarLiquidacion(item.idLiquidacion),
+      showCondition: (item) => !this.timbradoEnProceso[item.idLiquidacion]
+
     }
   ];
 
   ColumnConfigsLiquidaciones = ColumnConfigsLiquidaciones;
   tableConfigsLiquidaciones = tableConfigsLiquidaciones;
 
-  constructor(public apiCfdiLiq: ApiCfdiService) { }
+  constructor(public apiCfdiLiq: ApiCfdiService, private loading: LoadingService) { }
 
   ngOnInit() {
   }
