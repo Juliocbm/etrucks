@@ -44,6 +44,9 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
         bloquearSeleccion: (item) =>
             ![0, 2, 4, 5].includes(item.estatus),
         customRender: (rowData) => {
+            if (rowData.timbrando) {
+                return `spinner,blue,Timbrando...`;
+            }
             let icon = 'error';
             let color = 'red';
             let tooltip = rowData.mensaje || 'Timbrado Fallido';
@@ -115,13 +118,5 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
             rowData.uuid == null
                 ? 'Sin UUID'
                 : rowData.uuid,
-    },
-    estatus2: {
-        displayName: 'Estatus',
-        type: 'default',
-        showFilter: false,
-        visible: true,
-        widthColumn: '100px',
-        customRender: (rowData) => rowData.timbrando ? 'Timbrando...' : ''
     }
 };
