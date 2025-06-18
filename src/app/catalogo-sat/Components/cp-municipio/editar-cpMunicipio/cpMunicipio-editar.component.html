@@ -1,0 +1,47 @@
+<app-layout title="Editar estatus unidad">
+  <app-toolbar [showFilterActivos]="false" [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false"
+    [showFilter]="false" [showExportButton]="false" (saveClicked)="onSubmit()"></app-toolbar>
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <form [formGroup]="cpForm" (ngSubmit)="onSubmit()">
+    <div class="card mt-5 col-md-6">
+      <div class="card-header"><h5>Codigo Postal / Municipio</h5></div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Columna Izquierda -->
+          <div>
+    
+            
+            <div class="form-group">
+              <label for="cp">Codigo Postal:</label>
+              <input type="number" class="form-control" id="cp" name="cp" formControlName="cp"
+                required>
+            </div>
+    
+            <div class="form-group">
+              <label for="estado">Estado:</label>
+              <input type="text" class="form-control" id="estado" name="estado" formControlName="estado"
+                required>
+            </div>
+    
+            <div class="form-group">
+              <label for="municipio">Municipio:</label>
+              <input type="number" class="form-control" id="municipio" name="municipio" formControlName="municipio"
+                required>
+            </div>
+    
+            <div class="form-group">
+              <label for="localidad">Localidad:</label>
+              <input type="number" class="form-control" id="localidad" name="localidad" formControlName="localidad"
+                required>
+            </div>
+    
+           
+          </div>
+    
+        </div>
+      </div>
+    </div>
+    
+  </form>
+</app-layout>

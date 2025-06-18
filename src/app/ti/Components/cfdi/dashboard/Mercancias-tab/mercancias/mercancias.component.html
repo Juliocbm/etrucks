@@ -1,0 +1,257 @@
+<table mat-table [dataSource]="dataSourceMercancias" matSort class="mat-elevation-z8" style="margin-top: 30px;">
+  <!-- Id -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <div style="display: flex; flex-direction: column;">
+        <span>IdProducto</span>
+        <input matInput (keyup)="applyFilter('id', $any($event.target).value)" (click)="$event.stopPropagation()" placeholder="Filtrar..."
+          style="width: 100%; margin-top: 4px;">
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <!-- Cantidad -->
+  <ng-container matColumnDef="cantidad">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <div style="display: flex; flex-direction: column;">
+        <span>IdProducto</span>
+        <input matInput (keyup)="applyFilter('cantidad', $any($event.target).value)" (click)="$event.stopPropagation()" placeholder="Filtrar..."
+          style="width: 100%; margin-top: 4px;">
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.cantidad}">
+      <ng-container *ngIf="!element.editable; else editCantidad">{{ element.cantidad }}</ng-container>
+      <ng-template #editCantidad>
+        <input type="number" [(ngModel)]="element.cantidad" (ngModelChange)="validarMercancias()"
+          [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Peso -->
+  <ng-container matColumnDef="peso">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <div style="display: flex; flex-direction: column;">
+        <span>Peso</span>
+        <input matInput (keyup)="applyFilter('peso', $any($event.target).value)" (click)="$event.stopPropagation()" placeholder="Filtrar..."
+          style="width: 100%; margin-top: 4px;">
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.peso}">
+      <ng-container *ngIf="!element.editable; else editPeso">{{ element.peso }}</ng-container>
+      <ng-template #editPeso>
+        <input type="number" [(ngModel)]="element.peso" (ngModelChange)="validarMercancias()"
+          [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Clave Producto/Servicio -->
+  <ng-container matColumnDef="claveProdServ">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>     
+        <div style="display: flex; flex-direction: column;">
+          <span>Clave Prod/Serv</span>
+          <input matInput (keyup)="applyFilter('claveProdServ', $any($event.target).value)" (click)="$event.stopPropagation()" placeholder="Filtrar..."
+            style="width: 100%; margin-top: 4px;">
+        </div>
+    </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.claveProdServ}">
+      <ng-container *ngIf="!element.editable; else editClaveProd">{{ element.claveProdServ }}</ng-container>
+      <ng-template #editClaveProd>
+        <input type="text" OnlyDigitBase maxlength="8" [(ngModel)]="element.claveProdServ"
+          (ngModelChange)="validarMercancias()" [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fraccionArancelaria">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>      
+      <div style="display: flex; flex-direction: column;">
+        <span>Fracción Arancelaria</span>
+        <input matInput (keyup)="applyFilter('fraccionArancelaria', $any($event.target).value)" (click)="$event.stopPropagation()" placeholder="Filtrar..."
+          style="width: 100%; margin-top: 4px;">
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.fraccionArancelaria}">
+      <ng-container *ngIf="!element.editable; else editFraccion">{{ element.fraccionArancelaria }}</ng-container>
+      <ng-template #editFraccion>
+        <input type="text" OnlyDigitBase maxlength="10" [(ngModel)]="element.fraccionArancelaria"
+          (ngModelChange)="validarMercancias()" [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="pedimento">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Pedimento</th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.pedimento}">
+      <ng-container *ngIf="!element.editable; else editPedimento">{{ element.pedimento }}</ng-container>
+      <ng-template #editPedimento>
+        <input type="text" [(ngModel)]="element.pedimento" (ngModelChange)="validarMercancias()"
+          [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="descripcion">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <div style="display: flex; flex-direction: column;">
+        <span>Descripción</span>
+        <input matInput (keyup)="applyFilter('descripcion', $any($event.target).value)" (click)="$event.stopPropagation()" placeholder="Filtrar..."
+          style="width: 100%; margin-top: 4px;">
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.descripcion}">
+      <span matTooltip="{{ element.descripcion }}">{{ element.descripcion | truncate : 9 }}</span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="claveUnidad">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <div style="display: flex; flex-direction: column;">
+        <span>Clave Unidad</span>
+        <input matInput (keyup)="applyFilter('claveUnidad', $any($event.target).value)" (click)="$event.stopPropagation()" placeholder="Filtrar..."
+          style="width: 100%; margin-top: 4px;">
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.claveUnidad}">
+      <ng-container *ngIf="!element.editable; else editClaveUnidad">{{ element.claveUnidad }}</ng-container>
+      <ng-template #editClaveUnidad>
+        <input type="text" maxlength="100" [(ngModel)]="element.claveUnidad" (ngModelChange)="validarMercancias()"
+          [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="claveUnidadPeso">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <div style="display: flex; flex-direction: column;">
+        <span>Clave Unidad Peso</span>
+        <input matInput (keyup)="applyFilter('claveUnidadPeso', $any($event.target).value)" (click)="$event.stopPropagation()" placeholder="Filtrar..."
+          style="width: 100%; margin-top: 4px;">
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.claveUnidadPeso}">
+      <ng-container *ngIf="!element.editable; else editClavePeso">{{ element.claveUnidadPeso }}</ng-container>
+      <ng-template #editClavePeso>
+        <input type="text" maxlength="3" [(ngModel)]="element.claveUnidadPeso" (ngModelChange)="validarMercancias()"
+          [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="esMaterialPeligroso">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Material Peligroso      
+    </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.esMaterialPeligroso}">
+      <ng-container *ngIf="!element.editable; else editMaterial">
+        {{ element.esMaterialPeligroso === '0' ? 'No' : element.esMaterialPeligroso === '1' ? 'Si' :
+        element.esMaterialPeligroso === '0,1' ? 'Puede ser' : element.esMaterialPeligroso }}
+      </ng-container>
+      <ng-template #editMaterial>
+        <mat-select [(ngModel)]="element.esMaterialPeligroso" (ngModelChange)="validarMercancias()"
+          [disabled]="!element.editable">
+          <mat-option value="0">No</mat-option>
+          <mat-option value="1">Si</mat-option>
+          <mat-option value="0,1">Puede ser</mat-option>
+        </mat-select>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="cveMaterialPeligroso">
+    <th mat-header-cell *matHeaderCellDef>CVE Material Peligroso</th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.cveMaterialPeligroso}">
+      <ng-container *ngIf="!element.editable; else editCve">{{ element.cveMaterialPeligroso }}</ng-container>
+      <ng-template #editCve>
+        <input type="text" [(ngModel)]="element.cveMaterialPeligroso" (ngModelChange)="validarMercancias()"
+          [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="valorMercancia">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor Mercancía</th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.valorMercancia}">
+      <ng-container *ngIf="!element.editable; else editValor">{{ element.valorMercancia }}</ng-container>
+      <ng-template #editValor>
+        <input type="number" [(ngModel)]="element.valorMercancia" (ngModelChange)="validarMercancias()"
+          [disabled]="!element.editable">
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <!--   <ng-container matColumnDef="descripcionMateria">
+    <th mat-header-cell *matHeaderCellDef>Descripción Materia</th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.descripcionMateria}">
+      <span matTooltip="{{ element.descripcionMateria }}">{{ element.descripcionMateria | truncate : 9 }}</span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipoMateria">
+    <th mat-header-cell *matHeaderCellDef>Tipo Materia</th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.tipoMateria}">
+      <ng-container *ngIf="!element.editable; else editTipo">
+        {{ element.descripcionMateria }}
+      </ng-container>
+      <ng-template #editTipo>
+        <mat-select [(ngModel)]="element.tipoMateria" (ngModelChange)="validarMercancias()" [disabled]="!element.editable">
+          <mat-option value="01">Materia prima</mat-option>
+          <mat-option value="02">Materia procesada</mat-option>
+          <mat-option value="03">Materia terminada</mat-option>
+          <mat-option value="04">industria manufacturera</mat-option>
+          <mat-option value="05">Otra</mat-option>
+        </mat-select>
+      </ng-template>
+    </td>
+  </ng-container> -->
+
+  <!-- Descripción Materia -->
+  <ng-container matColumnDef="descripcionMateria">
+    <th mat-header-cell *matHeaderCellDef>Descripción Materia</th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.descripcionMateria}">
+      <span matTooltip="{{ element.descripcionMateria }}">{{ element.descripcionMateria | truncate : 9 }}</span>
+    </td>
+  </ng-container>
+
+  <!-- Tipo Materia -->
+  <ng-container matColumnDef="tipoMateria">
+    <th mat-header-cell *matHeaderCellDef>Tipo Materia</th>
+    <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.tipoMateria}">
+      <ng-container *ngIf="!element.editable; else editTipo">
+        {{ element.tipoMateria === '01' ? 'Materia prima' : element.tipoMateria === '02' ? 'Materia procesada' :
+        element.tipoMateria === '03' ? 'Materia terminada' : element.tipoMateria === '04' ? 'Industria manufacturera' :
+        'Otra' }}
+      </ng-container>
+      <ng-template #editTipo>
+        <mat-select [(ngModel)]="element.tipoMateria" (ngModelChange)="actualizarDescripcionMateria(element)"
+          [disabled]="!element.editable">
+          <mat-option value="01">01 - Materia prima</mat-option>
+          <mat-option value="02">02 - Materia procesada</mat-option>
+          <mat-option value="03">03 - Materia terminada</mat-option>
+          <mat-option value="04">04 - Industria manufacturera</mat-option>
+          <mat-option value="05">05 - Otra</mat-option>
+        </mat-select>
+      </ng-template>
+    </td>
+  </ng-container>
+
+
+  <!-- Botón Editar/Guardar -->
+  <ng-container matColumnDef="editar">
+    <th mat-header-cell *matHeaderCellDef>Acción</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="element.editable ? guardarMercancia(element) : toggleEditMode(element)">
+        <mat-icon>{{ element.editable ? 'save' : 'edit' }}</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Encabezados y filas -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsMercancias"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsMercancias"></tr>
+</table>
+
+<!-- Paginador -->
+<mat-paginator #mercanciasPaginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons></mat-paginator>

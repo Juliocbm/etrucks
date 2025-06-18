@@ -1,0 +1,22 @@
+<app-layout title="Monitor de Timbrados Lis">
+  <div style="display: flex; justify-content: flex-end">
+    <button
+      mat-raised-button
+      color="white"
+      (click)="descargarExcel()"
+      style="display: flex; align-items: center; justify-content: flex-end; gap: 5px;"
+    >
+      Exportar excel
+      <mat-icon
+        _ngcontent-ng-c3281339807=""
+        role="img"
+        class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color"
+        style="margin: 0px;"
+        aria-hidden="true"
+        data-mat-icon-type="font"
+        >file_download</mat-icon
+      >
+    </button>
+  </div>
+  <app-shared-stepper [steps]="steps" (stepCompleted)="handleStepCompleted($event)" [data]="datos" (enviarDatos)="recibirDatos($event)" (exportarDatos)="exportarDatos($event)"></app-shared-stepper>
+</app-layout>

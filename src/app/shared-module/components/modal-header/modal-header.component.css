@@ -1,0 +1,25 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    /* Distribuye los elementos a los extremos */
+}
+
+.left-elements {
+    display: flex;
+    align-items: center;
+    /* Alinea verticalmente los elementos a la izquierda */
+}
+
+.right-elements {
+    display: flex;
+    align-items: center;
+    /* Alinea verticalmente los elementos a la derecha */
+}
+
+h2 {
+    margin: 0;
+    /* Asegúrate de que el h2 no tenga margen para alinearse correctamente */
+    flex-grow: 1;
+    /* Permite que el h2 ocupe todo el espacio disponible */
+}
+

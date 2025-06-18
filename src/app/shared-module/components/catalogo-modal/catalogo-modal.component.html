@@ -1,0 +1,20 @@
+
+
+<app-layout title="{{( data.title == undefined || data.title == null || data.title == '') ? 'CATALOGO MODAL' : data.title}}">
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+  
+   <app-full-table
+   [data]="data.datosFiltrados"
+   --[columns]="data.columns" 
+   [nombreMenu]="'Catalogo Modal'"
+   [columnConfigs]="data.columnConfigs"
+   (enviarItemEvent)="goToEnviar($event)"
+
+   --[showVerColumn] = false
+   --[showEditarColumn] = false
+   --[showEstatusColumn] = false
+   [showExportarButton] = false
+   [showCreateButton] = false
+   ></app-full-table>
+  
+  </app-layout>

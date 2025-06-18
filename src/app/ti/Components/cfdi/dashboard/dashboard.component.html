@@ -1,0 +1,188 @@
+<div class="content-wrapper">
+  <div style="margin-top: 50px;">
+    <!-- Formulario de Consulta -->
+    <form [formGroup]="consultaForm" (ngSubmit)="onSubmitConsulta()" fxLayout="row wrap" fxLayoutGap="10px"
+      style="margin-top: 15px;">
+      <div class="row">
+        <!-- Remisión -->
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Remisión</mat-label>
+            <input matInput formControlName="numGuia" required />
+          </mat-form-field>
+        </div>
+
+        <!-- Estatus Timbrado -->
+        <div class="col-md-2">
+          <mat-label>Estatus timbrado</mat-label>
+          <div>
+            <span *ngIf="cartaPorte?.estatusTimbrado === 0" style="color:gray;">Sin timbrar</span>
+            <span *ngIf="cartaPorte?.estatusTimbrado === 1" style="color:blue;">Procesando</span>
+            <span *ngIf="cartaPorte?.estatusTimbrado === 2" style="color:red;">
+              Con errores
+              <mat-icon *ngIf="cartaPorte?.erroresTimbradoGenerals?.length"
+                (click)="openErrorDetails(cartaPorte?.erroresTimbradoGenerals)"
+                style="cursor: pointer; color: red; vertical-align: bottom;">error_outline</mat-icon>
+            </span>
+            <span *ngIf="cartaPorte?.estatusTimbrado === 3" style="color:green">
+              Timbrado
+              <mat-icon *ngIf="cartaPorte?.erroresTimbradoGenerals?.length"
+                (click)="openErrorDetails(cartaPorte?.erroresTimbradoGenerals)"
+                style="cursor: pointer; color: rgb(255, 140, 46); vertical-align: bottom;">error_outline</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <!-- Documentos -->
+        <div class="col-md-2">
+          <mat-label>Documentos</mat-label>
+          <div>
+            <span *ngIf="cartaPorte?.archivoCFDi?.xml"
+              (click)="downloadFile(cartaPorte?.archivoCFDi?.xml, cartaPorte?.numGuia + '.xml')"
+              style="cursor: pointer; color: rgb(226, 106, 7); margin-right: 10px;">XML</span>
+            <span *ngIf="cartaPorte?.archivoCFDi?.pdf"
+              (click)="downloadFile(cartaPorte?.archivoCFDi?.pdf, cartaPorte?.numGuia + '.pdf')"
+              style="cursor: pointer; color: red; margin-left: 10px;">PDF</span>
+          </div>
+        </div>
+
+        <!-- Sistema Timbrado -->
+        <div class="col-md-2">
+          <mat-label>Sistema timbrado</mat-label>
+          <div>
+            <span *ngIf="cartaPorte?.sistemaTimbrado === 0">Lis</span>
+            <span *ngIf="cartaPorte?.sistemaTimbrado === 1">Lis</span>
+            <span *ngIf="cartaPorte?.sistemaTimbrado === 2">BuzonE</span>
+            <span *ngIf="cartaPorte?.sistemaTimbrado === 3">InvoiceOne</span>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="col-md-4 d-flex align-items-center">
+          <div *ngIf="isLoading" class="spinner-border" role="status" style="margin-right: 15px; color:blue;"></div>
+          <button [disabled]="cartaPorte?.estatusTimbrado === 1" mat-raised-button color="primary" type="submit">
+            Consultar
+          </button>
+          <button
+            [disabled]="cartaPorte?.estatusTimbrado === 3 || cartaPorte?.estatusTimbrado === 1 || !cartaPorte?.numGuia"
+            class="mx-3" mat-raised-button color="primary" type="button" (click)="guardarCartaPorte()">
+            Guardar datos
+          </button>
+          <button
+            [disabled]="cartaPorte?.estatusTimbrado === 3 || cartaPorte?.estatusTimbrado === 1 || !cartaPorte?.numGuia"
+            mat-raised-button color="primary" type="button" (click)="timbrarRemision()">
+            Timbrar
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div>
+      <div *ngIf="!cartaPorte || !cartaPorte.numGuia" class="no-data-wrapper">
+        <mat-card class="no-data-card">
+          <mat-card-content class="no-data-content">
+            <mat-icon class="no-data-icon">info</mat-icon>
+            <p>No hay datos disponibles. Realiza una consulta para ver la información.</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <mat-tab-group  animationDuration="0ms" *ngIf="cartaPorte && cartaPorte.numGuia" style="margin-top: 25px;">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">insert_drive_file</mat-icon>
+            Remision
+            <mat-icon *ngIf="tabsConErrores['remision']" class="error-icon"  (click)="mostrarErrores('remision')" matTooltip="Haz clic para ver errores">error</mat-icon>
+            <mat-icon *ngIf="!tabsConErrores['remision']" class="ok-icon">check_circle</mat-icon>
+          </ng-template>
+          <app-remision></app-remision>
+      <!--     <div *ngIf="erroresTabs['remision'].length">
+            <mat-card class="error-card">
+              <mat-card-content>
+                <mat-list>
+                  <mat-list-item *ngFor="let error of erroresTabs['remision']">{{ error }}</mat-list-item>
+
+                </mat-list>
+              </mat-card-content>
+            </mat-card>
+          </div> -->
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">receipt</mat-icon>
+            Pedido
+            <mat-icon *ngIf="tabsConErrores['pedido']" class="error-icon" (click)="mostrarErrores('pedido')" matTooltip="Haz clic para ver errores">error</mat-icon>
+            <mat-icon *ngIf="!tabsConErrores['pedido']" class="ok-icon">check_circle</mat-icon>
+          </ng-template>
+          <app-pedido></app-pedido>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">sync</mat-icon>
+            Zam
+            <mat-icon *ngIf="tabsConErrores['zam']" class="error-icon" (click)="mostrarErrores('zam')" matTooltip="Haz clic para ver errores">error</mat-icon>
+            <mat-icon *ngIf="!tabsConErrores['zam']" class="ok-icon">check_circle</mat-icon>
+          </ng-template>
+          <app-zam></app-zam>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">location_on</mat-icon>
+            Ubicaciones
+            <mat-icon *ngIf="tabsConErrores['ubicaciones']" class="error-icon" (click)="mostrarErrores('ubicaciones')" matTooltip="Haz clic para ver errores">error</mat-icon>
+            <mat-icon *ngIf="!tabsConErrores['ubicaciones']" class="ok-icon">check_circle</mat-icon>
+          </ng-template>
+          <app-ubicaciones></app-ubicaciones>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">language</mat-icon>
+            Internacional
+            <mat-icon *ngIf="tabsConErrores['internacional']" class="error-icon" (click)="mostrarErrores('internacional')" matTooltip="Haz clic para ver errores">error</mat-icon>
+            <mat-icon *ngIf="!tabsConErrores['internacional']" class="ok-icon">check_circle</mat-icon>
+          </ng-template>
+          <app-internacional></app-internacional>
+        </mat-tab>
+
+        <mat-tab
+          *ngIf="this.cartaPorte != undefined && this.cartaPorte.cartaPorteSustituciones != undefined && this.cartaPorte.cartaPorteSustituciones.length > 0">
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">my_library_books</mat-icon>
+            Documentos relacionados
+            <mat-icon class="ok-icon">check_circle</mat-icon>
+          </ng-template>
+          <app-docRelacionados></app-docRelacionados>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">shopping_cart</mat-icon>
+            Mercancias
+            <mat-icon *ngIf="tabsConErrores['mercancias']" class="error-icon" (click)="mostrarErrores('mercancias')" matTooltip="Haz clic para ver errores">error</mat-icon>
+            <mat-icon *ngIf="!tabsConErrores['mercancias']" class="ok-icon">check_circle</mat-icon>
+          </ng-template>
+          <app-mercancias></app-mercancias>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">attach_money</mat-icon>
+            Conceptos
+            <mat-icon *ngIf="tabsConErrores['conceptos']" class="error-icon" (click)="mostrarErrores('conceptos')" matTooltip="Haz clic para ver errores">error</mat-icon>
+            <mat-icon *ngIf="!tabsConErrores['conceptos']" class="ok-icon">check_circle</mat-icon>
+          </ng-template>
+          <app-conceptos></app-conceptos>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+
+
+
+
+  </div>
+</div>

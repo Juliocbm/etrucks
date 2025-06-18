@@ -1,0 +1,37 @@
+<app-layout title="Reporte Exceso de Velocidad / Samsara">
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <div style="display: flex; justify-content: flex-end">
+    <button
+      mat-raised-button
+      color="white"
+      (click)="descargarExcel()"
+      style="display: flex; align-items: center; justify-content: flex-end; gap: 5px;"
+    >
+      Exportar completo
+      <mat-icon
+        _ngcontent-ng-c3281339807=""
+        role="img"
+        class="mat-icon notranslate material-icons mat-ligature-font mat-icon-no-color"
+        style="margin: 0px;"
+        aria-hidden="true"
+        data-mat-icon-type="font"
+        >file_download</mat-icon
+      >
+    </button>
+  </div>
+
+  <app-full-table
+    crearRoute="/Satelite/repoExcesoVelocidad"
+    [data]="datos"
+    [nombreMenu]="'repoExcesoVelocidad'"
+    [columnConfigs]="columnConfigs"
+    (refreshEvent)="refreshData()"
+    [excelFileName]="'reporte_exceso_velocidad_samsara'"
+    [tableConfigs]="tableConfigs"
+    [isLoading]="isLoading"
+    [showCreateButton]="false"
+    [resaltarSeleccion]="true"
+    [showExportarButton]="true"
+  ></app-full-table>
+</app-layout>

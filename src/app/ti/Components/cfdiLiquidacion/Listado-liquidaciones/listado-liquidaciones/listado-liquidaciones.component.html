@@ -1,0 +1,18 @@
+<app-layout titulo="Liquidaciones: Timbrado"> 
+  <app-full-tableV2 
+    [fetchDataFunction]="apiCfdiLiq.getLiquidaciones.bind(apiCfdiLiq)"
+    [showCreateButtonModal]="false" 
+    [showFilterInactivos]="false" 
+    [nombreMenu]="'Liquidaciones'"
+    [nombreTabla]="'Liquidaciones'" 
+    [columnConfigs]="ColumnConfigsLiquidaciones"
+    [excelFileName]="'LiquidacionesParaTimbrado'" 
+    [isReport]="false" 
+    [tableConfigs]="tableConfigsLiquidaciones"
+    [mostrarFiltroGeneralFechas]="false"
+    [showExportarButton]="false"
+    [actions]="tableActions"
+   >
+  </app-full-tableV2>
+
+</app-layout>

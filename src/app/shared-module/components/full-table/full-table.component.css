@@ -1,0 +1,942 @@
+.disabled {
+  pointer-events: none;
+  background-color: #e5e5e5 !important;
+  border-color: gray !important;
+  /* más estilos para indicar que el elemento está deshabilitado */
+}
+
+.disabled-record {
+  background-color: #f0f0f0; /* Color de fondo para registros desactivados */
+  color: #cccccc; /* Color del texto para registros desactivados */
+  pointer-events: none; /* Desactiva eventos del mouse, incluido el click */
+}
+
+.toolbar {
+  position: relative; /* Contenedor relativo para el centro absoluto */
+  display: flex;
+  height: 50px; /* o la altura que necesites */
+  margin: 7px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+}
+
+.left-buttons,
+.right-buttons {
+  display: flex; /* Usa flexbox para contener los botones */
+  align-items: center; /* Alinea verticalmente */
+}
+
+.left-buttons {
+  padding: 5px;
+  justify-content: flex-start; /* Alinea los botones a la izquierda */
+  flex: 1; /* Opcional, si quieres que ocupe un espacio específico */
+}
+
+.right-buttons {
+  padding: 5px;
+  justify-content: flex-end; /* Alinea los botones a la derecha */
+  flex: 1; /* Opcional, si quieres que ocupe un espacio específico */
+}
+
+.center-buttons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1; /* Asegura que esté sobre los otros elementos si se superponen */
+  width: auto; /* O define un ancho específico */
+}
+
+/* O si solo quieres mover los últimos botones a la derecha sin cambiar la estructura HTML */
+.toolbar > button:last-child {
+  margin-left: auto; /* Esto empujará el último botón a la derecha */
+}
+
+.custom-button {
+  background-color: black !important; /* Cambiar el color de fondo a negro */
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.filtro-width {
+  width: 50px;
+}
+
+.filtro-fecha-width {
+  width: 260px;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #7cf27c !important;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #478b47 !important;
+}
+
+.refresh-button {
+  padding: 6px 12px; /* Ajusta según la necesidad */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px; /* Redondeo de los bordes */
+  transition: background-color 0.3s;
+}
+
+.refresh-button:hover {
+  background-color: rgba(0, 0, 0, 0.04); /* Color de fondo al pasar el cursor */
+}
+
+.refresh-button mat-icon {
+  font-size: 21px; /* Ajusta según la necesidad */
+  margin: 0;
+}
+
+.mat-table-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  border-radius: 5px;
+  flex: 1 1 auto;
+  margin: 0;
+  min-height: 0;
+  line-height: 1.2 !important;
+  min-width: 100%;
+  transition: width 0.3s ease;
+  height: auto;
+}
+
+.dynamic-height-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+  border: 2px solid #f7f7f7;
+  border-radius: 10px;
+}
+
+.table-centered {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+th.mat-header-cell {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  background-color: white !important;
+  min-width: 100px; /* Ancho mínimo para cada columna */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+tr.mat-header-row {
+  z-index: 1;
+  position: relative;
+  height: 48px;
+}
+
+.mat-mdc-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+}
+
+.mat-mdc-table {
+  overflow: visible;
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed; /* Cambiamos a fixed para mantener alineación entre header y celdas */
+}
+
+tr:not(:first-child):hover {
+  cursor: pointer;
+  background-color: #f5f5f5 !important;
+}
+
+tr:not(:first-child):hover td {
+  background-color: #f5f5f5 !important;
+}
+
+tr:not(:first-child):hover td.mat-cell-with-actions {
+  background-color: #f5f5f5 !important;
+}
+
+/* Reducir el tamaño de la fuente de la tabla */
+mat-table {
+  font-size: 0.8rem !important;
+  display: inline-table;
+  padding: 5px 15px;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+/* Ajustar los botones dentro de la tabla */
+mat-table button {
+  padding: 4px 8px !important;
+  font-size: 0.7rem !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+}
+
+/* Ajustar el espaciado de las celdas de la tabla */
+mat-table td,
+mat-table th {
+  padding: 4px 12px !important;
+  font-size: 0.8rem !important;
+  white-space: nowrap;
+}
+
+/* Definir altura específica para las filas */
+tr.mat-row {
+  height: 32px !important; /* Altura más reducida como en la versión 2 */
+  min-height: 32px !important;
+  background-color: white;
+}
+
+.btn-action {
+  background-color: #f0ad4e; /* Color de fondo */
+  border: none; /* Elimina el borde */
+  color: white; /* Color del texto */
+  padding: 0px !important; /* Espaciado interno */
+  text-align: center; /* Alineación del texto */
+  text-decoration: none; /* Quita el subrayado en caso de usar <a> */
+  display: inline-block; /* Permite dimensiones específicas */
+  font-size: 14px; /* Tamaño del texto */
+  margin: 2px 1px !important; /* Margen reducido */
+  cursor: pointer; /* Cambia el cursor a una mano al pasar el mouse */
+  border-radius: 4px; /* Bordes redondeados */
+  transition: background-color 0.3s ease; /* Transición suave para el hover */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.btn-action:hover {
+  background-color: #ec971f; /* Color al pasar el mouse */
+}
+
+button span {
+  vertical-align: middle; /* Alinea el texto verticalmente con el ícono */
+}
+
+/* Si tienes un span al lado del icono y quieres ocultarlo (por ejemplo, para móviles) */
+.btn-action span {
+  display: none;
+}
+
+/* Estilos adicionales para el mat-icon si es necesario */
+.btn-action mat-icon {
+  font-size: 18px !important; /* Íconos más pequeños */
+  line-height: 18px !important;
+  height: 18px !important;
+  width: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.icono-grande {
+  font-size: 30px !important;
+  color: #747474 !important;
+  width: max-content;
+  height: max-content;
+}
+
+.empty-state {
+  text-align: center;
+  color: #626262;
+  font-size: 14px;
+  padding: 20px;
+  background-color: #f5f5f59e;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: 120px;
+}
+
+.empty-state mat-icon {
+  font-size: 40px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  margin: 0;
+  padding: 0;
+}
+
+.empty-state button {
+  margin-top: 15px;
+}
+
+.float-right {
+  float: right;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.resaltar-renglon {
+  background-color: #ebebeb !important;
+}
+
+.loading-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  margin: 0;
+  padding: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 5px; /* Ancho inicial del scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar:hover {
+  width: 8px; /* Ancho más grande al hacer hover */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Cambio de color opcional al hacer hover */
+}
+
+.registroEliminado {
+  cursor: not-allowed !important;
+  background-color: #6e727517 !important;
+  position: relative;
+  color: #7c787875 !important; /* Opcional para ocultar el texto */
+}
+
+.truncate-text-dropdown {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px; /* Ajusta el ancho máximo según tus necesidades */
+}
+
+.ng-star-inserted {
+  padding-top: 0px !important;
+}
+
+th:last-child,
+td:last-child,
+.sticky-footer {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  align-items: right !important;
+  justify-items: right !important;
+  background-color: inherit !important;
+}
+
+.sticky-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #f7f7f7;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.mat-cell-with-actions {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: inherit !important;
+  z-index: 5 !important;
+  padding: 2px 4px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+}
+
+.acciones-header {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 11 !important;
+  background-color: white !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  padding: 4px 8px !important;
+}
+
+.mat-cell-with-actions {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: inherit !important;
+  z-index: 5 !important;
+  padding: 2px 4px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+}
+
+tr.mat-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr.mat-row:last-child {
+  margin-bottom: 0;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+mat-paginator {
+  height: 35px !important;
+  min-height: 35px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  justify-content: right;
+}
+
+/* Estilos para el wrapper con scroll */
+.mat-table-wrapper.scrolled th.mat-header-cell {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mat-table-wrapper.scrolled .mat-cell-with-actions {
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mat-table-wrapper.scrolled th.acciones-header {
+  box-shadow: -2px 1px 5px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Mejora del posicionamiento z-index para elementos sticky */
+th.mat-header-cell {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  background-color: white !important;
+}
+
+th.acciones-header {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 11 !important;
+  background-color: white !important;
+  text-align: center !important;
+}
+
+.mat-cell-with-actions {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: inherit !important;
+  z-index: 5 !important;
+  text-align: center !important;
+  min-width: 65px !important;
+}
+
+/* Mejora visual para la tabla */
+.table-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px;
+  color: #7d7d7d;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Mejoras para dispositivos móviles */
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    height: auto;
+    padding: 5px;
+  }
+
+  .left-buttons,
+  .right-buttons {
+    width: 100%;
+    justify-content: center;
+    margin: 5px 0;
+  }
+}
+
+/* Estilos para tablas compactas */
+.mat-table-wrapper.compact-table {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.compact-table mat-table {
+  padding: 0 10px;
+}
+
+.compact-table th.mat-header-cell {
+  padding: 8px 10px !important;
+}
+
+.compact-table td.mat-cell {
+  padding: 6px 10px !important;
+}
+
+/* Ajuste para paginator en modo compacto */
+.compact-table + .sticky-footer {
+  border-radius: 0 0 8px 8px;
+}
+
+/* Mejora visual para tablas con pocos registros */
+.few-rows-table .mat-row {
+  min-height: 45px;
+}
+
+/* Ajustes para la tabla sin datos */
+.no-data-table .mat-table-wrapper {
+  height: auto !important;
+  min-height: 150px !important; /* Suficiente espacio para mensaje de no datos */
+  overflow: auto !important;
+}
+
+/* Estilos para la estructura principal de la tabla */
+.dynamic-height-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Evitar cualquier desbordamiento */
+  min-height: 0; /* Para permitir que los hijos flex se reduzcan correctamente */
+}
+
+/* SECCIÓN HEADER */
+.table-header {
+  flex: 0 0 auto; /* No crecer ni reducirse */
+}
+
+/* SECCIÓN BODY */
+.table-body {
+  flex: 1 0 auto; /* Crecer pero no reducirse */
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Permite que los hijos puedan usar flex correctamente */
+  position: relative;
+}
+
+/* SECCIÓN FOOTER */
+.table-footer {
+  flex: 0 0 auto; /* No crecer ni reducirse */
+}
+
+/* Estilos para el wrapper de la tabla con mejor control de scroll */
+.mat-table-wrapper {
+  overflow: hidden !important;
+  position: relative;
+  border-radius: 5px;
+  transition: width 0.3s ease, max-width 0.3s ease, height 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* Ajustado para crecer y reducirse según sea necesario */
+  margin: 0;
+  min-height: 0; /* Crucial para evitar problemas de scroll */
+  max-height: 50% !important;
+  height: 50% !important;
+}
+
+/* Estilos específicos para la tabla */
+.mat-table {
+  width: 100%;
+  min-width: 100%;
+  table-layout: auto;
+}
+
+/* Estilos para filas específicas */
+.mat-header-row {
+  height: 40px !important; /* Altura del encabezado reducida pero suficiente para los filtros */
+  min-height: 40px !important;
+  background-color: white;
+}
+
+.mat-data-row {
+  height: 40px;
+}
+
+/* Estado sin datos */
+.no-data-row {
+  height: auto;
+  width: 100%;
+}
+
+.no-data-row td {
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* Ocultar header y otros elementos innecesarios cuando no hay datos */
+.no-data-table .mat-header-row {
+  display: table-row; /* Mantener visible el header */
+}
+
+/* Modificación del estilo cuando se está mostrando el mensaje de no datos */
+.mat-table-wrapper.empty-table-wrapper {
+  border: 1px solid #eee;
+  box-shadow: none;
+  margin: 10px 0;
+}
+
+/* Estado de carga */
+.loading-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 5;
+}
+
+/* Optimizar sticky footer */
+.sticky-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #f7f7f7;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.acciones-container {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 2px; /* Gap reducido */
+  width: 100%;
+  height: 100%;
+}
+
+th.acciones-header {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 11 !important;
+  background-color: white !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  padding: 4px 8px !important;
+}
+
+/* Eliminar el pseudo-elemento ::after que estaba reservando espacio adicional */
+th.acciones-header::after {
+  content: none;
+}
+
+.mat-cell-with-actions {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: inherit !important;
+  z-index: 5 !important;
+  padding: 2px 4px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+}
+
+/* Estilos específicos para la última columna */
+th:last-child,
+td:last-child {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background-color: white;
+}
+
+/* Mejora del sombreado para elementos sticky */
+.mat-table-wrapper.scrolled .mat-cell-with-actions {
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mat-table-wrapper.scrolled th.acciones-header {
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.15) !important;
+}
+
+.ng-star-inserted {
+  padding-top: 0px !important;
+}
+
+/* Ajustar los botones de acción para alinear con el tamaño reducido */
+.btn-action {
+  width: 25px !important;
+  height: 25px !important;
+  margin: 2px 1px !important; /* Margen reducido */
+}
+
+.btn-action mat-icon {
+  font-size: 18px !important; /* Íconos más pequeños */
+  line-height: 18px !important;
+  height: 18px !important;
+  width: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Ajuste para la columna de acciones */
+.mat-cell-with-actions {
+  padding: 2px 4px !important;
+}
+
+/* Ajustar la altura de los inputs en los filtros */
+.form-control-sm {
+  height: 22px !important;
+  min-height: 22px !important;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}
+
+/* Espaciado vertical en general más compacto */
+.mat-table-wrapper {
+  line-height: 1.2 !important;
+}
+
+/* Alinear contenido verticalmente en todas las celdas */
+.mat-cell {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Ajustar espaciado en flex containers */
+.flex-container {
+  gap: 2px;
+}
+
+/* Ajustes para el contenedor principal de la tabla */
+.mat-table-wrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  border-radius: 5px;
+  min-width: 100%; /* Asegura que la tabla ocupe al menos el ancho del contenedor */
+  transition: width 0.3s ease;
+}
+
+/* Configuración de la tabla para que se ajuste al contenido pero mantenga alineación */
+.mat-mdc-table {
+  overflow: visible;
+  width: 100%;
+  min-width: 100%;
+}
+
+/* Definimos un ancho mínimo para cada columna */
+th.mat-header-cell {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  background-color: white !important;
+  min-width: 100px; /* Ancho mínimo para cada columna */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+/* Ajustamos el ancho mínimo de la tabla para mostrar 3 registros cómodamente */
+.min-width-three-records {
+  min-width: 600px; /* Ancho mínimo estimado para mostrar 3 registros */
+}
+
+/* Alineación específica para las celdas */
+.mat-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+/* Ajustes para columnas de acciones */
+.mat-cell-with-actions {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: inherit !important;
+  z-index: 5 !important;
+  text-align: center !important;
+}
+
+.acciones-header {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 11 !important;
+  background-color: white !important;
+  text-align: center !important;
+}
+
+/* Clases para indicar cuando hay scroll */
+.mat-table-wrapper.scrolled th.mat-header-cell {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mat-table-wrapper.scrolled .mat-cell-with-actions {
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mat-table-wrapper.scrolled th.acciones-header {
+  box-shadow: -2px 1px 5px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Input con alineación a la derecha para números */
+.input-number-right {
+  width: 100%;
+  max-width: 105px;
+  height: 80%;
+  text-align: right;
+}
+
+/* Asegurar que el fondo del dropdown se mantenga visible */
+:host
+  ::ng-deep
+  app-dropdown-fullV2
+  .mat-mdc-form-field-has-icon-suffix
+  .mat-mdc-text-field-wrapper {
+  padding-right: 0;
+  background-color: #ffffff !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  max-height: 30px !important;
+}
+
+:host
+  ::ng-deep
+  app-dropdown-fullV2
+  .mat-mdc-form-field-subscript-wrapper
+  mat-mdc-form-field-bottom-align {
+  height: 0px !important;
+}
+
+/* Reglas adicionales para eliminar espacio extra en dropdowns */
+:host ::ng-deep app-dropdown-fullV2 .mat-mdc-form-field-subscript-wrapper {
+  height: 0px !important;
+  min-height: 0px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+:host ::ng-deep app-dropdown-fullV2 .mat-mdc-form-field-bottom-align {
+  height: 0px !important;
+}
+
+:host ::ng-deep app-dropdown-fullV2 .mat-mdc-form-field-infix {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  min-height: 30px !important;
+}
+
+:host
+  ::ng-deep
+  app-dropdown-fullV2
+  .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined)
+  .mat-mdc-form-field-infix {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+:host ::ng-deep app-dropdown-fullV2 .input-group {
+  background-color: #ffffff !important;
+  height: 30px !important;
+  border-bottom: solid;
+}
+
+:host ::ng-deep app-dropdown-fullV2 input.mat-mdc-input-element {
+  background-color: #ffffff !important;
+  height: 25px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 5px 0px 0px 8px !important;
+}
+
+.mat-cell app-dropdown-fullV2 {
+  display: block !important;
+  width: 100% !important;
+  background-color: #ffffff !important;
+  height: 30px !important;
+}
+
+td.mat-cell:has(app-dropdown-fullV2) {
+  background-color: #ffffff !important;
+  padding: 0 4px !important;
+}
+
+:host ::ng-deep app-dropdown-fullV2 {
+  display: block !important;
+  height: 30px !important;
+  max-height: 30px !important;
+  overflow: hidden !important;
+}
+
+:host ::ng-deep app-dropdown-fullV2 .mat-mdc-form-field-flex {
+  padding: 0 !important;
+  height: 30px !important;
+}
+
+:host ::ng-deep app-dropdown-fullV2 .mat-mdc-form-field-label-wrapper {
+  height: 0 !important;
+  top: 0 !important;
+}
+
+tr.mat-row:has(app-dropdown-fullV2) {
+  height: 35px !important;
+}
+
+:host ::ng-deep app-dropdown-fullV2 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  padding: 0 !important;
+}
+
+/* Base background for table rows */
+tr.mat-row {
+  background-color: white;
+}
+
+tr.mat-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Base background for sticky cells */
+th:last-child,
+td:last-child,
+.sticky-footer {
+  background-color: inherit !important;
+}
+
+/* Header de acciones */
+.acciones-header {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 11 !important;
+  background-color: white !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  padding: 4px 8px !important;
+}

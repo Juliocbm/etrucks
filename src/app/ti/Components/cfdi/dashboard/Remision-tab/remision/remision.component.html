@@ -1,0 +1,199 @@
+<form [formGroup]="remisionForm" fxLayout="row wrap" fxLayoutGap="10px" style="margin-top: 30px;">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>General</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+    <!--     <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill">
+            <mat-label>Id</mat-label>
+            <input matInput formControlName="id">
+          </mat-form-field>
+        </div> -->
+        <div class="col-md-2">
+          <mat-form-field appearance="fill">
+            <mat-label>Numero de guia</mat-label>
+            <input readonly="true" matInput formControlName="noGuia">
+          </mat-form-field>
+        </div>
+     <!--    <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill">
+            <mat-label>Remision</mat-label>
+            <input matInput formControlName="numGuia">
+          </mat-form-field>
+        </div>
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill">
+            <mat-label>Compania</mat-label>
+            <input matInput formControlName="compania">
+          </mat-form-field>
+        </div> -->
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Estado de la Guía</mat-label>
+            <input readonly="true" matInput formControlName="statusGuia" />
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Moneda</mat-label>
+            <input readonly="true" matInput formControlName="moneda" />
+          </mat-form-field>
+        </div>
+<!--         <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Días de Crédito</mat-label>
+            <input matInput type="number" formControlName="diasCredito" />
+          </mat-form-field> 
+        </div>-->
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Forma de Pago</mat-label>
+            <input matInput formControlName="formaPago" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Método de Pago</mat-label>
+            <input matInput formControlName="metodoPago" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Total Distancia Recorrida</mat-label>
+            <input matInput formControlName="totalDistanciaRec" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="example-card" style="margin-top: 20px;">
+    <mat-card-header>
+      <mat-card-title>Unidad, remolque y operador</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>ID Unidad</mat-label>
+            <input readonly="true" matInput formControlName="idUnidad" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Modelo Unidad</mat-label>
+            <input readonly="true" matInput formControlName="modeloUnidad" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Placa Unidad</mat-label>
+            <input toUpperCase maxlength="7" minlength="5" matInput formControlName="placaUnidad" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Config Vehicular</mat-label>
+            <input matInput formControlName="configVehicular" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Aseguradora</mat-label>
+            <input matInput formControlName="aseguradora" />
+          </mat-form-field>
+        </div>
+       <!--  <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Póliza Unidad</mat-label>
+            <input matInput formControlName="polizaUnidad" />
+          </mat-form-field>
+        </div> -->
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Peso Bruto Vehicular</mat-label>
+            <input matInput formControlName="pesoBrutoVehicular" />
+          </mat-form-field>
+        </div>
+
+
+       <!--  <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Número de Viaje</mat-label>
+            <input matInput formControlName="noViaje" />
+          </mat-form-field>
+        </div> -->
+  <!--       <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Total Distancia Recorrida</mat-label>
+            <input matInput formControlName="totalDistanciaRec" />
+          </mat-form-field>
+        </div> -->
+      </div>
+
+      <div class="row">   
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Operador</mat-label>
+            <input readonly="true" matInput formControlName="operador" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>RFC Operador</mat-label>
+            <input readonly="true" matInput formControlName="rfcOperador" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Licencia Operador</mat-label>
+            <input readonly="true" matInput formControlName="licenciaOperador" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>ID Remolque</mat-label>
+            <input readonly="true" matInput formControlName="idRemolque" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Placa Remolque 1</mat-label>
+            <input toUpperCase  maxlength="7" minlength="5" matInput formControlName="placaRemolque1" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Subtipo Remolque 1</mat-label>
+            <input matInput formControlName="subtipoRemolque1" />
+          </mat-form-field>
+        </div>
+     <!--    <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Placa Remolque 2</mat-label>
+            <input toUpperCase  maxlength="7" minlength="5" matInput formControlName="placaRemolque2" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Subtipo Remolque 2</mat-label>
+            <input matInput formControlName="subtipoRemolque2" />
+          </mat-form-field>
+        </div> -->
+
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</form>

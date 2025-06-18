@@ -1,0 +1,206 @@
+<app-modal-header [TITULO_MODAL]="TITULO_MODAL" [TIPO_MODAL]="TIPO_MODAL" [IS_EDITABLE]="IS_EDITABLE"
+  (isEditableEvent)="editableChange($event)" (submitEvent)="onSubmit()"
+  (closeModalEvent)="cerrarModal()"></app-modal-header>
+
+<alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+<app-loading [isLoading]="isLoading" [fondo]="true"></app-loading>
+<!-- Campos para las propiedades del Operador -->
+<div style="margin: 20px 5px 20px 5px">
+  <div class="col-md-12">
+    <form [formGroup]="formulario" class="permisionario-form">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>General</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-4">
+              <!-- <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+                <mat-label>Sucursal</mat-label>
+                <mat-select
+                  formControlName="idSucursal"
+                >
+                  <mat-option
+                    *ngFor="let sis of Sucursales"
+                    [value]="sis.idSucursal"
+                    >{{ sis.nombre  }}  </mat-option
+                  >
+                </mat-select>
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field> -->
+              <mat-form-field  appearance="fill"
+              class="custom-form-field">
+              <mat-label>Sucursal</mat-label>
+              <input matInput formControlName="nombre" readonly />
+              </mat-form-field>
+            </div>
+
+            <div class="col-4">
+              <!-- <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+                <mat-label>Geocerca</mat-label>
+                <mat-select
+                  formControlName="idSucursal"
+                >
+                  <mat-option
+                    *ngFor="let sis of Sucursales"
+                    [value]="sis.idSucursal"
+                    >{{ sis.nombre  }}  </mat-option
+                  >
+                </mat-select>
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field> -->
+              <label for="idPersonal" class="label">Geocerca:</label>
+                  <app-dropdown-fullV2 
+                      [fetchDataFunction]="apiMantenimiento.obtenerGeocercasPatios.bind(apiMantenimiento)"
+                      [parametros]="parametrosPersonal"
+                      [columnConfigs]="columnPersonalConfigs"
+                      [placeholder]="'Selecciona geocerca..'"
+                      [itemDefault]="geocercaSelected"
+                      [displayColumnConfigDF]="displayColPersonal"
+                      (enviarItemEvent)="seleccionaGeocerca($event)" 
+                      [tableConfigs]="tableConfigs" >
+                  </app-dropdown-fullV2>
+            </div>
+
+            <div class="col-2">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="VerRegistro()"
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+               
+                Preview
+              </button>
+            </div>
+            <div class="col-2">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="agregarRegistro()"
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <i class="material-icons">add</i>
+                Agregar
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2">
+              
+            </div>
+            <div class="col-8">
+             <app-full-table [data]="sucursalGeocercaSelected" [columnConfigs]="columnConfigsLicencia"
+                 [nombreTabla]="'Geocercas Relacionadas'" [tableConfigs]="tableConfigs" 
+                 [showCreateButton]="false" [showExportarButton]="false" [actions]="tableActionsLicencia"
+                 [showConfColumnsButton]="false"  [showAddButton]="false" 
+                 [showRefreshButton]="false"></app-full-table>
+           </div>
+         </div>
+          <div class="row">
+            
+            <div class="col-4">
+             
+           
+            </div>
+            <div class="col-3">
+              
+            </div>
+            <div class="col-4">
+              
+              <!-- <label for="SucursalGeocerca">Geocercas</label>
+              <ng-multiselect-dropdown
+                [placeholder]="'Geocercas'"
+                [settings]="dropdownSettings"
+                [data]="geocercas"
+                  formControlName="geocercasSelect"
+                >
+                </ng-multiselect-dropdown> -->
+                <!-- <br>
+                  <mat-slide-toggle [disabled]="!IS_EDITABLE" formControlName="activo" style="padding-top: 10px;">
+                    <div style="color: #4f4f4f; font-family: system-ui; font-weight: 600">
+                      {{
+                      formulario.get("activo")?.value ? "activo" : "inactivo"
+                      }}
+                    </div>
+                  </mat-slide-toggle> -->
+              <!-- <div style="position: relative; margin-bottom: 12px">
+                  <label for="idPersonal" class="label">Empleado:</label>
+                  <app-dropdown-fullV2 
+                      [fetchDataFunction]="apiMantenimiento.obtenerGeocercaV2.bind(apiMantenimiento)"
+                      [parametros]="parametrosPersonal"
+                      [columnConfigs]="columnPersonalConfigs"
+                      [placeholder]="'Selecciona geocerca..'"
+                      [itemDefault]="geocercaSelected"
+                      [displayColumnConfigDF]="displayColPersonal"
+                      (enviarItemEvent)="seleccionaGeocerca($event)" 
+                      [tableConfigs]="tableConfigs" >
+                  </app-dropdown-fullV2>
+                  
+                   <div
+                      *ngIf="formulario.get('idPersonal')?.touched && formulario.get('idPersonal')?.invalid">
+                      <div *ngIf="formulario.get('idPersonal')?.errors?.['required']">
+                          <span style="color:red;">Se requiere seleccionar un valor.</span>
+                      </div>
+                  </div> 
+              </div> -->
+          </div> 
+            
+
+        </div>
+        <div class="row">
+          <div class="col-2">
+            
+          </div>
+        </div> 
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+
+  <div *ngIf="TIPO_MODAL == 'DETAIL'" class="col-md-12">
+    <form [formGroup]="formulario" class="permisionario-form">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Auditoria</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-3">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Creado por</mat-label>
+                <input [readonly]="true" matInput [value]="this.sucursal.usuarioCreadoPor" />
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Modificado por</mat-label>
+                <input [readonly]="true" matInput [value]="this.sucursal.usuarioModificadoPor" />
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field appearance="fill" class="custom-form-field">
+                <mat-label>Fecha de Creación</mat-label>
+                <input [readonly]="true" matInput formControlName="fechaCreacion" />
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field appearance="fill" class="custom-form-field">
+                <mat-label>Fecha de modificación</mat-label>
+                <input [readonly]="true" matInput formControlName="fechaModificacion" />
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+</div>

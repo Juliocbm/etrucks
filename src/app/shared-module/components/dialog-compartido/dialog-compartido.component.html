@@ -1,0 +1,135 @@
+<!-- <div
+  style="
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    padding: 20px;
+    width: 100%;
+  "
+>
+  <div id="errors-container" *ngFor="let column of data | keyvalue">
+    <div *ngIf="column.key == 'error'">
+      <div class="row">
+        <div
+          class="col"
+          style="
+            display: flex;
+            width: 93vh;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div class="col-md-6">
+            <h5>Errores Encontrados:</h5>
+          </div>
+
+          <div
+            *ngIf="pageErrors === true"
+            class="col-md-6"
+            style="
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+            "
+          >
+            <div class="example-button-row">
+              <button
+                mat-fab
+                extended
+                (click)="onExportarPDF()"
+                color="primary"
+              >
+                <mat-icon>description</mat-icon>
+                PDF
+              </button>
+
+              <button
+                mat-fab
+                extended
+                (click)="onExportarXML()"
+                color="primary"
+              >
+                <mat-icon>code</mat-icon>
+                XML
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <mat-list>
+        <p id="errors-content">{{ column.value }}</p>
+      </mat-list>
+    </div>
+
+    <div *ngIf="column.key == 'error_complemento'">
+      <h4>Dirigirse a:</h4>
+      <mat-list>
+        <p id="complement-content">{{ column.value }}</p>
+      </mat-list>
+    </div>
+  </div>
+
+  <div
+    class="footer"
+    style="
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    "
+    >
+    <button mat-fab extended (click)="onTimbrar()" color="primary">
+      <mat-icon>assignment</mat-icon>
+      Timbrar
+    </button>
+  </div>
+</div> -->
+
+  <!-- <div *ngFor="let column of data | keyvalue" style="display: flex; align-items:center; justify-content:center; gap:8px">
+    <div class="row" style="display: flex;">
+      <ng-container *ngIf="column.key === 'num_guia' || column.key === 'fecha_envio_acumatica'">
+        <h1 mat-dialog-title>
+          {{ column.key === 'num_guia' ? 'Guia:' : 'Fecha:' }} {{ column.value }}
+        </h1>
+      </ng-container>
+    </div>
+  </div> -->
+
+
+  <div *ngFor="let column of data | keyvalue" style="display: flex; align-items:center; justify-content:flex-start; gap:8px ">
+    <div class="row" style="display: flex;">
+      <h1 mat-dialog-title *ngIf="column.key === 'num_guia'">Guia: {{ column.value }}</h1>
+      <!-- <h1 mat-dialog-title *ngIf="column.key === 'fecha_envio_acumatica'">Fecha: {{ column.value }}</h1> -->
+    </div>
+  </div>
+  <mat-dialog-content>
+
+
+    <div id="errors-container" *ngFor="let column of data | keyvalue">
+      <div *ngIf="column.key == 'error' ">
+        <h6>Errores Encontrados:</h6>
+        <mat-list>
+          <p id="errors-content">{{ column.value }}</p>
+        </mat-list>
+      </div>
+
+      <div *ngIf="column.key === 'error_complemento' && column.value !== null && column.value !== ''">
+        <h6>Dirigirse a:</h6>
+        <mat-list>
+          <p id="complement-content">{{ column.value }}</p>
+        </mat-list>
+      </div>
+
+    </div>
+
+    <!-- <mat-form-field>
+      <mat-label>Favorite Animal</mat-label>
+      <input matInput [(ngModel)]="data.animal">
+    </mat-form-field> -->
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions style="display: flex; align-items:end; justify-content:flex-end">
+    <button mat-button (click)="onTimbrar()"><mat-icon>assignment</mat-icon> Timbrar </button>
+  </mat-dialog-actions>

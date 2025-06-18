@@ -1,0 +1,95 @@
+<app-layout titulo="Nuevo Personal">
+  <app-toolbar [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false" [showFilter]="false" [showExportButton]="false"></app-toolbar>
+
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <div class="card mt-5">
+    <div class="card-body">
+      <form #personalForm="ngForm" (ngSubmit)="onSubmit(personalForm)">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="personal.nombre" required (input)="onInputToUppercase($event, 'nombre')">
+            </div>
+
+            <div class="form-group">
+              <label for="apellidoPaterno">Apellido Paterno:</label>
+              <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" [(ngModel)]="personal.apellidoPaterno" required (input)="onInputToUppercase($event, 'apellidoPaterno')">
+            </div>
+
+            <div class="form-group">
+              <label for="apellidoMaterno">Apellido Materno:</label>
+              <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno" [(ngModel)]="personal.apellidoMaterno" required (input)="onInputToUppercase($event, 'apellidoMaterno')">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="personal.email">
+            </div>
+
+            <!-- <div class="form-group">
+              <label for="idCompania">ID Compañía:</label>
+              <input type="number" class="form-control" id="idCompania" name="idCompania" [(ngModel)]="personal.idCompania" required>
+            </div> -->
+
+            <div class="form-group">
+              <label for="idSucursal">ID Sucursal:</label>
+              <input type="text" class="form-control" id="idSucursal" name="idSucursal" [(ngModel)]="personal.idSucursal">
+            </div>
+
+            <div class="form-group">
+              <label for="idDepartamento">ID Departamento:</label>
+              <input type="number" class="form-control" id="idDepartamento" name="idDepartamento" [(ngModel)]="personal.idDepartamento">
+            </div>
+
+            <div class="form-group">
+              <label for="idCategoria">Categoría:</label>
+              <select class="form-control" id="idCategoria" name="idCategoria" [(ngModel)]="personal.idCategoria" required>
+                <option value="0">Operador</option>
+                <option value="1">Permisionario</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="noNomina">Número de Nómina:</label>
+              <input type="text" class="form-control" id="noNomina" name="noNomina" [(ngModel)]="personal.noNomina">
+            </div>
+
+            <div class="form-group">
+              <label for="activo">Activo:</label>
+              <select id="activo" class="form-control" name="activo" [(ngModel)]="personal.activo">
+                <option [value]="true">Activo</option>
+                <option [value]="false">Inactivo</option>
+              </select>
+            </div>
+
+            <!-- <div class="form-group">
+              <label for="fechaCreacion">Fecha de Creación:</label>
+              <input type="text" class="form-control" id="fechaCreacion" name="fechaCreacion" [(ngModel)]="personal.fechaCreacion" readonly>
+            </div>
+
+            <div class="form-group">
+              <label for="creadoPor">Creado Por:</label>
+              <input type="text" class="form-control" id="creadoPor" name="creadoPor" [(ngModel)]="personal.creadoPor">
+            </div>
+
+            <div class="form-group">
+              <label for="fechaModificacion">Fecha de Modificación:</label>
+              <input type="text" class="form-control" id="fechaModificacion" name="fechaModificacion" [(ngModel)]="personal.fechaModificacion" readonly>
+            </div>
+
+            <div class="form-group">
+              <label for="modificadoPor">Modificado Por:</label>
+              <input type="text" class="form-control" id="modificadoPor" name="modificadoPor" [(ngModel)]="personal.modificadoPor">
+            </div> -->
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="display: flex; margin-top: 2vh;">Crear Personal</button>
+      </form>
+    </div>
+  </div>
+</app-layout>

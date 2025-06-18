@@ -1,0 +1,8 @@
+<app-layout titulo="Facturas pendientes de traslado a ZAM">
+    <app-full-tableV2 [fetchDataFunction]="apiInterfacesLis.getCartasPorteErrorTrasladoLis.bind(apiInterfacesLis)"
+      [showCreateButtonModal]="false" [showFilterInactivos]="false" [nombreMenu]="'Traslado de facturas'"
+      [nombreTabla]="'Facturas pendientes de traslado a ZAM'" [columnConfigs]="ColumnConfigsFacturas"
+      [excelFileName]="'FacturasPendientesZam'" [isReport]="false" [tableConfigs]="tableConfigsFacturas"
+      [mostrarFiltroGeneralFechas]="false" [actions]="tableActions">
+    </app-full-tableV2>
+</app-layout>

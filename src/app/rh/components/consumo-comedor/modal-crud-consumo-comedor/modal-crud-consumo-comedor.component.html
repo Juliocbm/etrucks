@@ -1,0 +1,134 @@
+<app-modal-header
+  [TITULO_MODAL]="TITULO_MODAL"
+  [TIPO_MODAL]="TIPO_MODAL"
+  [IS_EDITABLE]="IS_EDITABLE"
+  (submitEvent)="onSubmit()"
+  (isEditableEvent)="editableChange($event)"
+  (closeModalEvent)="cerrarModal()"
+></app-modal-header>
+
+<alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+<app-loading [isLoading]="isLoading" [fondo]="true"></app-loading>
+
+<div class="container-fluid mt-3">
+  <form [formGroup]="consumoComedorForm" class="permisionario-form">
+    <!-- Información General -->
+    <mat-card class="mb-4">
+      <mat-card-title>Información General</mat-card-title>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-3" *ngIf="TIPO_MODAL != 'CREATE'">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Id Consumo</mat-label>
+              <input matInput formControlName="idConsumo" [readonly]="!IS_EDITABLE" toUpperCase />
+              <mat-error>Campo obligatorio.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <label for="sucursalId" class="form-label">Sucursal</label>
+            <app-dropdown-fullV2
+              [fetchDataFunction]="apiRecursosHumanos.getSucursalesV2.bind(apiRecursosHumanos)"
+              [parametros]="parametrosSucursales"
+              [columnConfigs]="columnConfigSucursales"
+              [placeholder]="'Selecciona una sucursal'"
+              [IS_EDITABLE]="IS_EDITABLE"
+              [itemDefault]="sucursalSelected"
+              [displayColumnConfigDF]="displayColumnConfigSucursales"
+              (enviarItemEvent)="onSeleccionaSucursal($event)"
+              #myTable
+            ></app-dropdown-fullV2>
+          </div>
+
+          <div class="col-md-3" *ngIf="TIPO_MODAL != 'CREATE'">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Estatus Consumo</mat-label>
+              <input matInput formControlName="estatusConsumo" [readonly]="!IS_EDITABLE" toUpperCase />
+              <mat-error>Campo obligatorio.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha Consumo</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="fechaIngreso" [readonly]="!IS_EDITABLE" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error>Campo obligatorio.</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Registro de Consumo -->
+    <mat-card class="mb-4">
+      <mat-card-title>Registro de Consumo</mat-card-title>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="idMenu" class="form-label">Comida Menu</label>
+            <app-dropdown-fullV2
+              [fetchDataFunction]="apiComedor.getEstatusConsumoV2.bind(apiComedor)"
+              [parametros]="parametrosMenus"
+              [columnConfigs]="columnConfigMenus"
+              [placeholder]="'Selecciona una comida'"
+              [IS_EDITABLE]="IS_EDITABLE"
+              [itemDefault]="selectedComidaMenu"
+              [displayColumnConfigDF]="displayColumnConfigMenus"
+              (enviarItemEvent)="onSeleccionaMenu($event)"
+              #myTable
+            ></app-dropdown-fullV2>
+          </div>
+
+          <div class="col-md-6">
+            <label for="idPersonal" class="form-label">Empleado</label>
+            <app-dropdown-fullV2
+              [fetchDataFunction]="apiPersonal.obtenerPersonalV2.bind(apiPersonal)"
+              [parametros]="parametrosPersonal"
+              [columnConfigs]="columnPersonalConfigs"
+              [IS_EDITABLE]="IS_EDITABLE"
+              [placeholder]="'Selecciona empleado...'"
+              [itemDefault]="personalSelected"
+              [displayColumnConfigDF]="displayColPersonal"
+              (enviarItemEvent)="onSeleccionaPersonal($event)"
+            ></app-dropdown-fullV2>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Información de Auditoría -->
+    <mat-card class="mb-4" *ngIf="TIPO_MODAL == 'DETAIL'">
+      <mat-card-title>Auditoría</mat-card-title>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Usuario Creación</mat-label>
+              <input matInput formControlName="usuarioCreadoPor" [readonly]="true" toUpperCase />
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha Creación</mat-label>
+              <input matInput formControlName="fechaCreacion" [readonly]="true" toUpperCase />
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Usuario Modificación</mat-label>
+              <input matInput formControlName="usuarioModificadoPor" [readonly]="true" toUpperCase />
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha Modificación</mat-label>
+              <input matInput formControlName="fechaModificacion" [readonly]="true" toUpperCase />
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

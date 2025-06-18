@@ -1,0 +1,14 @@
+<div class="mt-3">
+    <div class="toolbar btn-group small-buttons">
+
+        <button  class="btn btn-secondary" (click)="saveData()">Guardar</button>
+
+        <div *ngIf="registrosPadre.length > 0" class="filter-container d-flex align-items-center">
+            <label class="mr-2" for="idCatPadre">Catalogo:</label>
+            <select class="custom-select" id="idCatPadre" style="width: auto;" [(ngModel)]="selectedIdCatPadre" (change)="filtrarPorIdCatPadre()">
+                <option value="todos">Todos</option>
+                <option *ngFor="let registro of registrosPadre" [value]="registro.idCatGeneral">{{ registro.nombre }}</option>
+            </select>
+        </div>
+    </div>
+</div>

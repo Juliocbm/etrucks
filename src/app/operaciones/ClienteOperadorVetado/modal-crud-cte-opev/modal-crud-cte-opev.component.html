@@ -1,0 +1,45 @@
+<app-modal-header
+  TITULO_MODAL="Relacion de cliente con el operador vetado"
+  [TIPO_MODAL]="TIPO_MODAL"
+  [IS_EDITABLE]="IS_EDITABLE"
+  (isEditableEvent)="editableChange($event)"
+  (submitEvent)="onSubmit()"
+  (closeModalEvent)="cerrarModal()"
+></app-modal-header>
+<section style=" display: flex; padding: 12px; flex-flow:column; " >
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+  <div>
+    <label for="cliente">Cliente</label>
+    <app-dropdown-multi-select
+    [formGroup]="formulario"
+    [valColumnToFormControl]="[{ valueColumn: 'idCliente', formControl: 'idCliente' }]"
+    style="margin-bottom: 20px !important; position: relative; display: block;"
+    [fetchDataFunction]="apiOperacionesService.getClientes.bind(apiOperacionesService)"
+    [parametros]="parametrosClientes"
+    [columnConfigs]="columnConfigsClientes"
+    [placeholder]="'Selecciona un cliente'"
+    [IS_EDITABLE]="IS_EDITABLE"
+    [displayColumnConfigDF]="displayColumnConfCliente"
+    (enviarItemEvent)="onSeleccionaCliente($event)" #myTable
+    >
+  </app-dropdown-multi-select>
+  </div>
+
+  <div>
+    <label for="Operador">Operador</label>
+    <app-dropdown-multi-select
+
+      [fetchDataFunction]="ApiRhService.GetVwPersonalOperadorV2.bind(apiOperacionesService)"
+      [parametros]="parametrosOperadores"
+      [placeholder]="'Selecciona un operador'"
+      [IS_EDITABLE]="IS_EDITABLE"
+      [columnConfigs]="columnConfigsOperadores"
+      [arrayDefault]="operadorSelected"
+      [displayColumnConfigDF]="displayColumnConfOperador"
+      [tableConfigs]="tableConfigsOperador"
+      (eliminarItemEvent)="onDeletePersonalOperador($event)"
+      (enviarItemEvent)="onAddPersonalOperador($event)">
+    </app-dropdown-multi-select>
+  </div>
+</section>
+

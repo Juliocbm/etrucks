@@ -1,0 +1,560 @@
+/* Estilos generales del dashboard */
+.dashboard-edi-kpi-container {
+  padding: 12px;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 64px); /* Ajustar según altura del header principal */
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Estilos del encabezado */
+.dashboard-header {
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Estilos para el selector de rango de fechas */
+.date-range-container {
+  margin-right: 16px;
+}
+
+.date-range-container mat-form-field {
+  width: 280px;
+}
+
+.dashboard-header h1 {
+  margin-bottom: 8px;
+  color: #3f51b5;
+  font-weight: 500;
+}
+
+.dashboard-header .mat-subtitle-1 {
+  color: #666;
+  margin-top: 0;
+}
+
+/* Estilos de las tarjetas de resumen */
+.summary-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.summary-card {
+  flex: 1 1 200px;
+  text-align: center;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card-value {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.card-label {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Colores para las tarjetas según tipo */
+
+.total-card .card-value {
+  color: #3f51b5;
+}
+
+
+
+.edi-card .card-value {
+  color: #1976d2;
+}
+
+
+
+.non-edi-card .card-value {
+  color: #e91e63;
+}
+
+/* Colores KPI para la tarjeta de porcentaje */
+
+.percentage-card.good-kpi .card-value {
+  color: #4caf50;
+}
+
+.percentage-card.medium-kpi {
+  background-color: #fff8e1;
+}
+
+.percentage-card.medium-kpi .card-value {
+  color: #ffc107;
+}
+
+.percentage-card.bad-kpi {
+  background-color: #ffebee;
+}
+
+.percentage-card.bad-kpi .card-value {
+  color: #f44336;
+}
+
+/* Panel de filtros */
+.filter-panel-container {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+/* Contenedor principal de gráfico y tabla */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex: 1;
+  overflow: auto;
+  height: 100%;
+}
+
+/* En pantallas más grandes, mostrar gráfico y tabla uno al lado del otro */
+@media (min-width: 992px) {
+  .dashboard-content {
+    grid-template-columns: 1fr 1fr; /* 50% cada uno */
+  }
+}
+
+/* Mantener la distribución 50/50 incluso en pantallas muy grandes */
+@media (min-width: 1400px) {
+  .dashboard-content {
+    grid-template-columns: 1fr 1fr; /* 50% cada uno */
+  }
+}
+
+/* Contenedor del gráfico */
+.chart-container {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  min-height: 350px;
+  height: 100%; /* Asegurar que el contenedor ocupe toda la altura disponible */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Asegurarse de que apx-chart ocupa todo el espacio disponible */
+.chart-container apx-chart {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 300px; /* Altura mínima para el gráfico */
+  display: block;
+}
+
+/* Estilos específicos para la clase responsive-chart */
+.responsive-chart {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: visible !important;
+}
+
+/* Estilos para asegurar que el toolbar de ApexCharts sea visible */
+.apexcharts-toolbar {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+  z-index: 11 !important; /* Mayor z-index para asegurar visibilidad */
+}
+
+/* Ajustes de altura mínima para diferentes tamaños de pantalla */
+@media screen and (max-width: 1200px) {
+  .chart-container {
+    min-height: 300px;
+  }
+  .chart-container apx-chart {
+    min-height: 250px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .chart-container {
+    min-height: 250px;
+  }
+  .chart-container apx-chart {
+    min-height: 200px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chart-container {
+    min-height: 200px;
+  }
+  .chart-container apx-chart {
+    min-height: 150px;
+  }
+}
+
+/* Ajuste del contenedor interno del gráfico */
+.chart-container .chart-container {
+  flex-grow: 1;
+  padding: 0; /* Quitar padding adicional */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px; /* Altura mínima para asegurar visibilidad */
+}
+
+/* Ajustes para el componente ApexCharts */
+.chart-container apx-chart {
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  display: block; /* Asegurar que ocupe todo el espacio disponible */
+}
+
+/* Arreglar problema de visualización en dispositivos pequeños */
+@media (max-width: 768px) {
+  .chart-container .chart-container {
+    min-height: 250px;
+  }
+}
+
+.chart-title {
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: #333;
+}
+
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Contenedor de la tabla */
+.table-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-table-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.kpi-table-wrapper .mat-mdc-table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* Estilos para la tabla KPI */
+.kpi-table {
+  width: 100%;
+  table-layout: auto; /* Permite que las columnas se ajusten dinámicamente */
+}
+
+.mat-mdc-table {
+  background: white;
+  min-width: 600px; /* Ancho mínimo de la tabla para evitar columnas demasiado estrechas */
+}
+
+/* Ajuste automático de columnas con ancho mínimo */
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+  padding: 0 16px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Establecer anchos mínimos para cada tipo de columna */
+.mat-column-periodo {
+  min-width: 100px;
+  max-width: 120px;
+}
+
+.mat-column-totalPedidos {
+  min-width: 80px;
+  max-width: 100px;
+  text-align: center;
+}
+
+.mat-column-loadTender {
+  min-width: 80px;
+  max-width: 100px;
+  text-align: center;
+}
+
+.mat-column-acciones {
+  min-width: 70px;
+  max-width: 90px;
+  text-align: center;
+}
+
+/* Asegurar que el contenedor se ajuste correctamente */
+.kpi-table-wrapper .mat-mdc-table-container {
+  overflow-x: auto;
+  width: 100%;
+  padding: 8px; /* Añadir margen interior */
+}
+
+.mat-mdc-row:hover {
+  background-color: rgba(63, 81, 181, 0.04);
+}
+
+.mat-column-acciones {
+  width: 70px;
+  text-align: center;
+}
+
+/* Habilitar scroll horizontal para la tabla en dispositivos pequeños */
+.kpi-table-wrapper .mat-mdc-table {
+  min-width: 800px;
+}
+
+/* Dar más espacio al paginador */
+.mat-mdc-paginator {
+  background: #f9f9f9;
+}
+
+/* Mensaje de error */
+.error-message {
+  display: flex;
+  align-items: center;
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.error-message mat-icon {
+  margin-right: 8px;
+}
+
+/* Mensaje de sin datos */
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  text-align: center;
+  color: #666;
+}
+
+.no-data-message mat-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  color: #9e9e9e;
+  margin-bottom: 16px;
+}
+
+/* Ajustes responsivos para dispositivos móviles */
+@media (max-width: 599px) {
+  .summary-cards {
+    flex-direction: column;
+  }
+  
+  .summary-card {
+    flex: none;
+    margin-bottom: 8px;
+  }
+  
+  .card-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* Estilos para el selector de clientes */
+.client-selector-container {
+  position: relative;
+}
+
+.clickable-chip {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clickable-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cliente-selector-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 420px;
+  max-width: calc(23dvw - 20px);
+  background-color: white;
+  border-radius: 4px;
+  z-index: 1000;
+  margin-top: 8px;
+  overflow: hidden;
+  max-height: calc(60dvh - 10px);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cliente-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.cliente-selector-header h3 {
+  margin: 0;
+  font-weight: 500;
+  color: #3f51b5;
+}
+
+.cliente-search-field {
+  /* width: calc(100% - 32px); */
+  margin: 8px;
+}
+
+.cliente-list {
+  overflow-y: auto;
+  padding: 0;
+  /* max-height: 280px; */
+  text-align: center;
+}
+
+/* Estilos para la tabla KPI */
+
+/* Fila cuando el loadTender está por debajo de la meta del cliente */
+.below-target-row {
+  /* Rojo claro */
+  background-color: rgba(255, 0, 0, 0.1); 
+}
+
+/* Fila cuando el loadTender cumple o supera la meta del cliente */
+.above-target-row {
+  /* Verde suave */
+  background-color: rgba(0, 128, 0, 0.1); 
+}
+
+/* Valores de éxito (verde) */
+.success-value {
+  color: green;
+  font-weight: bold;
+}
+
+/* Valores de advertencia (rojo) */
+.warning-value {
+  color: red;
+  font-weight: bold;
+}
+
+/* Estilos para la tabla */
+.mat-table {
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para encabezados de tabla */
+.mat-header-cell {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estilo para el footer de la tabla */
+.mat-footer-cell {
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+
+/* Ajustes para paginador */
+.mat-paginator {
+  background-color: transparent;
+}
+
+.cliente-list-item {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.cliente-list-item:hover {
+  background-color: #f5f5f5;
+}
+
+.selected-cliente {
+  background-color: #e8f0fe;
+}
+
+.selected-cliente mat-icon {
+  color: #3f51b5;
+}
+
+.cliente-scac {
+  color: #757575;
+  font-size: 12px;
+}
+
+.cliente-loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  flex-direction: column;
+}
+
+.cliente-loading-spinner span {
+  margin-top: 12px;
+  color: #666;
+}
+
+.no-clientes-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  color: #666;
+}
+
+.no-clientes-message mat-icon {
+  margin-right: 8px;
+  color: #9e9e9e;
+}

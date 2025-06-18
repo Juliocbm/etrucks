@@ -1,0 +1,108 @@
+/* formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    /* gap: 20px; */
+    /* Espacio entre los campos del formulario */
+}
+
+.mat-form-field-label {
+    color: var(--primary-color);
+    /* Usa la variable de tu tema */
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Estado hover */
+.mat-form-field-label:hover {
+    color: var(--accent-color);
+    transition: color 0.3s;
+}
+
+mat-form-field {
+    width: 100% !important;
+}
+
+.error-message{
+    color:red;
+}
+
+.image-preview-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.image-overlay:hover {
+  opacity: 1;
+}
+
+.preview-icon {
+  color: white;
+  font-size: 24px;
+}
+
+.no-image-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-image-icon {
+  font-size: 48px;
+  color: #9e9e9e;
+}
+
+.upload-button {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  z-index: 1;
+  transform: scale(0.8);
+}
+
+.fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.fullscreen-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}

@@ -1,0 +1,124 @@
+<!-- operador-pedido-table.component.html -->
+<mat-card class="table-wrapper" style="overflow-y: auto;">
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <ng-container *ngIf="isOperador">
+                  <th class="sticky-header">ORD.</th>
+                  <th class="sticky-header">OPERADOR</th>
+                  <th class="sticky-header">UBICACION</th>
+                  <!-- <th *ngIf="showSucursal" class="sticky-header">SUCURSAL</th> -->
+                  <th class="sticky-header">DISPONIBILIDAD</th> <!-- Cambiado de Estado a Disponibilidad -->
+                  <th class="sticky-header">FECHA</th>
+                  <th class="sticky-header">ESTADO</th>
+              </ng-container>
+              <ng-container *ngIf="!isOperador">
+                  <th class="sticky-header">ORD.</th>
+                  <th class="sticky-header">PEDIDO</th>
+                  <th class="sticky-header">FECHA</th>
+                  <th matTooltip="HH:MM:SS" class="sticky-header">TRANSCURRIDO</th>
+                  <th class="sticky-header">ORIGEN</th>
+                  <th class="sticky-header">DESTINO</th>
+                  <th class="sticky-header">RUTA</th>
+                  <th class="sticky-header">CITA</th>
+              </ng-container>
+          </tr>
+      </thead>
+      <tbody *ngIf="isLoading">
+          <tr>
+              <td colspan="6" class="center-content">
+                  <mat-spinner diameter="30"></mat-spinner>
+              </td>
+          </tr>
+      </tbody>
+      <tbody *ngIf="!isLoading && data.length === 0">
+          <tr>
+              <td colspan="6" class="center-content">
+                  <p>No hay datos disponibles</p>
+              </td>
+          </tr>
+      </tbody>
+
+      <tbody *ngIf="!isLoading && data.length > 0">
+          <tr *ngFor="let item of data">
+
+              <!-- Operadores -->
+              <ng-container *ngIf="isOperador">
+                  <td>{{ item.priorityPosition }}</td>
+                  <td> {{ item.idPersonal }} - {{ item.nombreOperador }} </td>
+                  <td>{{ item.ubicacion }}</td>
+                  <td>
+                      <div style="display: flex; align-items: center; gap: 5px;">
+                          <span
+                              [ngStyle]="{
+                              'background-color': item.estadoOperador === 'No Disponible' ? 'red' :
+                              item.estadoOperador === 'Disponible' ? 'green' :
+                              item.estadoOperador === 'Ocupado' ? 'blue' :
+                              item.estadoOperador === 'Transito' ? 'orange' : 'grey'
+                              }"
+                              style="display: inline-block; width: 10px; height: 10px; border-radius: 50%;"
+                          >
+                          </span>
+                          <span>{{ item.estadoOperador }}</span>
+                      </div>
+                  </td>
+                  <td>{{ item.fechaDisponible | date: 'dd/MM/yyyy HH:mm' }}</td>
+                  <td>
+                      <div style="display: flex; align-items: center; gap: 5px; justify-content:center; flex-direction:column;" >
+                          <div style="display: flex; gap:12px; justify-content:center; align-items:center; ">
+                            <span
+                              [ngStyle]="{
+                              'background-color':
+                              item.estadoSemaforo === 'En Tiempo' ? 'green' :
+                              item.estadoSemaforo === 'Por Vencer' ? 'orange' :
+                              item.estadoSemaforo === 'Vencido' ? 'red' :
+                              item.estadoSemaforo === 'Cita Excedida' ? 'red' : 'grey'
+                              }"
+                              style="display: inline-block; width: 10px; height: 10px; border-radius: 50%;"
+                            >
+                            </span>
+                            <strong *ngIf="item.tiempoTranscurridoOperador$ | async as tiempo" >{{ tiempo }}</strong>
+                          </div>
+                          <div *ngIf="item.noViaje"  style="display: flex; gap:12px; justify-content:center; align-items:center; ">
+                            <strong *ngIf="item.noViaje" style="font: bold; color:red;">VIAJE ASIGNADO</strong>
+                          </div>
+                      </div>
+                  </td>
+              </ng-container>
+
+              <!-- Pedidos -->
+              <ng-container *ngIf="!isOperador">
+                  <td>{{ item.priorityPosition }}</td>
+                  <td>{{ item.idPedido }}</td>
+                  <td>{{ item.fechaPedido | date: 'dd/MM/yyyy HH:mm' }}</td>
+                  <td>
+                    <strong *ngIf="item.tiempoTranscurrido$ | async as tiempo">{{ tiempo }}</strong>
+                  </td>
+                  <td>
+                      <span matTooltip="{{ item.origen }}" matTooltipPosition="above">
+                          {{ item.origen.length > 25 ? (item.origen | slice:0:25) + '...' : item.origen }}
+                      </span>
+                  </td>
+                  <td>
+                      <span matTooltip="{{ item.destino }}" matTooltipPosition="above">
+                          {{ item.destino.length > 25 ? (item.destino | slice:0:25) + '...' : item.destino }}
+                      </span>
+                  </td>
+                  <td>{{ item.ruta }}</td>
+                  <td>
+                      <ng-container *ngIf="item.conCita === true; else noCita">
+                          <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                              <path fill="#00ff1e" d="M406.656 706.944 195.84 496.256a32 32 0 1 0-45.248 45.248l256 256 512-512a32 32 0 0 0-45.248-45.248L406.592 706.944z"></path>
+                          </svg>
+                      </ng-container>
+                      <ng-template #noCita>
+                          <!-- <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                      <path fill="#ff0000" d="M764.288 214.592 512 466.88 259.712 214.592a31.936 31.936 0 0 0-45.12 45.12L466.752 512 214.528 764.224a31.936 31.936 0 1 0 45.12 45.184L512 557.184l252.288 252.288a31.936 31.936 0 0 0 45.12-45.12L557.12 512.064l252.288-252.352a31.936 31.936 0 1 0-45.12-45.184z"></path>
+                      </svg> -->
+                      </ng-template>
+                  </td>
+              </ng-container>
+          </tr>
+      </tbody>
+  </table>
+</mat-card>

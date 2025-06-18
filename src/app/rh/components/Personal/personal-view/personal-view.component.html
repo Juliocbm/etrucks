@@ -1,0 +1,9 @@
+
+<app-layout title="Personal">
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+  <app-full-table
+    [nombreMenu]="'Personal'"       [data]="datosFiltrados"         [actions]="tableActions"
+    [columnConfigs]="columnConfigs" [tableConfigs]="tableConfigs"   [excelFileName]="'CatalogoPersonal'"
+    (refreshEvent)="retriveData()"  [showCreateButtonModal]="true"  [isLoading]="isLoading">
+  </app-full-table>
+</app-layout>

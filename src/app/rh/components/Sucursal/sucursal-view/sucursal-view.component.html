@@ -1,0 +1,9 @@
+<app-layout titulo="Sucursales">
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <app-full-table  [data]="datosFiltrados" [actions]="tableActions"
+    [nombreMenu]="'Sucursales'" [columnConfigs]="columnConfigs"
+    (refreshEvent)="retriveData()" [excelFileName]="'CatalogoSucursales'" [tableConfigs]="tableConfigs" [showCreateButtonModal]="true"
+    [isLoading]="isLoading"></app-full-table>
+
+</app-layout>

@@ -1,0 +1,304 @@
+<div class="dashboard-edi-kpi-container">
+  <!-- Título y descripción -->
+  <div class="dashboard-header">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <h1 class="mat-h1 mb-0">KPI PEDIDOS EDI</h1>
+      </div>
+
+      <div class="client-selector-container" >
+
+        <div style="display: flex; align-items: center; gap: 10px; justify-content: space-between;">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Rango de fechas</mat-label>
+          <mat-date-range-input [formGroup]="rangoFechas" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Fecha inicio">
+            <input matEndDate formControlName="end" placeholder="Fecha fin">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <mat-chip-list class="clickable-chip" (click)="toggleClienteSelector()"
+          (keydown.enter)="toggleClienteSelector()" (keydown.space)="toggleClienteSelector()" tabindex="0" role="button"
+          [attr.aria-label]="clienteSeleccionado ? 'Seleccionar cliente: ' + clienteSeleccionado : 'Seleccionar cliente'"
+          [attr.aria-expanded]="showClienteSelector">
+          <mat-chip color="primary" selected>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <mat-icon class="mr-1">account_circle</mat-icon>
+              <span>{{ clienteSeleccionado || 'Todos los clientes' }}</span>
+              <mat-icon>{{ showClienteSelector ? 'arrow_drop_up' : 'arrow_drop_down' }}</mat-icon>
+            </div>
+          </mat-chip>
+        </mat-chip-list>
+
+        </div>
+
+        <!-- Cliente selector dropdown -->
+        <div *ngIf="showClienteSelector" class="cliente-selector-dropdown mat-elevation-z4"
+          (keydown)="handleKeyboardEvent($event)" clickOutside [clickOutsideEnabled]="showClienteSelector"
+          (clickOutside)="showClienteSelector = false" role="dialog" aria-labelledby="cliente-selector-title">
+          <div class="cliente-selector-header">
+            <h3 id="cliente-selector-title" class="mat-h3">Seleccionar Cliente</h3>
+            <button mat-icon-button (click)="toggleClienteSelector()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <!-- Search box -->
+          <mat-form-field appearance="outline" class="cliente-search-field">
+            <mat-label>Buscar cliente</mat-label>
+            <input matInput [(ngModel)]="clienteSearchText" (input)="filterClientes(clienteSearchText)"
+              placeholder="Nombre del cliente">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+          <!-- Loading spinner -->
+          <div *ngIf="clientesLoading" class="cliente-loading-spinner">
+            <mat-spinner diameter="30"></mat-spinner>
+            <span>Cargando clientes...</span>
+          </div>
+
+          <!-- Clients list -->
+          <mat-nav-list class="cliente-list">
+            <a mat-list-item (click)="clearClienteFilter()" class="cliente-list-item">
+              <mat-icon mat-list-icon>group</mat-icon>
+              <div mat-line>Todos los clientes</div>
+            </a>
+
+            <a mat-list-item *ngFor="let cliente of filteredClientesList" (click)="selectCliente(cliente)"
+              (keydown.enter)="selectCliente(cliente)" (keydown.space)="selectCliente(cliente); $event.preventDefault()"
+              class="cliente-list-item" [class.selected-cliente]="clienteSeleccionado === cliente.descripcion"
+              tabindex="0">
+              <div style="display: flex; align-items: center; gap: 8px; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <!-- <mat-icon mat-list-icon>{{ clienteSeleccionado === cliente.descripcion ? 'check_circle' :
+                    'account_circle' }}</mat-icon> -->
+                  <div mat-line>{{ cliente.descripcion }}</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;" mat-line class="cliente-scac">{{ cliente.scac }}</div>
+              </div>
+            </a>
+
+            <!-- No results message -->
+            <div *ngIf="filteredClientesList.length === 0 && !clientesLoading" class="no-clientes-message">
+              <mat-icon>info</mat-icon>
+              <span>{{ clienteSearchText ? 'No se encontraron clientes con ese filtro' : 'No hay clientes disponibles'
+                }}</span>
+            </div>
+          </mat-nav-list>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tarjetas de resumen -->
+  <div class="summary-cards">
+    <mat-card class="summary-card total-card">
+      <mat-card-content>
+        <div class="card-value">{{ filteredData.length > 0 ? (filteredData | slice:0:1)[0].totalPedidos : 0 }}</div>
+        <div class="card-label">Total Pedidos</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card edi-card">
+      <mat-card-content>
+        <div class="card-value">{{ filteredData.length > 0 ? (filteredData | slice:0:1)[0].ediShipments : 0 }}</div>
+        <div class="card-label">EDIs</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card non-edi-card">
+      <mat-card-content>
+        <div class="card-value">{{ filteredData.length > 0 ? (filteredData | slice:0:1)[0].nonEDIShipments : 0 }}</div>
+        <div class="card-label">No EDIs</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card percentage-card"
+      [ngClass]="filteredData.length > 0 ? ((filteredData | slice:0:1)[0].ediShipments / (filteredData | slice:0:1)[0].totalPedidos > 0.8 ? 'good-kpi' : 
+                       ((filteredData | slice:0:1)[0].ediShipments / (filteredData | slice:0:1)[0].totalPedidos > 0.7 ? 'medium-kpi' : 'bad-kpi')) : ''">
+      <mat-card-content>
+        <div class="card-value">
+          {{ filteredData.length > 0 ? (((filteredData | slice:0:1)[0].ediShipments / (filteredData |
+          slice:0:1)[0].totalPedidos) * 100).toFixed(2) : 0 }}%
+        </div>
+        <div class="card-label">% EDIs</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="error" class="error-message">
+    <mat-icon color="warn">error</mat-icon>
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- Panel de filtros -->
+  <!-- <div class="filter-panel-container">
+    <app-filter-panel (filtrosActualizados)="onFilterChange($event)">
+    </app-filter-panel>
+  </div> -->
+
+  <!-- Contenedor de gráfico y tabla -->
+  <div class="dashboard-content">
+    <!-- Gráfico ApexCharts -->
+    <div class="chart-container mat-elevation-z2">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="chart-title mat-h2 mb-0">KPI Semanal - Pedidos EDI vs No EDI</h2>
+        <!-- <div class="chart-controls">
+          <button mat-icon-button matTooltip="Exportar gráfico">
+            <mat-icon>download</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Expandir gráfico">
+            <mat-icon>fullscreen</mat-icon>
+          </button>
+        </div> -->
+      </div>
+      <div *ngIf="loading" class="loading-spinner-container">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      <!-- Componente ApexCharts -->
+      <div class="chart-container">
+        
+        <!-- Referencia local #chart para poder acceder al gráfico desde el componente -->
+        <apx-chart #chart *ngIf="chartOptions && filteredData.length > 0"
+          [series]="chartOptions.series || []"
+          [chart]="chartOptions.chart || {type: 'bar', height: 350}"
+          [dataLabels]="chartOptions.dataLabels || {}"
+          [plotOptions]="chartOptions.plotOptions || {}"
+          [yaxis]="chartOptions.yaxis || []"
+          [xaxis]="chartOptions.xaxis || {}"
+          [legend]="chartOptions.legend || {}"
+          [fill]="chartOptions.fill || {}"
+          [stroke]="chartOptions.stroke || {}"
+          [tooltip]="chartOptions.tooltip || {}"
+          [annotations]="chartOptions.annotations || {}"
+          [grid]="chartOptions.grid || {}"
+          [responsive]="chartOptions.responsive || []"
+          [states]="chartOptions.states || {}"
+          class="responsive-chart"
+        ></apx-chart>
+      </div>
+      <div *ngIf="filteredData.length === 0 && !loading" class="no-data-message">
+        <mat-icon>info</mat-icon>
+        <span>No hay datos disponibles para mostrar</span>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="table-container">
+      <div class="mat-elevation-z2 kpi-table-wrapper">
+        <!-- Loading spinner -->
+        <div *ngIf="loading" class="loading-spinner-container">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+
+        <div class="mat-mdc-table-container">
+          <table mat-table [dataSource]="dataSource" matSort class="kpi-table" aria-label="Tabla de KPIs EDI">
+          <!-- Año/Semana Column -->
+          <ng-container matColumnDef="periodo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Año/Semana </th>
+            <td mat-cell *matCellDef="let item"> {{item.anio}}/S{{item.semana}} </td>
+            <!-- <td mat-footer-cell *matFooterCellDef> Total </td> -->
+          </ng-container>
+
+          <!-- Cliente Column -->
+          <ng-container matColumnDef="cliente">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+            <td mat-cell *matCellDef="let item"> {{item.cliente}} </td>
+            <!-- <td mat-footer-cell *matFooterCellDef> {{filteredData.length}} registros </td> -->
+          </ng-container>
+
+          <!-- TotalPedidos Column -->
+          <ng-container matColumnDef="totalPedidos">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+            <td mat-cell *matCellDef="let item"> {{item.totalPedidos}} </td>
+            <!-- <td mat-footer-cell *matFooterCellDef> 
+              {{getTotalPedidos()}} 
+            </td> -->
+          </ng-container>
+
+          <!-- EDIShipments Column -->
+          <ng-container matColumnDef="ediShipments">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> EDI Shipments </th>
+            <td mat-cell *matCellDef="let item"> {{item.ediShipments}} </td>
+            <!-- <td mat-footer-cell *matFooterCellDef> 
+              {{getTotalEdiShipments()}}
+            </td> -->
+          </ng-container>
+
+          <!-- NonEDIShipments Column -->
+          <ng-container matColumnDef="nonEDIShipments">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Non-EDI Shipments </th>
+            <td mat-cell *matCellDef="let item"> {{item.nonEDIShipments}} </td>
+            <!-- <td mat-footer-cell *matFooterCellDef> 
+              {{getTotalNonEdiShipments()}}
+            </td> -->
+          </ng-container>
+
+          <!-- LoadTender (%) Column -->
+          <ng-container matColumnDef="loadTender">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> (%) </th>
+            <td mat-cell *matCellDef="let item"> 
+              <span [class.success-value]="item.loadTender >= item.metaCliente"
+                    [class.warning-value]="item.loadTender < item.metaCliente">
+                {{item.loadTender}}%
+              </span>
+            </td>
+            <!-- <td mat-footer-cell *matFooterCellDef> 
+              {{getPromedioLoadTender() | number:'1.2-2'}}% 
+            </td> -->
+          </ng-container>
+
+          <!-- MetaCliente Column -->
+          <!-- <ng-container matColumnDef="metaCliente">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Meta Cliente </th>
+            <td mat-cell *matCellDef="let item"> {{item.metaCliente}}% </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <!-- MetaInt Column -->
+          <!-- <ng-container matColumnDef="metaInt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Meta Int. </th>
+            <td mat-cell *matCellDef="let item"> {{item.metaInt}}% </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container> -->
+
+          <!-- Acciones Column -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let item"> 
+              <button mat-icon-button color="primary" matTooltip="Ver detalle" 
+                      (click)="verDetalle(item.anio, item.semana, item.idCliente)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </td>
+            <!-- <td mat-footer-cell *matFooterCellDef></td> -->
+          </ng-container>
+
+          <!-- Row definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+              [ngClass]="{'below-target-row': row.loadTender < row.metaCliente, 'above-target-row': row.loadTender >= row.metaCliente}"></tr>
+          <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr> -->
+          </table>
+        </div>
+
+        <!-- Paginador -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" 
+                       [pageSize]="10" 
+                       showFirstLastButtons 
+                       aria-label="Seleccionar página de datos KPI">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje sin datos -->
+  <div *ngIf="!loading && filteredData.length === 0" class="no-data-message">
+    <mat-icon>info</mat-icon>
+    <p>No hay datos disponibles para los filtros seleccionados.</p>
+  </div>
+</div>

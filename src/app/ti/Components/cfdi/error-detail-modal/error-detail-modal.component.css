@@ -1,0 +1,4 @@
+.right-elements {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos a la derecha */
+  }

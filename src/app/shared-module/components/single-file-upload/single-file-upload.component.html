@@ -1,0 +1,34 @@
+<h4>Subida de Archivos</h4>
+
+<input type="file"
+       class="file-input"
+       (change)="onChange($event)"
+       [attr.accept]="allowedTypes"
+       [attr.multiple]="multiple ? true : null" />
+
+<div *ngIf="files.length > 0">
+  <section class="file-info">
+
+    <div class="col-md-8">
+      Detalles de los archivos:
+      <ul>
+        <li *ngFor="let file of files">
+          Nombre: {{ file.name }} | Tamaño: {{ formatBytes(file.size) }} bytes
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4" style="display:flex; flex-wrap:wrap; align-content:center;align-items:center;justify-content:flex-end; gap:8px">
+      <button (click)="onUpload()">{{ uploadLabel }}</button>
+      <section [ngSwitch]="status">
+        <p *ngSwitchCase="'uploading'" style="display: flex; align-items:center; justify-content:flex-start; gap:14px; " >
+          {{ customMessages.uploading }}
+          <mat-spinner style="height: 24px; width:24px; "></mat-spinner>
+        </p>
+        <p *ngSwitchCase="'success'" style="color: green; text-decoration:underline; ">{{ customMessages.success }}</p>
+        <p *ngSwitchCase="'fail'" style="color: red; text-decoration:underline; ">{{ customMessages.fail }}</p>
+        <p *ngSwitchDefault>{{ customMessages.default }}</p>
+      </section>
+    </div>
+
+  </section>
+</div>

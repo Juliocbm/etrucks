@@ -1,0 +1,145 @@
+<form [formGroup]="internacionalForm" class="mat-elevation-z8" style="margin-top: 30px;">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Expo/Impo</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Es Transporte Internacional</mat-label>
+            <mat-select formControlName="esTransporteInternacional"  (ngModelChange)="validarFormulario()">
+              <mat-option *ngFor="let item of catTransporteInternacionalOptions" [value]="item.value">
+                {{ item.key }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Entrada/Salida Mercancía</mat-label>
+            <mat-select formControlName="entSalMercancia">
+              <mat-option *ngFor="let item of catEntradaSalidaOptions" [value]="item.value">
+                {{ item.key }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Vía Entrada/Salida</mat-label>
+            <mat-select formControlName="viaEntradaSalida">
+              <mat-option *ngFor="let item of catTransporteOptions" [value]="item.value">
+                {{ item.key }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Pedimento</mat-label>
+            <input maxlength="15" matInput formControlName="pedimento">
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>RFC Importador</mat-label>
+            <input matInput formControlName="rfcImpo">
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>
+
+<div class="tabla-contenedor">
+  <div *ngIf="this.datosRegimenesAdu === 0" class="overlay">
+    <div class="overlay-message">
+      No se encontraron régimenes aduaneros en el ccp(dummy).
+    </div>
+  </div>
+  <table *ngIf="this.datosRegimenesAdu > 0" mat-table [dataSource]="dataSourceRegimenesAduaneros" class="mat-elevation-z8" style="">  
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+  
+    <!-- Número de Guía -->
+     <ng-container matColumnDef="noGuia">
+      <th mat-header-cell *matHeaderCellDef>No. Guía</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.noGuia}">
+        <ng-container *ngIf="!element.editable; else editNoGuia">
+          {{ element.noGuia }}
+        </ng-container>
+        <ng-template #editNoGuia>
+          <input type="text" [(ngModel)]="element.noGuia" [disabled]="!element.editable">
+        </ng-template>
+      </td>
+    </ng-container> 
+  
+    <!-- Compañía -->
+     <ng-container matColumnDef="compania">
+      <th mat-header-cell *matHeaderCellDef>Compañía</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.compania}">
+        <ng-container *ngIf="!element.editable; else editCompania">
+          {{ element.compania }}
+        </ng-container>
+        <ng-template #editCompania>
+          <input type="text" [(ngModel)]="element.compania" [disabled]="!element.editable">
+        </ng-template>
+      </td>
+    </ng-container> 
+  
+    <!-- Régimen Aduanero -->
+    <ng-container matColumnDef="regimenAduanero">
+      <th mat-header-cell *matHeaderCellDef>Régimen Aduanero</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.regimenAduanero}">
+        <ng-container *ngIf="!element.editable; else editMaterial">
+          {{ element.regimenAduanero === 'IMD' ? 'IMD-Definitivo de importación.' : element.regimenAduanero === 'EXD' ? 'EXD-Definitivo de exportación.' : element.regimenAduanero === 'ITR' ? 'ITR-Temporales de importación para retomar al extranjero en el mismo estado.' : element.regimenAduanero === 'ITE' ? 'ITE-Temporales de importación para elaboración, transformación o reparación para empresas con programa IMMEX.' : element.regimenAduanero === 'ETR' ? 'ETR-Temporales de exportación para retornar al país en el mismo estado.' : element.regimenAduanero === 'ETE' ? 'ETE-Temporales de exportación para elaboración, transformación o reparación.' : element.regimenAduanero === 'DFI' ? 'DFI-Depósito Fiscal.' : element.regimenAduanero === 'RFE' ? 'RFE-Elaboración, transformación o reparación en recinto fiscalizado.' : element.regimenAduanero === 'RFS' ? 'RFS-Recinto fiscalizado estratégico.' : element.regimenAduanero === 'TRA' ? 'TRA-Tránsitos.' : element.regimenAduanero  }}
+        </ng-container>
+        <ng-template #editMaterial>
+          <mat-select [(ngModel)]="element.regimenAduanero" (ngModelChange)="validarFormulario()" [disabled]="!element.editable">
+            <mat-option value="IMD">IMD-Definitivo de importación.</mat-option>
+            <mat-option value="EXD">EXD-Definitivo de exportación.</mat-option>
+            <mat-option value="ITR">ITR-Temporales de importación para retomar al extranjero en el mismo estado.</mat-option>
+            <mat-option value="ITE">ITE-Temporales de importación para elaboración, transformación o reparación para empresas con programa IMMEX.</mat-option>
+            <mat-option value="ETR">ETR-Temporales de exportación para retornar al país en el mismo estado.</mat-option>
+            <mat-option value="ETE">ETE-Temporales de exportación para elaboración, transformación o reparación.</mat-option>
+            <mat-option value="DFI">DFI-Depósito Fiscal.</mat-option>
+            <mat-option value="RFE">RFE-Elaboración, transformación o reparación en recinto fiscalizado.</mat-option>
+            <mat-option value="RFS">RFS-Recinto fiscalizado estratégico.</mat-option>
+            <mat-option value="TRA">TRA-Tránsitos.</mat-option>
+          </mat-select>
+        </ng-template>
+      </td>
+    </ng-container>
+  
+    <!-- Fecha de Inserción -->
+    <ng-container matColumnDef="fechaInsert">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let element">{{ element.fechaInsert }}</td>
+    </ng-container>
+  
+    <!-- Acción Editar/Guardar -->
+    <ng-container matColumnDef="editar">
+      <th mat-header-cell *matHeaderCellDef>Acción</th>
+      <td mat-cell *matCellDef="let element">
+        <button [disabled]="isButtonSaveRegAduaneroDisabled" mat-icon-button (click)="element.editable ? guardarCambiosRegimen(element) : toggleEditMode(element)">
+          <mat-icon>{{ element.editable ? 'save' : 'edit' }}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <!-- Encabezados y Filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsRegimenesAduaneros"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsRegimenesAduaneros"></tr>
+  </table>   
+  <mat-paginator *ngIf="this.datosRegimenesAdu > 0" #conceptosPaginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+</div>

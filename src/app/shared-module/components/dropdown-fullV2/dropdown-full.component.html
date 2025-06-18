@@ -1,0 +1,167 @@
+<mat-form-field appearance="fill" [ngClass]="customClass" [ngStyle]="{
+  '--mdc-form-field-infix-padding': '0px',
+  '--mdc-text-field-padding': '0px'
+  }">
+  <mat-label *ngIf="mostrarLabel" [ngClass]="{ notValid: IS_REQUIRED && ( anyControlInvalid() || controlInvalidAfterLostFocus ) }">
+  {{ placeholder }}<span *ngIf="IS_REQUIRED">*</span>
+  </mat-label>
+
+  <div class="input-group">
+    <input autocomplete="off" matInput [readonly]="true" id="test" type="text"
+    (click)="IS_EDITABLE ? toggleTable() : null" [value]="getValueForDisplay(selectedItem, displayColumnConfigDF)"
+    (blur)="onInputBlur($event)"
+    style="text-transform: uppercase;" />
+    
+    <button *ngIf="selectedItem && IS_EDITABLE && showClearButton" 
+            class="clear-button"
+            type="button" 
+            matSuffix 
+            (click)="clearSelection($event)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</mat-form-field>
+
+<div class="dropdown" *ngIf="isTableVisible" [ngStyle]="{ visibility: tableVisibility }" #dropdownTable>
+  <!-- Contenedor principal de la tabla con scroll nativo -->
+  <div class="mat-table-wrapper" #matTableWrapper>
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8 fixed-table" #matTable>
+      <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ columnConfigs[column]?.displayName || column }}
+          <!-- Filtro para la columna -->
+          <div *ngIf="columnConfigs[column]?.showFilter">
+            <input class="form-control column-filter" [style.width.px]="getColumnWidth(column)"
+              (input)="onInputFilter($event, column)" placeholder="Filtrar" />
+          </div>
+        </th>
+        <td mat-cell *matCellDef="let element" [ngClass]="{ 'disabled-record': shouldBlockRow(element) }">
+          <ng-container [ngSwitch]="columnConfigs[column]?.type">
+
+            <ng-container *ngIf="columnConfigs[column]?.type === 'default'">
+              <ng-container *ngIf="
+                  columnConfigs[column]?.customRender;
+                  else elseBlockDefault
+                ">
+                <span>{{ columnConfigs[column]?.customRender(element) }}</span>
+              </ng-container>
+              <ng-template #elseBlockDefault>
+                <ng-container *ngIf="
+                    columnConfigs[column]?.editable;
+                    else elseBlockDefaultEditable
+                  ">
+                  <ng-container *ngIf="columnConfigs[column]?.event; else elseEventDefault">
+                    <input type="text" [(ngModel)]="element[column]" style="width: 100%" toUpperCase
+                      (blur)="columnConfigs[column]?.functionEvent(element)" />
+                  </ng-container>
+                  <ng-template #elseEventDefault>
+                    <input type="text" [(ngModel)]="element[column]" style="width: 100%" toUpperCase />
+                  </ng-template>
+                </ng-container>
+                <ng-template #elseBlockDefaultEditable>
+                  {{ element[column] }}
+                </ng-template>
+              </ng-template>
+            </ng-container>
+
+            <ng-container *ngIf="columnConfigs[column]?.type === 'default-truncate'">
+              <ng-container *ngIf="columnConfigs[column]?.customRender; else elseBlock">
+                <span matTooltip="{{ element[column] }}">{{
+                  columnConfigs[column]?.customRender(element) | truncate : 20
+                  }}</span>
+              </ng-container>
+              <ng-template #elseBlock>
+                <span matTooltip="{{ element[column] }}">{{
+                  element[column] | truncate : 20
+                  }}</span>
+              </ng-template>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'boolean'">
+              <ng-container *ngIf="
+                  columnConfigs[column]?.customRender;
+                  else elseBlockDefault
+                ">
+                <span>{{ columnConfigs[column]?.customRender(element) }}</span>
+              </ng-container>
+              <ng-template #elseBlockDefault>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="element[column]"
+                    [disabled]="!columnConfigs[column]?.editable" />
+                </div>
+              </ng-template>
+            </ng-container>
+            <ng-container *ngSwitchCase="'date'">
+              {{ element[column] | date : columnConfigs[column]?.format }}
+            </ng-container>
+
+            <ng-container *ngIf="columnConfigs[column]?.type === 'number'">
+              <ng-container
+                *ngIf="columnConfigs[column]?.editable; else elseBlock"
+              >
+                <ng-container
+                  *ngIf="columnConfigs[column]?.event; else elseEvent"
+                >
+                  <input
+                    type="text"
+                    [(ngModel)]="element[column]"
+                    style="width: 100%; text-align: right"
+                    (keydown.enter)="
+                      columnConfigs[column]?.functionEvent(element)
+                    "
+                    onlyDigit="{{ columnConfigs[column]?.char }}"
+                  />
+                </ng-container>
+                <ng-template #elseEvent>
+                  <input
+                    type="text"
+                    [(ngModel)]="element[column]"
+                    style="width: 100%; text-align: right"
+                    onlyDigit="{{ columnConfigs[column]?.char }}"
+                  />
+                </ng-template>
+              </ng-container>
+
+              <ng-template #elseBlock>
+                <p class="text-align-right" *ngIf="!element.isEditing">
+                  {{
+                    element[column] | onlyDigit : columnConfigs[column]?.char
+                  }}
+                </p>
+              </ng-template>
+            </ng-container>
+
+         <!--    <ng-container *ngSwitchDefault>
+              <ng-container *ngIf="
+                  columnConfigs[column]?.customRender;
+                  else elseBlockDefault
+                ">
+                <span>{{ columnConfigs[column]?.customRender(element) }}</span>
+              </ng-container>
+              <ng-template #elseBlockDefault>
+                <input *ngIf="columnConfigs[column]?.editable; else readonlyField" [(ngModel)]="element[column]"
+                  style="width: 200px; text-align: right" matInput />
+                <ng-template #readonlyField>{{
+                  element[column] != null
+                  ? truncateText(element[column], 35)
+                  : ""
+                  }}</ng-template>
+              </ng-template>
+            </ng-container> -->
+          </ng-container>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="sticky-header"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onItemSelected(row)"></tr>
+    </mat-table>
+  </div>
+  
+  <!-- Scroll horizontal alternativo (solo visible cuando es necesario) -->
+  <div class="horizontal-scroll-container" #horizontalScrollContainer aria-hidden="true" role="presentation">
+    <div class="scroll-content"></div>
+  </div>
+  
+  <mat-paginator [length]="totalRecords" [pageSize]="parametros.tamanoPagina"
+    [pageSizeOptions]="tableConfigs.pageSizeOptions" (page)="onPageChange($event)" showFirstLastButtons>
+  </mat-paginator>
+</div>

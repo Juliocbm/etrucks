@@ -1,0 +1,53 @@
+<app-modal-header
+  TITULO_MODAL="Detalle de viaje"
+  (closeModalEvent)="cerrarModal()"
+  [IS_EDITABLE]="false"
+  [EXPORT]="true"
+  (doExport)="onExport()">
+</app-modal-header>
+
+<mat-tab-group class="mb-3" animationDuration="0ms">
+  <mat-tab label="Trazabilidad">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div id="map" class="map-container mt-3" style="width: 100%; height: 400px; border-radius: 4px; border: 1px solid #ccc;"></div>
+            </div>
+        </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Pings posicionamiento">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <app-full-tableV2
+                    nombreMenu="Trazabilidad de viajes"
+                    [columnConfigs]="columnConfigsPings"
+                    excelFileName="ReporteDeTazabilidadDeViajes"
+                    [tableConfigs]="tableConfigs"
+                    [fetchDataFunction]="posicionesObs$"
+                    [extraParams]="{ idViaje: this.data.idViaje }"
+                    [parametros]="paramsPings">
+                </app-full-tableV2>
+            </div>
+        </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="E/S de geocercas">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <app-full-tableV2
+                    nombreMenu="Trazabilidad de viajes"
+                    [columnConfigs]="columnConfigsES"
+                    excelFileName="ReporteDeTazabilidadDeViajes"
+                    [tableConfigs]="tableConfigs"
+                    [fetchDataFunction]="posicionesObs$"
+                    [extraParams]="{ idViaje: this.data.idViaje }"
+                    [parametros]="paramsES">
+                </app-full-tableV2>
+            </div>
+        </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

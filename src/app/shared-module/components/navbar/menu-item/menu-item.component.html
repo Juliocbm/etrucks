@@ -1,0 +1,94 @@
+<!-- 
+<ng-container *ngFor="let item of items; let i = index">
+    <ng-container *ngIf="item.children?.length">
+      <button mat-button [matMenuTriggerFor]="menu">{{ item.Nombre }}</button>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let child of item.children; let j = index">
+          <button mat-menu-item 
+                  *ngIf="!child.children?.length" 
+                  [routerLink]="child.Url">{{ child.Nombre }}</button>
+          <button mat-menu-item 
+                  *ngIf="child.children?.length" 
+                  [matMenuTriggerFor]="subMenu">{{ child.Nombre }}</button>
+          <mat-menu #subMenu="matMenu">
+            <ng-container *ngFor="let grandchild of child.children">
+              <button mat-menu-item [routerLink]="grandchild.Url">{{ grandchild.Nombre }}</button>
+            </ng-container>
+          </mat-menu>
+        </ng-container>
+      </mat-menu>
+    </ng-container>
+  
+    <ng-container *ngIf="!item.children?.length">
+      <button mat-menu-item [routerLink]="item.Url">{{ item.Nombre }}</button>
+    </ng-container>
+  </ng-container>
+   -->
+
+<!--    <ng-container *ngFor="let item of items; let i = index">
+    <ng-container *ngIf="item.children?.length">
+      <button mat-button class="nav-button" [matMenuTriggerFor]="menu">
+        {{ item.Nombre }}
+      </button>
+      <mat-menu #menu="matMenu" [overlapTrigger]="false" class="menu-panel">
+        <ng-container *ngFor="let child of item.children; let j = index">
+          <button mat-menu-item 
+                  *ngIf="!child.children?.length" 
+                  [routerLink]="[child.Url, { menuName: child.Nombre }]"
+                  routerLinkActive="active-menu-item">
+            {{ child.Nombre }}
+          </button>
+          <button mat-menu-item 
+                  *ngIf="child.children?.length" 
+                  [matMenuTriggerFor]="subMenu">
+            {{ child.Nombre }}
+          </button>
+          <mat-menu #subMenu="matMenu" [overlapTrigger]="false" class="submenu-panel">
+            <ng-container *ngFor="let grandchild of child.children">
+              <button mat-menu-item 
+                      [routerLink]="[grandchild.Url, { menuName: grandchild.Nombre }]"
+                      routerLinkActive="active-menu-item">
+                {{ grandchild.Nombre }}
+              </button>
+            </ng-container>
+          </mat-menu>
+        </ng-container>   
+      </mat-menu>
+    </ng-container>
+  
+    <ng-container *ngIf="!item.children?.length">
+      <button mat-button 
+              class="nav-button"
+              [routerLink]="[item.Url, { menuName: item.Nombre }]"
+              routerLinkActive="active">
+        {{ item.Nombre }}
+      </button>
+    </ng-container>
+  </ng-container>
+   -->
+
+   
+   <ng-container *ngFor="let item of items; let i = index">
+    <ng-container *ngIf="item.children?.length">
+      <button mat-button [matMenuTriggerFor]="menu">{{ item.menu }}</button>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let child of item.children; let j = index">
+          <button mat-menu-item 
+                  *ngIf="!child.children?.length" 
+                  [routerLink]="[child.url, { menuName: child.menu }]">{{ child.menu }}</button>
+          <button mat-menu-item 
+                  *ngIf="child.children?.length" 
+                  [matMenuTriggerFor]="subMenu">{{ child.menu }}</button>
+          <mat-menu #subMenu="matMenu">
+            <ng-container *ngFor="let grandchild of child.children">
+              <button mat-menu-item [routerLink]="[grandchild.url, { menuName: grandchild.menu }]">{{ grandchild.menu }}</button>
+            </ng-container>
+          </mat-menu>
+        </ng-container>
+      </mat-menu>
+    </ng-container>
+    <ng-container *ngIf="!item.children?.length">
+      <button mat-button [routerLink]="[item.url, { menuName: item.menu }]">{{ item.menu }}</button>
+    </ng-container>
+  </ng-container>
+  

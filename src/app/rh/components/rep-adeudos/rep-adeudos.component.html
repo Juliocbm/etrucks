@@ -1,0 +1,20 @@
+
+<app-layout title="Tipo Adeudos">
+  <!-- <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert> -->
+
+  <app-full-table
+  [data]="datosFiltrados"
+  [nombreMenu]="'Reporte Adeudos'"
+  [columnConfigs]="columnConfigs"
+  (refreshEvent)="refreshData()"
+  [excelFileName]="'AdeudosRh'"
+    [tableConfigs]="tableConfigs"
+    [isLoading]="isLoading"
+  [showCreateButton]="false"
+  [showExportarButton]="false"
+  [showRefreshButton]="true"
+  [showConfColumnsButton]="false"
+  ></app-full-table>
+
+</app-layout>
+

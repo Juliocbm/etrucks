@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Configurar Columnas</h2>
+<mat-dialog-content>
+  <div *ngFor="let column of data.columns">
+    <mat-checkbox [(ngModel)]="column.visible">{{ column.displayName }}</mat-checkbox>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="data.columns">Aceptar</button>
+</mat-dialog-actions>

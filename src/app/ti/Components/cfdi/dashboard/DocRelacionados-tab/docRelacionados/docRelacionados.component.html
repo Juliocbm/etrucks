@@ -1,0 +1,38 @@
+<table mat-table [dataSource]="dataSourceSustituciones" class="mat-elevation-z8" style="margin-top: 30px;">
+
+  <!-- Número de Guía -->
+  <ng-container matColumnDef="noGuia">
+    <th mat-header-cell *matHeaderCellDef>No. Guía</th>
+    <td mat-cell *matCellDef="let element">{{ element.noGuia }}</td>
+  </ng-container>
+
+  <!-- Compañía -->
+  <ng-container matColumnDef="compania">
+    <th mat-header-cell *matHeaderCellDef>Compañía</th>
+    <td mat-cell *matCellDef="let element">{{ element.compania }}</td>
+  </ng-container>
+
+  <!-- Motivo Relación -->
+  <ng-container matColumnDef="motivoRelacion">
+    <th mat-header-cell *matHeaderCellDef>Motivo Relación</th>
+    <td mat-cell *matCellDef="let element">{{ element.motivoRelacion }}</td>
+  </ng-container>
+
+  <!-- Número de Guía -->
+  <ng-container matColumnDef="numGuia">
+    <th mat-header-cell *matHeaderCellDef>Número de Guía</th>
+    <td mat-cell *matCellDef="let element">{{ element.numGuia }}</td>
+  </ng-container>
+
+  <!-- UUID -->
+  <ng-container matColumnDef="uuid">
+    <th mat-header-cell *matHeaderCellDef>UUID</th>
+    <td mat-cell *matCellDef="let element">{{ element.uuid }}</td>
+  </ng-container>
+
+  <!-- Encabezado y Filas -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsSustituciones"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsSustituciones"></tr>
+</table>
+
+<mat-paginator #sustitucionesPaginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

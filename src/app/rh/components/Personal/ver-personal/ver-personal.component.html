@@ -1,0 +1,29 @@
+<app-layout titulo="Detalle Personal"> <!-- Cambia el título según tus necesidades -->
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h2>Detalle del Personal: {{ personal.nombre }} {{ personal.apellidoPaterno }}</h2>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>ID Personal: </strong>{{ personal.idPersonal }}</p>
+          <p><strong>Nombre: </strong>{{ personal.nombre }}</p>
+          <p><strong>Apellido Paterno: </strong>{{ personal.apellidoPaterno }}</p>
+          <p><strong>Apellido Materno: </strong>{{ personal.apellidoMaterno }}</p>
+          <p><strong>Sucursal: </strong>{{ personal.sucursal }}</p>
+          <p><strong>Compañía: </strong>{{ personal.compania }}</p>
+          <p><strong>Departamento: </strong>{{ personal.departamento }}</p>
+          <p><strong>Categoría: </strong>{{ personal.categoria }}</p>
+          <p><strong>Email: </strong>{{ personal.email }}</p>
+          <p><strong>No. Nómina: </strong>{{ personal.noNomina }}</p>
+          <p><strong>Activo: </strong>{{ personal.activo ? 'Si' : 'No' }}</p>
+          <p><strong>Fecha de Creación: </strong>{{ personal.fechaCreacion | date:'dd-MM-yyyy HH:mm:ss' }}</p>
+          <p><strong>Creado por: </strong>{{ personal.usuarioCreadoPor }}</p>
+          <p><strong>Fecha de Modificación: </strong>{{ personal.fechaModificacion | date:'dd-MM-yyyy HH:mm:ss' }}</p>
+          <p><strong>Modificado por: </strong>{{ personal.usuarioModificadoPor }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-layout>

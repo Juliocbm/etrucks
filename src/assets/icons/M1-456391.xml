@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cfdi:Comprobante xmlns:cartaporte30="http://www.sat.gob.mx/CartaPorte30" xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Certificado="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" CondicionesDePago="45" Exportacion="01" Fecha="2024-05-16T12:27:35" Folio="2719" FormaPago="99" LugarExpedicion="66634" MetodoPago="PPD" Moneda="MXN" NoCertificado="00001000000704840299" Sello="S3ESyz6kn834NjVNf/36ioxM0DDQL5psnHdVprVz6fstRY3w26076hPU+PhvEUgyGh10KN8AKsAOjcze2gPVGkjHMEp7zyL9xrtFJEzzZyfuADFjyVXAL46wCGlLvxB61fVRp4xhswHXk8suWviL7bi8VCP1tSsiPB5k6VH0gYLryyuicspmV1Sqjd49c5UwnJEB5erTWLDJhWp7h/a1zht9V4aJwb3qQDuecpEeXdijnmlrn50vwyt5CrHmfQid4q3fmdaYZTFKZfNzpeb1Bwpi6GAqn0f9+ime4vHD64iDH5a8COLIMyL42v+bSRJfx96uWxMr+8sgDff8tZ9MSA==" Serie="CCPAP" SubTotal="15000.00" TipoDeComprobante="I" Total="16799.99" Version="4.0" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/CartaPorte30 http://www.sat.gob.mx/sitio_internet/cfd/CartaPorte/CartaPorte30.xsd">
+  <cfdi:Emisor Nombre="H G TRANSPORTACIONES" RegimenFiscal="624" Rfc="HGT9312179LA" />
+  <cfdi:Receptor DomicilioFiscalReceptor="11560" Nombre="NAVISTAR MEXICO " RegimenFiscalReceptor="601" Rfc="CMI950920TR8" UsoCFDI="G03" />
+  <cfdi:Conceptos>
+    <cfdi:Concepto Cantidad="1.000000" ClaveProdServ="78101802" ClaveUnidad="E48" Descripcion="FLETE CCP C/R n/a" Importe="11342.64" ObjetoImp="02" Unidad="E48" ValorUnitario="11342.64">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="11342.64" Importe="1814.82" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa" />
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+          <cfdi:Retencion Base="11342.64" Importe="453.71" Impuesto="002" TasaOCuota="0.040000" TipoFactor="Tasa" />
+        </cfdi:Retenciones>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto Cantidad="1.000000" ClaveProdServ="78101800" ClaveUnidad="E48" Descripcion="VARIACION DIESEL 16% C/R n/a" Importe="3005.64" ObjetoImp="02" Unidad="E48" ValorUnitario="3005.64">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="3005.64" Importe="480.90" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa" />
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+          <cfdi:Retencion Base="3005.64" Importe="120.23" Impuesto="002" TasaOCuota="0.040000" TipoFactor="Tasa" />
+        </cfdi:Retenciones>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto Cantidad="1.000000" ClaveProdServ="78121600" ClaveUnidad="E48" Descripcion="FLETE (P) C/R n/a" Importe="651.72" ObjetoImp="02" Unidad="E48" ValorUnitario="651.72">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="651.72" Importe="104.28" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa" />
+        </cfdi:Traslados>
+        <cfdi:Retenciones>
+          <cfdi:Retencion Base="651.72" Importe="26.07" Impuesto="002" TasaOCuota="0.040000" TipoFactor="Tasa" />
+        </cfdi:Retenciones>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosRetenidos="600.01" TotalImpuestosTrasladados="2400.00">
+    <cfdi:Retenciones>
+      <cfdi:Retencion Importe="600.01" Impuesto="002" />
+    </cfdi:Retenciones>
+    <cfdi:Traslados>
+      <cfdi:Traslado Base="15000.00" Importe="2400.00" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa" />
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+  <cfdi:Complemento>
+    <cartaporte30:CartaPorte IdCCP="CCC6cdbd-986c-4b52-8816-dcf7355bd3ec" TotalDistRec="12.00" TranspInternac="No" Version="3.0">
+      <cartaporte30:Ubicaciones>
+        <cartaporte30:Ubicacion FechaHoraSalidaLlegada="2024-05-16T11:27:01" IDUbicacion="OR007470" NombreRemitenteDestinatario="ALPHABET DE MEXICO DE MONCLOVA SA DE CV" RFCRemitenteDestinatario="AMM030714KW0" TipoUbicacion="Origen">
+          <cartaporte30:Domicilio Calle="Francisco Murgia" CodigoPostal="25770" Estado="COA" NumeroExterior="#20-C y D" Pais="MEX" />
+        </cartaporte30:Ubicacion>
+        <cartaporte30:Ubicacion DistanciaRecorrida="12.00" FechaHoraSalidaLlegada="2024-05-16T11:27:01" IDUbicacion="DE000159" NombreRemitenteDestinatario="CAMIONES Y MOTORES INTERNATIONAL " RFCRemitenteDestinatario="CMI950920TR8" TipoUbicacion="Destino">
+          <cartaporte30:Domicilio Calle="Carretera Monclova" CodigoPostal="66083" Estado="NLE" NumeroExterior="5000" Pais="MEX" />
+        </cartaporte30:Ubicacion>
+      </cartaporte30:Ubicaciones>
+      <cartaporte30:Mercancias NumTotalMercancias="1" PesoBrutoTotal="80.000" UnidadPeso="KGM">
+        <cartaporte30:Mercancia BienesTransp="26121704" Cantidad="64.000000" ClaveUnidad="H87" Descripcion="Arnés de alambrado especial" Moneda="MXN" PesoEnKg="80.000" Unidad="Pieza" ValorMercancia="0.000000" />
+        <cartaporte30:Autotransporte NumPermisoSCT="0038HGT20052011021001000" PermSCT="TPAF01">
+          <cartaporte30:IdentificacionVehicular AnioModeloVM="2024" ConfigVehicular="T2S2" PesoBrutoVehicular="8.30" PlacaVM="30BB5G" />
+          <cartaporte30:Seguros AseguraRespCivil="SEGUROS ATLAS, S.A." PolizaRespCivil="M00-1-7-000131622" />
+          <cartaporte30:Remolques>
+            <cartaporte30:Remolque Placa="22UC8C" SubTipoRem="CTR007" />
+          </cartaporte30:Remolques>
+        </cartaporte30:Autotransporte>
+      </cartaporte30:Mercancias>
+      <cartaporte30:FiguraTransporte>
+        <cartaporte30:TiposFigura NombreFigura="Adrian Montalvo Briones" NumLicencia="COAH108141" RFCFigura="MOBA721007UX7" TipoFigura="01" />
+        <cartaporte30:TiposFigura NombreFigura="HG" RFCFigura="HGT9312179LA" TipoFigura="03">
+          <cartaporte30:PartesTransporte ParteTransporte="PT04" />
+          <cartaporte30:Domicilio Calle="Julian treviño" CodigoPostal="66612" Estado="NLE" NumeroExterior="500" Pais="MEX" />
+        </cartaporte30:TiposFigura>
+      </cartaporte30:FiguraTransporte>
+    </cartaporte30:CartaPorte>
+    <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" FechaTimbrado="2024-05-16T12:25:36" NoCertificadoSAT="00001000000506202789" RfcProvCertif="SST060807KU0" SelloCFD="S3ESyz6kn834NjVNf/36ioxM0DDQL5psnHdVprVz6fstRY3w26076hPU+PhvEUgyGh10KN8AKsAOjcze2gPVGkjHMEp7zyL9xrtFJEzzZyfuADFjyVXAL46wCGlLvxB61fVRp4xhswHXk8suWviL7bi8VCP1tSsiPB5k6VH0gYLryyuicspmV1Sqjd49c5UwnJEB5erTWLDJhWp7h/a1zht9V4aJwb3qQDuecpEeXdijnmlrn50vwyt5CrHmfQid4q3fmdaYZTFKZfNzpeb1Bwpi6GAqn0f9+ime4vHD64iDH5a8COLIMyL42v+bSRJfx96uWxMr+8sgDff8tZ9MSA==" SelloSAT="e32kP2RoTUcaW/Gt11HPF64YC5sy2J/GzTNivadZdJ7nrvKM8qwyePyi40hiYSDXqbCMiZ6sIsH5lb3y0NuJzpAhwsYulJaDRjwWPvcFzxPy4UXp+Twlet5VHg2Sx+chR6o+ILLXXi0Djk5ynWKdaV5y3P4mH3ssw0OlKSGvPKUyAVLACf1Kfy/MI7obTbLAY4rsuSE+5cH/PfA3+kTJOJaExs9s47dJP0aJ7H4pWn3cKJmPlYVLPSwgNEWU7QWwYhwOLFntclhcfZJR0CaWbBqXO5huaVRrXIAuKJd7PG5cFlR+vzkpNXQmiQaHwshJ2lEtntpv0uI3FusDc3mfrw==" UUID="44B3BB0F-4D76-4C66-AF6B-DA6468B4CA66" Version="1.1" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" />
+  </cfdi:Complemento>
+</cfdi:Comprobante>

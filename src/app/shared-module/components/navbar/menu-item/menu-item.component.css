@@ -1,0 +1,160 @@
+/* Alinea los botones al centro */
+
+/* Estilo para el ícono de la flecha */
+mat-icon {
+    margin-left: auto; /* Empuja el ícono hacia el lado derecho del botón */
+}
+
+.mat-mdc-button.mat-unthemed {
+    --mdc-text-button-label-text-color: #555;
+}
+
+/* Estilos unificados para los botones del menú principal */
+:host {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background-color: #f8f9fa;
+}
+
+/* Estilo base para todos los botones de navegación */
+button.mat-mdc-button, 
+button.mat-button {
+  height: 35px !important;
+  padding: 0 16px;
+  margin: 0;
+  font-weight: 500;
+  color: #333;
+  border-radius: 5px !important;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 0.25px;
+  text-transform: none;
+  position: relative;
+  line-height: normal;
+  box-shadow: none;
+  border: none;
+  background-color: transparent;
+}
+
+/* Hover para botones principales */
+button.mat-mdc-button:hover, 
+button.mat-button:hover {
+  background-color: #eec752 !important;
+  color: #000 !important;
+}
+
+/* Estilo para botones activos */
+.nav-button.active,
+button.mat-mdc-button.active, 
+button.mat-button.active {
+  color: #000 !important;
+  background-color: #eec752 !important;
+  border-bottom: 2px solid #333;
+}
+
+/* Estilo para los ítems de menú desplegable */
+.mat-menu-item {
+  font-size: 14px;
+  line-height: 36px;
+  height: 36px;
+  padding: 0 16px;
+  color: #333;
+  transition: all 0.2s ease;
+  background-color: #fff;
+}
+
+.mat-menu-item:hover {
+  background-color: #eec752 !important;
+  color: #000 !important;
+}
+
+/* Estilos para menús activos en desplegables */
+.active-menu-item {
+  color: #000 !important;
+  background-color: #eec752 !important;
+}
+
+/* Configuración de los paneles desplegables */
+::ng-deep .mat-mdc-menu-panel {
+  min-width: 180px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 4px !important;
+  background-color: #fff !important;
+}
+
+::ng-deep .mat-mdc-menu-content {
+  padding: 8px 0 !important;
+  background-color: #fff !important;
+}
+
+/* Aseguramos colores correctos para los botones Material */
+.mat-mdc-button.mat-unthemed {
+  --mdc-text-button-label-text-color: #333;
+}
+
+/* Estilos para los botones de navegación */
+.nav-button {
+  height: 56px !important;
+  padding: 0 12px !important;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-radius: 0 !important;
+  transition: all 0.2s ease;
+  text-align: center;
+  background-color: transparent !important;
+}
+
+/* Estilo para los botones del menú */
+.nav-button:hover {
+  background-color: #eec752 !important;
+  color: #000 !important;
+}
+
+/* Estilo activo para los botones del menú */
+.active {
+  border-bottom: 2px solid #333;
+  background-color: #eec752 !important;
+  color: #000 !important;
+}
+
+/* Asegurar que los submenús tienen suficiente padding */
+::ng-deep .mat-menu-panel {
+  min-width: 200px !important;
+  background-color: #fff !important;
+}
+
+::ng-deep .mat-menu-content {
+  padding: 0 !important;
+  background-color: #fff !important;
+}
+
+::ng-deep .mat-menu-item {
+  height: 48px !important;
+  line-height: 48px !important;
+  padding: 0 16px !important;
+  font-size: 14px;
+  background-color: #fff !important;
+}
+
+::ng-deep .mat-menu-item:hover {
+  background-color: #eec752 !important;
+  color: #000 !important;
+}
+
+/* Estilos para los elementos activos del submenú */
+::ng-deep .active-menu-item {
+  font-weight: 500;
+  background-color: #eec752 !important;
+  color: #000 !important;
+}
+
+/* Espacio entre elementos de menú para mejor visualización */
+.nav-button + .nav-button {
+  margin-left: 2px;
+}

@@ -1,0 +1,142 @@
+<!-- <p>rep-moper works!</p> -->
+<app-layout>
+  <div class="container">
+
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+    <mat-stepper headerPosition="top" #stepper style="padding:10px;"  >
+
+      <mat-step [stepControl]="firstFormGroup" [tabIndex]="indexStepper">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel >Confirmación</ng-template>
+          <div formControlName="firstCtrl" style="margin-top:24px;">
+            <app-full-table
+              [data]="datosPorConfirmar"
+              (refreshEvent)="obtenerDatosMoperYConfirmacion()"
+              [columnConfigs]="columngConfigPendientes"
+              [nombreTabla]="'Confirmación'"
+              [tableConfigs]="tableConfigs"
+              [isLoading]="isLoading"
+              [excelFileName]="FileNameConfirmacion"
+              [showFilterInactivos]="false"
+              [showCreateButton]="false"
+              [showExportarButton]="true"
+              [showRefreshButton]="true"
+              [showConfColumnsButton]="true"
+              style="text-align-last: center;"
+            >
+            </app-full-table>
+            <div style="display:flex;margin-top:10px; justify-content:flex-end; align-items:flex-end;">
+              <button mat-raised-button style="display:flex;" (click)="openConfirmationModal()">
+                <mat-icon *ngIf="!isLoading">done</mat-icon>
+                <mat-icon *ngIf="isLoading">autorenew</mat-icon>
+                Confirmar
+              </button>
+            </div>
+          </div>
+
+          <div style="display:flex;margin-top:10px; justify-content:flex-end; align-items:end;">
+            <button mat-button matStepperNext style="flex-direction:row-reverse">
+              Siguiente
+              <mat-icon>navigate_next</mat-icon>
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Descargar Moper</ng-template>
+
+          <div formControlName="firstCtrl" style="margin-top:24px;">
+            <app-full-table
+              [data]="datosMoper"
+              [columnConfigs]="columnConfig"
+              [nombreTabla]="'Reporte Moper'"
+              [tableConfigs]="tableConfigs"
+              [isLoading]="isLoading"
+              [excelFileName]="FileNameMopper"
+              [showFilterInactivos]="false"
+              [showCreateButton]="false"
+              [showExportarButton]="true"
+              [showRefreshButton]="true"
+              [showConfColumnsButton]="true"
+              (refreshEvent)="obtenerDatosMoperYConfirmacion()"
+              style="text-align-last: center;"
+            >
+            </app-full-table>
+          </div>
+
+          <div style="display:flex;margin-top:10px; justify-content:flex-end; align-items:end;">
+            <button mat-button matStepperPrevious style="display: flex; align-items:center;white-space:nowrap">
+              <mat-icon>navigate_before</mat-icon>
+              Regresar
+            </button>
+            <button mat-button matStepperNext style="flex-direction:row-reverse">
+              Siguiente
+              <mat-icon>navigate_next</mat-icon>
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="secondFormGroup" optional>
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>
+            Carga de Descuentos
+          </ng-template>
+
+          <div formControlName="secondCtrl" style="margin-top:24px;">
+            <div class="row">
+
+                <!-- [allowedTypes]="'.txt, text/*'" -->
+              <app-single-file-upload
+                [UrlFile]="UrlFile"
+                [allowedTypes]="'.txt'"
+                [multiple]="true"
+                [uploadLabel]="'Cargar archivos seleccionados'"
+                [customMessages]="{
+                  uploading: 'Cargando archivos...',
+                  success: '¡Todos los archivos han sido cargados!',
+                  fail: 'Hubo un error durante la carga.',
+                  default: 'Por favor selecciona archivos para cargar...'
+                }"
+                (fileUploaded)="onFileUploaded($event)"
+                (responseFile)="onResponseFile($event)"
+                >
+              </app-single-file-upload>
+            </div>
+
+            <div *ngIf="datosResponse.length > 0">
+              <hr>
+              <h4>Listado de descuentos:</h4>
+              <app-full-table
+                [data]="datosResponse"
+                [columnConfigs]="columnConfigResponse"
+                [nombreTabla]="'Carga de descuentos'"
+                [tableConfigs]="tableConfigs"
+                [isLoading]="false"
+                [showFilterInactivos]="false"
+                [showCreateButton]="false"
+                [showExportarButton]="true"
+                [showRefreshButton]="false"
+                [showConfColumnsButton]="true"
+                style="text-align-last: center;"
+              >
+              </app-full-table>
+            </div>
+          </div>
+
+          <div style="display:flex;margin-top:10px; justify-content:space-between; align-items:end;">
+            <div style="display:flex;margin-top:10px; justify-content:space-between; align-items:end;">
+              <button mat-button (click)="stepper.reset()">
+                <mat-icon>rotate_left</mat-icon>
+                Reiniciar
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+
+  </div>
+</app-layout>

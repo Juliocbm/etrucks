@@ -1,0 +1,49 @@
+<div class="map-wrapper">
+  <div #map class="mapbox-container"></div>
+  
+  <div class="map-controls" *ngIf="shipmentData">
+    <div class="map-legend">
+      <h3>Leyenda</h3>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: #FF0000;"></div>
+        <span>Ruta</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon critical">⚠️</div>
+        <span>Evento crítico (X3)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon">🔵</div>
+        <span>Evento normal (X6)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon truck">🚚</div>
+        <span>Posición actual</span>
+      </div>
+    </div>
+    
+    <div class="map-actions">
+      <button mat-icon-button matTooltip="Centrar mapa" (click)="centerMap()">
+        <mat-icon>my_location</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Mostrar/ocultar geocercas" (click)="toggleGeocercas()">
+        <mat-icon>layers</mat-icon>
+      </button>
+    </div>
+    
+    <div class="route-info" *ngIf="shipmentData?.transporte">
+      <div class="info-item">
+        <span class="label">Inicio:</span>
+        <span class="value">{{ shipmentData.transporte.inicio_viaje | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Fin:</span>
+        <span class="value">{{ shipmentData.transporte.fin_viaje | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Duración:</span>
+        <span class="value">{{ shipmentData.transporte.rango_horas }}</span>
+      </div>
+    </div>
+  </div>
+</div>

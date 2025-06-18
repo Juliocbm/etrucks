@@ -1,0 +1,17 @@
+<app-layout titulo="Clientes alternos EDI">
+    <div class="row">
+        <div class="col">
+            <app-full-table
+                [data]="dataTable"
+                [columnConfigs]="columnConfigs"
+                [tableConfigs]="tableConfigs"
+                [isLoading]="isLoading"
+                [actions]="tableActions"
+                [showCreateButtonModal]="true"
+                (refreshEvent)="getData()"
+                nombreMenu="Clientes alternos EDI"
+                excelFileName="Clientes alternos EDI"
+            ></app-full-table>
+        </div>
+    </div>
+</app-layout>

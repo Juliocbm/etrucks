@@ -1,0 +1,19 @@
+
+<app-layout titulo="Empleados">
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+
+    <app-full-table
+      [data]="datosFiltrados"
+      [actions]="tableActions"
+      [nombreMenu]="'Empleados'"
+      (cambiarEstatusEvent)="cambiarEstado($event)"
+      [columnConfigs]="columnConfigs"
+      (refreshEvent)="retriveData()"
+      [excelFileName]="'CatalogoMenu'"
+      [tableConfigs]="tableConfigs"
+      [showCreateButtonModal]="true"
+      [isLoading]="isLoading">
+    </app-full-table>
+
+  </app-layout>

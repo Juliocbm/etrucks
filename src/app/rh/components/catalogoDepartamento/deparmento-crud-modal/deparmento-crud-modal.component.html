@@ -1,0 +1,103 @@
+<app-modal-header [TITULO_MODAL]="TITULO_MODAL" [TIPO_MODAL]="TIPO_MODAL" [IS_EDITABLE]="IS_EDITABLE"
+    (isEditableEvent)="editableChange($event)" (submitEvent)="onSubmit()"
+    (closeModalEvent)="cerrarModal()"></app-modal-header>
+
+
+    <app-loading [isLoading]="isLoading" [fondo]="true"></app-loading>
+    <!-- Campos para las propiedades del Operador -->
+    <div style="margin: 20px 5px 20px 5px;">
+        <div class="col-md-12">
+            <form [formGroup]="formulario" >           
+                <div style="padding: 15px;">
+                        <div  class="row"> 
+                            <div class="col-4 mt-3">
+                                <mat-form-field  class="custom-form-field">
+                                    <mat-label>Referencia LIS</mat-label>
+                                    <input [readonly]="!IS_EDITABLE" matInput formControlName="clave" toUpperCase [appMaxLength]="10"/>
+                                    <mat-error>
+                                        Campo obligatorio.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>                        
+                            <div class="col-4 mt-3">
+                                <mat-form-field  class="custom-form-field">
+                                    <mat-label>Nombre</mat-label>
+                                    <input [readonly]="!IS_EDITABLE" matInput formControlName="nombre" toUpperCase/>
+                                    <mat-error>
+                                        Campo obligatorio.
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>                          
+                            <div class="col-4">
+                                <mat-label>Compañias*</mat-label>
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Compañias'"
+                                [settings]="dropdownSettings"
+                                [data]="companias"
+                                formControlName="companiasSelect" 
+                                [disabled]="!IS_EDITABLE"                          
+                                >
+                                </ng-multiselect-dropdown>                              
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4 mt-3">
+                               <br>
+                                <mat-slide-toggle [disabled]="!IS_EDITABLE" formControlName="activo">
+                                    <div style="color: #4f4f4f; font-family: system-ui; font-weight: 600">
+                                        {{
+                                        formulario.get("activo")?.value ? "activo" : "inactivo"
+                                        }}
+                                    </div>
+                                </mat-slide-toggle>
+                            </div>       
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div  *ngIf="!IS_EDITABLE" class="col-md-12 mt-3">
+                <form [formGroup]="formulario" class="permisionario-form">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>Auditoria</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col-2">
+                                    <mat-form-field  class="custom-form-field">
+                                        <mat-label>Creado por</mat-label>
+                                        <input [readonly]="true" matInput formControlName="usuarioCreadoPor" toUpperCase/>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-3"><mat-form-field appearance="fill" class="custom-form-field">
+                                    <mat-label>Fecha de Creación</mat-label>
+                                    <input [readonly]="true" matInput formControlName="fechaCreacion" dateFormat/>
+                                </mat-form-field>
+                                </div>
+                                <div class="col-2">
+                                    <mat-form-field  class="custom-form-field">
+                                        <mat-label>Modificado por</mat-label>
+                                        <input [readonly]="true" matInput formControlName="usuarioModificadoPor" toUpperCase/>
+                                    </mat-form-field>
+                                </div>                              
+                                <div class="col-3"><mat-form-field appearance="fill" class="custom-form-field">
+                                    <mat-label>Fecha de modificación</mat-label>
+                                        <input [readonly]="true" matInput formControlName="fechaModificacion" dateFormat/>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-2">
+                                    <mat-form-field  class="custom-form-field">
+                                        <mat-label>Id</mat-label>
+                                        <input [readonly]="true" matInput formControlName="idDepartamento" onlyDigit="id"/>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                           
+                        </mat-card-content>
+                        </mat-card>
+                    </form>
+                </div>
+        </div>
+

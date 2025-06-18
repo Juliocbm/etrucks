@@ -1,0 +1,466 @@
+.dropdown {
+  position: fixed;
+  z-index: 99999999;
+  background-color: white;
+  border-radius: 5px;
+  border: solid 2px #d9d9d9;
+  width: auto;
+  max-width: 35vw; /* Ajustado a 35vw */
+  max-height: 35vh; /* Ajustado a 35vh*/
+  overflow: hidden; /* Asegurar que el contenido no se desborde */
+  display: flex;
+  flex-direction: column;
+
+  /* Añadir sombra para mejor visibilidad */
+  /* box-shadow: 0 2px 8px rgba(0,0,0,0.15);  */
+}
+
+.disabled-record {
+  background-color: #f0f0f0; /* Color de fondo para registros desactivados */
+  color: #cccccc; /* Color del texto para registros desactivados */
+  pointer-events: none; /* Desactiva eventos del mouse, incluido el click */
+}
+
+.column-filter {
+  padding: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-table-wrapper {
+  overflow-y: auto;
+  overflow-x: auto; /* Permitir scroll horizontal directamente en la tabla */
+  height: auto;
+  max-height: calc(35vh - 100px); /* Mantenemos la altura original */
+  width: 100%;
+  min-width: 300px; /* Ancho mínimo para asegurar usabilidad */
+  flex-grow: 1;
+  padding-right: 0; /* Eliminar cualquier padding que pueda afectar el ancho */
+  scrollbar-width: thin; /* Para Firefox - scroll fino */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Para Firefox */
+}
+
+.mat-elevation-z8 {
+  table-layout: fixed !important; /* Usar fixed con anchos explícitos para mejor control */
+  width: max-content; /* Permite que la tabla crezca según el contenido */
+  min-width: 100%; /* Asegura que al menos ocupe todo el ancho disponible */
+  border-collapse: separate; /* Importante para que table-layout funcione correctamente */
+  border-spacing: 0; /* Sin espacio entre celdas */
+}
+
+.mat-header-row,
+.mat-row {
+  display: flex !important; /* Forzar display flex para mejor control de las columnas */
+  height: auto !important; /* Permitir que las filas crezcan según su contenido */
+  min-height: 30px; /* Altura mínima para filas */
+  align-items: center !important;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  white-space: nowrap; /* Evita que el contenido se divida en varias líneas */
+  padding: 8px 16px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box; /* Para un cálculo más preciso del ancho */
+  flex-grow: 0 !important; /* No permitir que crezcan más allá de su ancho asignado */
+  flex-shrink: 0 !important; /* No permitir que se contraigan */
+}
+
+th.mat-header-cell:nth-child(1),
+td.mat-cell:nth-child(1) {
+  min-width: 40px; /* Columna ID más pequeña */
+  width: 40px !important; /* Forzar ancho específico para la columna ID */
+}
+
+/* Ajustar específicamente algunas columnas comunes por su nombre/índice */
+th.mat-header-cell:nth-child(2),
+td.mat-cell:nth-child(2) {
+  min-width: 150px; /* Nombre suele necesitar más espacio */
+  width: auto !important; /* Pero sigue permitiendo que crezca */
+}
+
+/* Para columnas de tipo de impuesto, porcentajes, etc. */
+th.mat-header-cell:nth-child(3),
+td.mat-cell:nth-child(3),
+th.mat-header-cell:nth-child(4),
+td.mat-cell:nth-child(4),
+th.mat-header-cell:nth-child(5),
+td.mat-cell:nth-child(5) {
+  min-width: 100px;
+  width: auto !important;
+}
+
+th.mat-header-cell {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: white;
+  border-bottom: solid 1px #ddd; /* Separador de la cabecera */
+}
+
+/* Mejorar el sticky header */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Aumentado para asegurar que esté por encima de otros elementos */
+  background-color: white;
+  border-bottom: solid 1px #ddd;
+}
+
+/* Mejorar el sticky footer */
+.mat-paginator {
+  position: sticky;
+  bottom: 0;
+  z-index: 10; /* Aumentado para asegurar que esté por encima de otros elementos */
+  background-color: white;
+  border-top: solid 1px #ddd; /* Añadido para marcar la separación */
+  width: 100%;
+}
+
+tr:not(:first-child):hover {
+  cursor: pointer;
+  background-color: lightgray;
+}
+
+/* Para la presentación de la tabla con scroll */
+mat-table {
+  font-size: 0.8rem !important;
+  display: block !important;
+  width: max-content !important; /* Forzar el ancho máximo según el contenido */
+  min-width: 100% !important;
+}
+
+.mat-table td,
+.mat-table th {
+  padding: 4px !important;
+}
+
+th {
+  padding: 10px 0px 10px 19px;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.resaltar-renglon {
+  background-color: #ededed;
+}
+
+.loading-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.empty-state {
+  text-align: center;
+  color: #626262;
+  font-size: 18px;
+  padding: 41px;
+  background-color: #f5f5f59e;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  color: #ccc;
+}
+
+/*ajustes a renglones*/
+tr {
+  font-size: 11px;
+  height: fit-content;
+  white-space: nowrap; /* Evita que el contenido se divida en varias líneas */
+}
+
+td {
+  padding: 5px;
+  padding-left: 20px;
+}
+
+.mat-mdc-form-field {
+  display: initial;
+}
+
+.notValid {
+  color: red !important;
+}
+
+.notValidInput {
+  border-color: red;
+}
+
+/* Clase específica para el mat-form-field cuando está dentro de una celda de tabla */
+.table-cell-dropdown .mat-mdc-form-field {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin: 0 !important;
+  background-color: #ffffff;
+}
+
+/* Estilo específico para el dropdown cuando se muestra en la tabla */
+.table-dropdown {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin: 0 !important;
+  background-color: #ffffff;
+}
+
+/* Estilos específicos para los elementos internos del form-field */
+.table-dropdown .mat-mdc-form-field-infix,
+.table-cell-dropdown .mat-mdc-form-field-infix {
+  padding: 0px !important;
+  margin: 0 !important;
+  background-color: #ffffff;
+}
+
+/* También apuntamos a otras clases posibles de componentes anidados */
+.table-dropdown .mat-mdc-form-field-flex,
+.table-cell-dropdown .mat-mdc-form-field-flex,
+.table-dropdown .mat-mdc-form-field-wrapper,
+.table-cell-dropdown .mat-mdc-form-field-wrapper {
+  padding: 0px !important;
+  margin: 0 !important;
+  background-color: #ffffff;
+}
+
+.table-dropdown .mat-mdc-input-element {
+  border: 1px solid;
+  border-color: #dee2e6;
+  border-radius: var(--bs-border-radius-sm);
+  padding: 0px 0px 0px 5px;
+  height: 40px;
+}
+
+/* Selectores extremadamente específicos para anular cualquier otro estilo */
+.table-dropdown div[class*="mat-mdc-form-field-infix"],
+.table-cell-dropdown div[class*="mat-mdc-form-field-infix"],
+.table-dropdown .mat-mdc-form-field div[class*="mat-mdc-form-field-infix"],
+.table-cell-dropdown .mat-mdc-form-field div[class*="mat-mdc-form-field-infix"],
+mat-form-field.table-dropdown div[class*="mat-mdc-form-field-infix"] {
+  padding: 0px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  margin: 0 !important;
+  min-height: auto !important;
+  background-color: #ffffff;
+}
+
+/* Uso de ::ng-deep para asegurar que los estilos penetren en componentes encapsulados */
+:host ::ng-deep .table-dropdown .mat-mdc-form-field-infix,
+:host ::ng-deep .table-cell-dropdown .mat-mdc-form-field-infix {
+  padding: 0px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  min-height: initial !important;
+  background-color: #ffffff;
+}
+
+:host ::ng-deep .table-dropdown .mat-mdc-text-field-wrapper {
+  padding: 0px !important;
+  margin: 0 !important;
+  background-color: #ffffff;
+  height: 35px !important;
+}
+
+:host ::ng-deep .table-cell-dropdown .mat-mdc-text-field-wrapper {
+  padding: 0px !important;
+  margin: 0 !important;
+  background-color: #ffffff;
+  height: 45px !important;
+}
+
+:host ::ng-deep .table-dropdown .mdc-text-field,
+:host ::ng-deep .table-cell-dropdown .mdc-text-field {
+  padding: 0px !important;
+  background-color: #ffffff;
+}
+
+/* Asegurar que capturamos todos los elementos mat-mdc-form-field-* posibles */
+:host ::ng-deep .table-dropdown .mat-mdc-form-field-flex,
+:host ::ng-deep .table-cell-dropdown .mat-mdc-form-field-flex,
+:host ::ng-deep .table-dropdown .mat-mdc-form-field-wrapper,
+:host ::ng-deep .table-cell-dropdown .mat-mdc-form-field-wrapper,
+:host ::ng-deep .table-dropdown mat-form-field div,
+:host ::ng-deep .table-cell-dropdown mat-form-field div,
+:host ::ng-deep mat-form-field.table-dropdown div,
+:host ::ng-deep app-dropdown-fullV2 mat-form-field div {
+  padding: 0px !important;
+  margin: 0px !important;
+  background-color: #ffffff;
+  height: 1px !important;
+}
+
+/* Seleccionamos directamente por la clase que vemos en la captura de pantalla */
+:host ::ng-deep .mat-mdc-form-field-infix.ng-tns-c120507789-29,
+:host ::ng-deep div[class*="mat-mdc-form-field-infix.ng-tns"] {
+  padding: 0px !important;
+  background-color: #ffffff;
+}
+
+/* Modificar las variables CSS de Material directamente */
+:host ::ng-deep .table-dropdown,
+:host ::ng-deep .table-cell-dropdown {
+  --mdc-filled-text-field-container-padding: 0px !important;
+  --mdc-filled-text-field-input-padding-top: 0px !important;
+  --mdc-filled-text-field-input-padding-bottom: 0px !important;
+  --mdc-outlined-text-field-container-padding: 0px !important;
+  --mdc-outlined-text-field-input-padding-top: 0px !important;
+  --mdc-outlined-text-field-input-padding-bottom: 0px !important;
+  --mat-form-field-container-height: auto !important;
+  --mat-form-field-container-vertical-padding: 0px !important;
+  --mat-form-field-infix-height: auto !important;
+  background-color: #ffffff;
+}
+
+/* Estilo específico para el componente dropdown en tabla */
+:host ::ng-deep .table-dropdown .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  transform: none !important;
+}
+
+/* Estilos para el botón de limpiar */
+.clear-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #757575;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  position: absolute;
+  right: 5px;
+  top: 25%;
+  transform: translateY(-50%);
+  z-index: 2;
+  border-radius: 50%;
+}
+
+.clear-button:hover {
+  color: #d32f2f;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.clear-button mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-group {
+  position: relative;
+  width: 100%;
+}
+
+.input-group input {
+  padding-right: 35px; /* Espacio para el botón */
+}
+
+/* Scroll horizontal alternativo - comportamiento mejorado */
+.horizontal-scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: sticky;
+  bottom: 56px; /* Ajustado para posicionarse justo encima del paginador */
+  height: 0; /* Inicialmente oculto por completo */
+  width: 100%;
+  background-color: transparent;
+  z-index: 9;
+  opacity: 0; /* Invisible por defecto */
+  transition: opacity 0.3s ease, height 0.3s ease; /* Transición suave */
+  scrollbar-width: none; /* Ocultar completamente en Firefox por defecto */
+  -ms-overflow-style: none; /* Para IE y Edge */
+  pointer-events: none; /* No interceptar eventos de mouse por defecto */
+}
+
+/* Ocultar completamente el scrollbar en Chrome/Safari/WebKit por defecto */
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none;
+  height: 0;
+}
+
+/* Solo mostrar cuando explícitamente tiene la clase has-overflow */
+.horizontal-scroll-container.has-overflow {
+  height: 8px;
+  opacity: 0; /* Mantener invisible hasta hover */
+  background-color: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+  scrollbar-width: thin; /* Para Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Para Firefox */
+  pointer-events: auto; /* Permitir eventos de mouse */
+}
+
+/* Mostrar scrollbar específicamente cuando has-overflow y hover */
+.horizontal-scroll-container.has-overflow:hover {
+  opacity: 1;
+  height: 10px;
+}
+
+/* Re-activar scrollbar en Chrome/Safari solo cuando tiene has-overflow */
+.horizontal-scroll-container.has-overflow::-webkit-scrollbar {
+  display: block;
+  height: 6px;
+}
+
+.horizontal-scroll-container.has-overflow:hover::-webkit-scrollbar {
+  height: 8px;
+}
+
+.horizontal-scroll-container.has-overflow::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.horizontal-scroll-container.has-overflow::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+}
+
+.horizontal-scroll-container.has-overflow::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Contenido del scroll */
+.scroll-content {
+  height: 1px;
+  width: var(--table-width, 100%);
+}
+
+/* Estilos para scrollbars en Chrome/Safari en el contenedor principal */
+.mat-table-wrapper::-webkit-scrollbar {
+  height: 6px; /* Altura del scrollbar horizontal */
+  width: 6px; /* Ancho del scrollbar vertical */
+}
+
+.mat-table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mat-table-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+}
+
+.mat-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}

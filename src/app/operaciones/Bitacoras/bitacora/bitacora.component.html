@@ -1,0 +1,43 @@
+<app-layout>
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <div class="row">
+    <div class="col" style="display: flex;">
+
+      <div class="col-md-6" style="display: flex; justify-content:flex-start;">
+        <h3 class="text-center">Bitacora de Muleros<span *ngIf="flotaNombre !== '' && flotaNombre !== null"> - {{flotaNombre}}</span></h3>
+      </div>
+
+      <div class="col-md-6" style="display: flex; justify-content:flex-end;">
+        <!-- Agregar botton Exportar Excel -->
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="exportarExcel()"
+          style="margin-bottom: 12px"
+        >
+          <i class="material-icons" style="margin-right: 12px;">cloud_download</i>
+          Exportar Excel
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <app-full-table
+      crearRoute="/Bitacoras-Muleros/crear"
+      [data]="datosFiltrados"
+      [actions]="tableActions"
+      [nombreMenu]="'Bitacoras de Muleros'"
+      (cambiarEstatusEvent)="cambiarEstado($event)"
+      [columnConfigs]="columnConfigs"
+      (refreshEvent)="openDialog()"
+      [excelFileName]="'CatalogoMuleros'"
+      [showExportarButton]="false"
+      [tableConfigs]="tableConfigs"
+      [showCreateButtonModal]="true"
+      [isLoading]="isLoading"
+    ></app-full-table>
+  </div>
+</app-layout>

@@ -1,0 +1,27 @@
+
+/* formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    /* gap: 20px; */
+    /* Espacio entre los campos del formulario */
+}
+
+.mat-form-field-label {
+    color: var(--primary-color);
+    /* Usa la variable de tu tema */
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Estado hover */
+.mat-form-field-label:hover {
+    color: var(--accent-color);
+    transition: color 0.3s;
+}
+
+mat-form-field {
+    width: 100% !important;
+}
+
+

@@ -1,0 +1,17 @@
+<app-layout title="Reporte Mantenimiento de equipo de computo">
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+  
+   <app-full-table
+   [data]="datosFiltrados"
+   [nombreMenu]="'Mtto Equipo Computo'"
+   [columnConfigs]="columnConfigs"
+   (refreshEvent)="refreshData()"
+   [excelFileName]="'mttoEquipoComputo'" 
+   [showCreateButton]="false"
+    [tableConfigs]="tableConfigs" [isLoading]="isLoading"
+    [showFilterInactivos] = "false"
+   ></app-full-table>
+  
+  </app-layout>
+  
+   

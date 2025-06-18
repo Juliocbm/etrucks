@@ -1,0 +1,123 @@
+<div class="eventos-container">
+  <!-- Barra de filtros y búsqueda -->
+  <div class="filtros-container">
+    <div class="search-box">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar en eventos</mat-label>
+        <input matInput placeholder="Buscar..." [(ngModel)]="searchTerm" (keyup)="applySearch()">
+        <button mat-icon-button matSuffix *ngIf="searchTerm" (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-icon matSuffix *ngIf="!searchTerm">search</mat-icon>
+      </mat-form-field>
+    </div>
+    
+    <div class="filter-buttons">
+      <button mat-button 
+              [class.active-filter]="currentFilter === 'all'"
+              (click)="setFilter('all')">
+        Todos
+      </button>
+      <button mat-button 
+              [class.active-filter]="currentFilter === 'app'"
+              (click)="setFilter('app')">
+        App Móvil
+      </button>
+      <button mat-button 
+              [class.active-filter]="currentFilter === 'system'"
+              (click)="setFilter('system')">
+        Sistema
+      </button>
+    </div>
+  </div>
+  
+  <!-- Sección de eventos principales -->
+  <div class="eventos-list">
+    <h3>Eventos ({{ filteredEvents.length }})</h3>
+    
+    <mat-list class="eventos-list-content" *ngIf="filteredEvents.length > 0">
+      <mat-list-item class="evento-item" *ngFor="let evento of filteredEvents">
+        <div class="evento-content">
+          <div class="evento-header">
+            <span class="evento-fecha">{{ formatDate(evento.fecha) }}</span>
+            <span class="evento-sistema" [ngClass]="{'sistema-app': evento.sistema.includes('APP'), 'sistema-interno': !evento.sistema.includes('APP')}">
+              {{ evento.sistema }}
+            </span>
+          </div>
+          
+          <div class="evento-mensaje">
+            {{ evento.mensaje }}
+          </div>
+          
+          <div class="evento-footer">
+            <span>Viaje: {{ evento.viaje }}</span>
+            <span>ID: {{ evento.id_personalizado }}</span>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+    
+    <div class="empty-message" *ngIf="filteredEvents.length === 0">
+      No se encontraron eventos que coincidan con los criterios de búsqueda.
+    </div>
+  </div>
+  
+  <!-- Sección de eventos reportados -->
+  <div class="eventos-reportados" *ngIf="eventosReportados && eventosReportados.length > 0">
+    <h3>Eventos Reportados</h3>
+    
+    <table mat-table [dataSource]="eventosReportados" class="eventos-tabla mat-elevation-z1">
+      <ng-container matColumnDef="caso">
+        <th mat-header-cell *matHeaderCellDef>Caso</th>
+        <td mat-cell *matCellDef="let reporte">{{ reporte.caso }}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let reporte">{{ reporte.descripcion }}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let reporte">{{ formatDate(reporte.fecha) }}</td>
+      </ng-container>
+      
+      <tr mat-header-row *matHeaderRowDef="['caso', 'descripcion', 'fecha']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['caso', 'descripcion', 'fecha']"></tr>
+    </table>
+  </div>
+  
+  <!-- Sección de estatus de seguimiento -->
+  <div class="estatus-seguimiento" *ngIf="estatusSeguimiento && estatusSeguimiento.length > 0">
+    <h3>Estatus de Seguimiento</h3>
+    
+    <table mat-table [dataSource]="estatusSeguimiento" class="estatus-tabla mat-elevation-z1">
+      <ng-container matColumnDef="caso">
+        <th mat-header-cell *matHeaderCellDef>Caso</th>
+        <td mat-cell *matCellDef="let estatus">{{ estatus.caso }}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="estatus">
+        <th mat-header-cell *matHeaderCellDef>Estatus</th>
+        <td mat-cell *matCellDef="let estatus">
+          <span class="estatus-badge" 
+                [ngClass]="{
+                  'status-completed': estatus.estatus === 'Resuelto',
+                  'status-in-progress': estatus.estatus === 'En proceso',
+                  'status-delayed': estatus.estatus === 'Retrasado'
+                }">
+            {{ estatus.estatus }}
+          </span>
+        </td>
+      </ng-container>
+      
+      <ng-container matColumnDef="fecha_notificacion">
+        <th mat-header-cell *matHeaderCellDef>Fecha Notificación</th>
+        <td mat-cell *matCellDef="let estatus">{{ formatDate(estatus.fecha_notificacion) }}</td>
+      </ng-container>
+      
+      <tr mat-header-row *matHeaderRowDef="['caso', 'estatus', 'fecha_notificacion']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['caso', 'estatus', 'fecha_notificacion']"></tr>
+    </table>
+  </div>
+</div>

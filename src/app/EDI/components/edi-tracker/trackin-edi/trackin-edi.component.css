@@ -1,0 +1,125 @@
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mapbox-container {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+}
+
+/* Controles del mapa */
+.map-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.map-legend {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+  max-width: 220px;
+}
+
+.map-legend h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 4px;
+  margin-right: 8px;
+  border-radius: 2px;
+}
+
+.legend-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.legend-icon.critical {
+  color: #FF5252;
+}
+
+.legend-icon.truck {
+  color: #333;
+}
+
+.map-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.map-actions button {
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.route-info {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+  max-width: 220px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.info-item .label {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.info-item .value {
+  font-weight: 500;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .map-controls {
+    top: 5px;
+    right: 5px;
+    gap: 5px;
+  }
+  
+  .map-legend, .route-info {
+    max-width: 180px;
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+  
+  .map-legend h3 {
+    font-size: 0.9rem;
+  }
+}

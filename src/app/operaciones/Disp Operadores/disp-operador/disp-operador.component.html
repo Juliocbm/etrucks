@@ -1,0 +1,40 @@
+<div class="row" style="display: flex; margin:12px;">
+
+  <div class="col-md-8" style="display: flex; justify-content: flex-start">
+    <h4 style="display: flex; text-align: start;  justify-content: center; margin-bottom: 20px;">
+      Disponibilidad operadores y Pedidos
+    </h4>
+  </div>
+
+  <div class="col-md-4" style="display: flex; justify-content: flex-end; gap: 8px">
+    <!-- Botton de Filtro -->
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      <mat-icon style="margin: auto">filter_list</mat-icon>
+    </button>
+  </div>
+
+</div>
+
+
+  <div class="row" >
+    <div [ngClass]="{'col-4': operadoresActivos && pedidosActivos, 'col-12': operadoresActivos && !pedidosActivos || !operadoresActivos && pedidosActivos}" *ngIf="operadoresActivos">
+      <h5 style="margin: 20px;">Disponibilidad de operadores en: {{ patioSeleccionado }}</h5>
+      <app-operador-pedido-table
+        [isOperador]="true"
+        [showSucursal]="true"
+        [data]="datosOperadoresFiltrados"
+        [isLoading]="isLoading">
+      </app-operador-pedido-table>
+    </div>
+
+    <div [ngClass]="{'col-8': operadoresActivos && pedidosActivos, 'col-12': operadoresActivos && !pedidosActivos || !operadoresActivos && pedidosActivos}" *ngIf="pedidosActivos">
+      <h5 style="margin: 20px;">Prioridad de pedidos en: {{ sucursalSeleccionada }}</h5>
+      <app-operador-pedido-table
+        [isOperador]="false"
+        [data]="datosPedidosFiltrados"
+        [isLoading]="isLoading">
+      </app-operador-pedido-table>
+    </div>
+
+</div>
+

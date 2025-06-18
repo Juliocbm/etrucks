@@ -1,0 +1,222 @@
+<app-layout
+  title="{{
+    'Bitacora de: ' +
+      bitacora.nombreOperador +
+      ' ' +
+      bitacora.apellidoPatOperador +
+      ' ' +
+      bitacora.apellidoMatOperador
+  }}"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div
+            class="card-header"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            "
+          >
+            <h5 class="card-title">Detalle de la bitácora</h5>
+            <!-- <button
+              mat-raised-button
+              class="btn btn-primary"
+              (click)="regresar()"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <mat-icon class="material-icons"> arrow_back </mat-icon>
+            </button> -->
+          </div>
+
+          <div class="card-body">
+            <div class="col" style="display: flex; gap:12px; justify-content: center;">
+              <div class="col-12 col col-md-6">
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label"
+                    >Bitacora:</label
+                  >
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{
+                        bitacora.idBitacora
+                      }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label"
+                    >Operador:</label
+                  >
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{
+                        bitacora.nombreOperador +
+                          ' ' +
+                          bitacora.apellidoPatOperador +
+                          ' ' +
+                          bitacora.apellidoMatOperador
+                      }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label">Fecha:</label>
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{
+                        bitacora.fechaModificacion | date : 'dd/MM/yyyy hh:mm'
+                      }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label"
+                    >Hora de inicio:</label
+                  >
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ bitacora.horaIniciales }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label"
+                    >Hora de fin:</label
+                  >
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ bitacora.horaFinales }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col col-md-6">
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label">Cliente:</label>
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ bitacora.idCliente + ' - '+ obtenerCliente(bitacora.idCliente) }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label">Unidad:</label>
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ bitacora.idUnidad }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label">Flota:</label>
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ obtenerFlota(bitacora.idFlota) }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label">Turno:</label>
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ bitacora.turno }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group row" style="padding: 12px;">
+                  <label class="col-12 col-md-4 col-form-label">Estatus:</label>
+                  <div class="col-12 col col-md-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      value="{{ bitacora.estatus }}"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Movimientos en formato de tabla de la bitacora -->
+    <div class="row" style="margin-top: 12px;">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">Movimientos</h5>
+          </div>
+          <div class="card-body" style="overflow-y: scroll; max-height: 350px;">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Solicitante</th>
+                  <th scope="col">Rampa Origen</th>
+                  <th scope="col">Rampa Destino</th>
+                  <th scope="col">Caja</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Hora Inicial</th>
+                  <th scope="col">Hora Final</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let movimiento of bitacora.bitacoraMovs">
+                  <td>{{ movimiento.solicitante }}</td>
+                  <td>{{ movimiento.rampaOrigen }}</td>
+                  <td>{{ movimiento.rampaDestino }}</td>
+                  <td>{{ movimiento.noCaja }}</td>
+                  <td>{{ movimiento.cajaDescripcion }}</td>
+                    <td>{{ movimiento.horaInicial | date : 'dd/MM/yyyy HH:mm' }}</td>
+                    <td>{{ movimiento.horaFinal | date : 'dd/MM/yyyy HH:mm' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</app-layout>

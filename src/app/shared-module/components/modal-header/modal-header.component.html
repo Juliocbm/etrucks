@@ -1,0 +1,48 @@
+<mat-card>
+  <mat-card-content class="header-container">
+    <div class="left-elements">
+      <!-- Elementos anclados a la izquierda -->
+      <h2 style="color: #4f4f4f; font-family: system-ui">
+        {{TITULO_MODAL}}
+      </h2>
+     <!--  <mat-slide-toggle *ngIf=" ( TIPO_MODAL== 'EDIT' || TIPO_MODAL == 'DETAIL' ) && showButtonEditable"
+        style="padding-top: 5px; margin-left: 20px" [(ngModel)]="IS_EDITABLE"
+        (ngModelChange)="editableChange($event)">
+        <div style="color: #4f4f4f; font-family: system-ui; font-weight: 600">
+          {{ IS_EDITABLE  ? "Editable" : "No editable" }}
+        </div>
+      </mat-slide-toggle> -->
+    </div>  
+    <div class="center-elements">
+      <div *ngIf="ELIMINADO" class="eliminado-badge">
+        <span>Registro eliminado</span>
+      </div>
+    </div>
+    <div class="right-elements">
+      <div *ngIf="isStepper">         
+        <button *ngIf="stepSelect > 0 && !isLoading"  mat-button
+        (click)="previousStep()" > ANTERIOR </button>
+
+        <button *ngIf="stepSelect != stepLenght - 1 && !isLoading" mat-button
+        (click)="nextStep()" >  SIGUIENTE </button>
+
+        <button *ngIf="stepSelect == stepLenght - 1 && !isLoading && IS_EDITABLE"
+          style="background-color: #eba23d; color: #393939" mat-button color="primary" (click)="onSubmit()">
+          Guardar
+        </button>
+      
+      </div>
+    <div *ngIf="!isStepper">
+      <button *ngIf="EXPORT" style="background-color: #eba23d; color: #393939" mat-button color="primary" (click)="onExport()">
+        Exportar
+      </button>
+      <button *ngIf="IS_EDITABLE" style="background-color: #eba23d; color: #393939" mat-button color="primary" (click)="onSubmit()">
+        Guardar
+      </button>
+    </div>
+      <button mat-icon-button (click)="cerrarModal()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

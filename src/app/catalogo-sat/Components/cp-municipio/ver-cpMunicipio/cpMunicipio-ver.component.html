@@ -1,0 +1,30 @@
+
+  
+  <app-layout title="Codigo Postal / Municipio">
+    <app-toolbar
+      [showFilterActivos]="false"
+      [showCreateButton]="false"
+      [showFilterDate]="false"
+      [showFilter]="false"
+      [showExportButton]="false"
+      [showSaveButton]="false"
+      
+    ></app-toolbar>
+  
+    <div class="card mt-4">
+      <div class="card-header">
+        <h5>Detalle del catalogo</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>ID: </strong>{{ cp.id }}</p>
+            <p><strong>Codigo Postal: </strong>{{ cp.cp }}</p>
+            <p><strong>Estado: </strong>{{ cp.estado }}</p>
+            <p><strong>Localidad: </strong>{{ cp.localidad }}</p>
+            <p><strong>Municipio: </strong>{{ cp.municipio }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-layout>

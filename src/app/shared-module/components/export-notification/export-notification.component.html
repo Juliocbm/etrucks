@@ -1,0 +1,36 @@
+<div *ngIf="exportStatus.showNotification" class="export-notification">
+  <div class="export-notification-content">
+    <div class="export-header">
+      <span>Descargas en curso...</span>
+      <button (click)="hideNotification()" class="close-btn">×</button>
+    </div>
+    
+    <div *ngIf="exportStatus.activeJobs.length === 0" class="no-jobs">
+      No hay exportaciones en curso.
+    </div>
+    
+    <div *ngFor="let job of exportStatus.activeJobs; trackBy: trackByJobId" class="export-job">
+      <div class="job-header">
+        <span class="job-title">{{job.fileName}}</span>
+        <span class="job-status" [ngClass]="{'status-completed': job.isCompleted && !job.error, 'status-error': job.error}">
+          {{job.error ? 'Error' : (job.isCompleted ? 'Completado' : 'En progreso')}}
+        </span>
+      </div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" 
+             [style.width.%]="job.progress"
+             [ngClass]="{'progress-completed': job.isCompleted && !job.error, 'progress-error': job.error}">
+        </div>
+      </div>
+      
+      <div *ngIf="job.error" class="error-message">
+        {{job.error}}
+      </div>
+      
+      <div *ngIf="job.isCompleted && !job.error" class="success-message">
+        Archivo descargado correctamente.
+      </div>
+    </div>
+  </div>
+</div> 

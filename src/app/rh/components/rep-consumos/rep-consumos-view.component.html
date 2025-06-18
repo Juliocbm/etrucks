@@ -1,0 +1,113 @@
+<app-layout titulo="Reporte de consumos">
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+    <!-- <form >  -->
+    <div class="row">
+      
+            <div class="col-3">
+              <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Elige el rango de fechas</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <!-- ngModel se usa sin paréntesis dobles en inputs individuales -->
+                  <input matStartDate [(ngModel)]="start" placeholder="Fecha inicio">
+                  <input matEndDate [(ngModel)]="end" placeholder="Fecha fin">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            </div>
+            
+            <div class="col-3">
+              <mat-form-field appearance="fill" class="custom-form-field">
+                <mat-label>Compañía</mat-label>
+                <!-- Aquí va [(ngModel)] en lugar de ([ngModel]) -->
+                <mat-select [(ngModel)]="idCompania" (selectionChange)="cambiarCompania($event)">
+                  <mat-option
+                    *ngFor="let sis of companias"
+                    [value]="sis.idCompania">
+                    {{ sis.nombre }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field appearance="fill" class="custom-form-field">
+                <mat-label>Sucursal</mat-label>
+                <mat-select 
+                [(ngModel)]="idSucursal">
+                <mat-option [value]="0" >TODOS</mat-option>
+                  <mat-option
+                  id="idSucursal"
+                  name="idSucursal"
+                    *ngFor="let sis of sucursal"
+                    [value]="sis.id_sucursal"
+                    >{{ sis.desc_sucursal  }} - {{sis.nombre_corto}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+          </div>
+          <div class="col-3">
+            <mat-form-field appearance="fill" class="custom-form-field">
+              <mat-label>Estatus</mat-label>
+              <!-- Aquí va [(ngModel)] en lugar de ([ngModel]) -->
+              <mat-select [(ngModel)]="idEstatusConsumo">
+                <mat-option [value]="0" >TODOS</mat-option>
+                <mat-option
+                  *ngFor="let sis of estatus"
+                  [value]="sis.idEstatus">
+                  {{ sis.descripcion }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+            
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-3">
+        <mat-form-field appearance="fill" class="custom-form-field">
+          <mat-label>Consumos</mat-label>
+          <mat-select 
+          [(ngModel)]="idTipoConsumos">
+            <mat-option [value]="1" >TODOS</mat-option>
+            <mat-option [value]="0" >NOMINA</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field appearance="fill" class="custom-form-field">
+          <mat-label>Tipo Empleado</mat-label>
+          <mat-select (selectionChange)="cambiarTipoEmpleado($event)"
+          [(ngModel)]="idTipoEmpleado">
+          <mat-option [value]="'0'" >TODOS</mat-option>
+            <mat-option
+            id="idTipoEmpleado"
+            name="idTipoEmpleado"
+              *ngFor="let te of tipoEmpleados"
+              [value]="te.idCatGenDetalle"
+              >{{ te.nombre  }}  </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div class="col-3">
+        <button (click)="retriveData()"  mat-raised-button color="primary" type="submit">Consultar</button>
+      </div>
+    </div>
+<!-- </form> -->
+
+    <app-full-table  
+    [data]="datosFiltrados"
+    [nombreTabla]="' Total Platillos: ' + cantPlatillos + ' Total Consumos: $' + cantConsumos"
+      [nombreMenu]="'Consumos'"
+      [columnConfigs]="columnConfigs"
+      (refreshEvent)="retriveData()" 
+      [excelFileName]="'Consimos'" 
+      [tableConfigs]="tableConfigs" 
+      [showCreateButtonModal]="false"
+      [isLoading]="isLoading">
+    </app-full-table>
+   
+  </app-layout>
+  
+   

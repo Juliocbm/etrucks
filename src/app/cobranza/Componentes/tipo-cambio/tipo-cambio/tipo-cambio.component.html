@@ -1,0 +1,12 @@
+<app-layout [titulo]="NOMBRE_MENU">
+  <app-full-tableV2
+    [actions]="tableActions"
+    [nombreMenu]="NOMBRE_MENU"
+    [columnConfigs]="columnConfigs"
+    [excelFileName]="'TipoCambioHistorial'"
+    [tableConfigs]="tableConfigs"
+    [showCreateButtonModal]="true"
+    [fetchDataFunction]="apiCfdi.obtenerTiposCambio.bind(apiCfdi)"
+    [parametros]="parametrosTipoCambio"
+  ></app-full-tableV2>
+</app-layout>

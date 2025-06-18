@@ -1,0 +1,284 @@
+<app-modal-header
+  [TITULO_MODAL]="TITULO_MODAL"
+  [TIPO_MODAL]="TIPO_MODAL"
+  [IS_EDITABLE]="IS_EDITABLE"
+  (isEditableEvent)="editableChange($event)" (submitEvent)="onSubmit()"
+  (closeModalEvent)="cerrarModal()">
+</app-modal-header>
+
+<alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+<app-loading [isLoading]="isLoading" [fondo]="true"></app-loading>
+
+
+<app-layout>
+  <div class="body">
+    <form [formGroup]="visitaForm">
+
+      <!-- HEADER -->
+      <div class="row" *ngIf="!isCreate">
+        <div class="col-md-6" *ngIf="!esEmpleado">
+          <div id="id">
+            <div class="form-group">
+              <label for="id">Visita</label>
+              <input type="text" class="form-control" id="id" formControlName="id" readonly />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="estatusSolicitud">Estatus Solictud</label>
+            <app-dropdown-fullV2 [fetchDataFunction]="apiOperacionesService.getEstatusSolicitud.bind(apiOperacionesService)"
+              [parametros]="parametrosEstatusSolicitud" [columnConfigs]="columnConfigEstatusSolicitud"
+              [placeholder]="'Selecciona un estatus'" [IS_EDITABLE]="false"
+              [itemDefault]="estatusSolicitudSelected" [displayColumnConfigDF]="displayColumnConfigEstatusSolicitud"
+              (enviarItemEvent)="onSeleccionaEstatusSolicitud($event)" #myTable>
+            </app-dropdown-fullV2>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- BODY -->
+      <div class="row">
+
+        <!-- Seccion de Registro de Usuario -->
+        <div class="row row-body">
+          <div class="col-md-3" *ngIf="!esEmpleado">
+            <div class="form-group">
+              <label for="nombreVisitante">Nombre Visitante</label>
+              <input [value]="visita.nombreVisitante" matInput [readonly]="!IS_EDITABLE" type="text"
+                class="form-control" id="nombreVisitante" formControlName="nombreVisitante" placeholder="Nombre...">
+              <div *ngIf="visitaForm.get('nombreVisitante')?.invalid && visitaForm.get('nombreVisitante')?.touched"
+                class="text-danger">
+                El nombre del visitante es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3" style="display: flex; align-items:center; flex-wrap:wrap ">
+            <label for="documentoIdentidad"
+              style="display: flex; flex-direction: column; align-items: flex-start; white-space: nowrap; text:center;">
+              Documento Identidad
+            </label>
+
+            <div style="display: flex; flex-wrap:wrap; gap:24px">
+              <div class="col-md-3">
+                <app-dropdown-fullV2
+                  [fetchDataFunction]="apiOperacionesService.getTipoDocumento.bind(apiOperacionesService)"
+                  [parametros]="parametrosTipoDocumento" [columnConfigs]="columnConfigTipoDocumento"
+                  [placeholder]="'Selecciona un visitante'" [IS_EDITABLE]="IS_EDITABLE"
+                  [itemDefault]="tipoDocumentoSelected" [displayColumnConfigDF]="displayColumnConfigTipoDocumento"
+                  (enviarItemEvent)="onSeleccionaTipoDocumento($event)" #myTable>
+                </app-dropdown-fullV2>
+                <div *ngIf="visitaForm.get('tipoDocumentoId')?.invalid && visitaForm.get('tipoDocumentoId')?.touched"
+                  class="text-danger">
+                  El tipo de documento es requerido.
+                </div>
+              </div>
+
+              <div class="col-md-7">
+                <div class="form-group">
+                    <input
+                      matInput
+                      [readonly]="!IS_EDITABLE"
+                      type="text"
+                      class="form-control"
+                      id="documentoIdentidad"
+                      formControlName="documentoIdentidad"
+                      placeholder="RFC, CURP, INE, etc."
+                      [appDocumentoValidator]="tipoDocumentoSelected.id"
+                      toUpperCase
+                    />
+                  <div
+                    class="text-danger">
+                    {{ getErrorMessage() }}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-4">
+            <div class="form-group">
+              <label for="sucursalId">Sucursal</label>
+              <select class="form-control" id="sucursalId" formControlName="sucursalId">
+                <option value="">Seleccione una sucursal</option>
+                <option *ngFor="let sucursal of sucursales" [value]="sucursalSelected.idSucursal">{{ sucursal.nombre }}</option>
+              </select>
+              <div *ngIf="visitaForm.get('sucursalId')?.invalid && visitaForm.get('sucursalId')?.touched" class="text-danger">
+                La sucursal es requerida.
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Dropdown V2 Sucursales -->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="sucursalId">Sucursal</label>
+              <app-dropdown-fullV2
+                [fetchDataFunction]="apiRecursosHumanos.getSucursalesV2.bind(apiOperacionesService)"
+                [parametros]="parametrosSucursales" [columnConfigs]="columnConfigSucursales"
+                [placeholder]="'Selecciona una sucursal'" [IS_EDITABLE]="IS_EDITABLE"
+                [itemDefault]="sucursalSelected" [displayColumnConfigDF]="displayColumnConfigSucursales"
+                (enviarItemEvent)="onSeleccionaSucursal($event)" #myTable>
+              </app-dropdown-fullV2>
+
+            </div>
+          </div>
+
+          <!-- Correo -->
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="correoDestinatario">Correo</label>
+              <input matInput type="email" class="form-control" id="correoDestinatario" formControlName="correoDestinatario" [readonly]="!IS_EDITABLE">
+              <div *ngIf="visitaForm.get('correoDestinatario')?.invalid && visitaForm.get('correoDestinatario')?.touched" class="text-danger">
+                El correo es requerido.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <!-- Seccion de Seleccion de Entrada de la Visita -->
+        <div class="row row-body">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="fechaVisita">Fecha visita</label>
+              <mat-form-field sty>
+                <!-- <mat-label>Fecha Visita</mat-label> -->
+                <input matInput [(ngModel)]="visita.fechaVisita" [matDatepicker]="picker1" id="fechaVisita" formControlName="fechaVisita"
+                  [readonly]="!IS_EDITABLE">
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker1" [disabled]="!IS_EDITABLE"></mat-datepicker-toggle>
+                <mat-datepicker [disabled]="!IS_EDITABLE" #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Timer Hora inicial -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="horaEntrada">Hora Entrada</label>
+              <input matInput type="time" class="form-control" id="horaEntrada" formControlName="horaEntrada"
+                [readonly]="!IS_EDITABLE">
+              <div *ngIf="visitaForm.get('horaEntrada')?.invalid && visitaForm.get('horaEntrada')?.touched"
+                class="text-danger">
+                La hora de entrada es requerida.
+              </div>
+            </div>
+          </div>
+
+          <!-- Timer Hora Final -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="horaSalida">Hora Salida</label>
+              <input matInput type="time" class="form-control" id="horaSalida" formControlName="horaSalida"
+                [readonly]="!IS_EDITABLE">
+              <div *ngIf="visitaForm.get('horaSalida')?.invalid && visitaForm.get('horaSalida')?.touched"
+                class="text-danger">
+                La hora de salida es requerida.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seccion ultima de Ingresos de TipoVisita, Si es Proveedor habilitar dropdown de proveedor -->
+        <div class="row row-body">
+
+          <!-- Registro del tipo de visita -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="tipoVisita">Tipo Visita</label>
+              <select class="form-control" id="tipoVisita" formControlName="tipoVisita"
+                (change)="onChangeTipoVisita($event)">
+                <option value="" disabled>Seleccione un tipo de visita</option>
+                <option value="Recursos Humanos">Recursos Humanos</option>
+                <option value="Proveedor">Proveedor</option>
+                <option value="Contratista">Contratista</option>
+                <option value="Visitante">Visitante</option>
+              </select>
+              <div *ngIf="visitaForm.get('tipoVisita')?.invalid && visitaForm.get('tipoVisita')?.touched"
+                class="text-danger">
+                El tipo de visita es requerido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Si esProveedor es true se muestra el div de la lista de proveedores, si no, se oculta  -->
+          <div class="col-md-6" *ngIf="tipoVisitaSelected === 'Proveedor'">
+            <div class="form-group">
+              <label for="idProveedor">Proveedor</label>
+              <app-dropdown-fullV2
+                style="margin-bottom: 20px !important; position: relative; display: block;"
+                [fetchDataFunction]="apiOperacionesService.getProveedoresV2.bind(apiOperacionesService)"
+                [parametros]="parametrosProveedores"
+                [columnConfigs]="columnConfigProveedores"
+                [placeholder]="'Selecciona un proveedor'" [IS_EDITABLE]="IS_EDITABLE"
+                [itemDefault]="proveedorSelected"
+                [displayColumnConfigDF]="displayColumnConfigProveedores"
+                (enviarItemEvent)="onSeleccionaProveedor($event)" #myTable>
+              </app-dropdown-fullV2>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!--  Motivos de la Visita  -->
+        <div class="row row-body">
+          <div class="col-md-12">
+            <div class="form-group">
+              <mat-label for="motivoVisita">Motivo Visita</mat-label>
+              <textarea [readonly]="!IS_EDITABLE" type="text" class="form-control" id="motivoVisita" formControlName="motivoVisita"></textarea>
+              <div *ngIf="visitaForm.get('motivoVisita')?.invalid && visitaForm.get('motivoVisita')?.touched" class="text-danger">
+                El motivo de la visita es requerido.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- FOOTER (DATOS AUDITORIA) -->
+      <div class="row row-body">
+        <hr style="width: 100%;">
+
+        <!-- Auditoria -->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="creadoPor">Usuario Creación</label>
+            <input type="text" class="form-control" id="creadoPor" formControlName="creadoPor" readonly />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="creado">Fecha Creación</label>
+            <input type="datetime"  class="form-control" id="creado" formControlName="creado" readonly />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="modificadoPor">Usuario Modificación</label>
+            <input type="text" class="form-control" id="modificadoPor" formControlName="modificadoPor" readonly />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="modificado">Fecha Modificación</label>
+            <input type="datetime"  class="form-control" id="modificado" formControlName="modificado" readonly />
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</app-layout>

@@ -1,0 +1,169 @@
+<app-modal-header
+  [TITULO_MODAL]="TITULO_MODAL"
+  [TIPO_MODAL]="TIPO_MODAL"
+  [IS_EDITABLE]="IS_EDITABLE"
+  (isEditableEvent)="editableChange($event)"
+  (submitEvent)="onSubmit()"
+  (closeModalEvent)="cerrarModal()"
+  [ELIMINADO]="!formulario.get('activo')?.value"
+></app-modal-header>
+
+<mat-tab-group style="margin: 20px 20px 20px 20px">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">badge</mat-icon>
+      General
+    </ng-template>
+    <form [formGroup]="formulario" >
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>General</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-4">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Nombre</mat-label>
+                <input
+                  [readonly]="!IS_EDITABLE"
+                  matInput
+                  formControlName="nombres"
+                  toUpperCase
+                />
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Apellido pateno</mat-label>
+                <input
+                  [readonly]="!IS_EDITABLE"
+                  matInput
+                  formControlName="apellidoPat"
+                  toUpperCase
+                />
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-4">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Apellido materno</mat-label>
+                <input
+                  [readonly]="!IS_EDITABLE"
+                  matInput
+                  formControlName="apellidoMat"
+                  toUpperCase
+                />
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row" style="display: flex; justify-content:center; align-items:center; ">
+            <div class="col-4">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Email</mat-label>
+                <input
+                  [readonly]="!IS_EDITABLE"
+                  matInput
+                  formControlName="email"
+                  toUpperCase
+                />
+                <mat-error
+                  *ngIf="formulario.get('email')?.hasError('required')"
+                >
+                  Campo obligatorio.
+                </mat-error>
+                <mat-error
+                  *ngIf="formulario.get('email')?.hasError('formatoInvalido')"
+                >
+                  Formato inválido.
+                </mat-error>
+                <mat-error
+                  *ngIf="formulario.get('email')?.hasError('dominioInvalido')"
+                >
+                  Dominio no permitido.
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-4">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Usuario</mat-label>
+                <input
+                  [readonly]="!IS_EDITABLE"
+                  matInput
+                  formControlName="usuario1"
+                  toUpperCase
+                />
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="TIPO_MODAL == 'CREATE'" class="col-4">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Contraseña</mat-label>
+                <input
+                  [readonly]="!IS_EDITABLE"
+                  matInput
+                  formControlName="contraseña"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </form>
+    <div>
+      <form [formGroup]="formulario">
+        <mat-card>
+          <mat-card-header>
+          
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">   
+              <div class="col-md-12" *ngIf="columnsConfigured">
+                <!-- Aquí va tu tabla -->
+                <app-full-table
+                  [data]="rolAsignado"
+                  [columnConfigs]="columnConfigsRolSelect"
+                  [nombreTabla]="'Roles asignados'"
+                  [tableConfigs]="tableConfigsRol"
+                  [showCreateButton]="false"
+                  [showExportarButton]="false"
+                  [actions]="IS_EDITABLE ? tableActionsAsignados : []"
+                  [showRefreshButton]="false"
+                  [showConfColumnsButton]="false"
+                  [showFilterInactivos]="false"
+                ></app-full-table>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </div>
+  </mat-tab>
+
+  <mat-tab *ngIf="TIPO_MODAL != 'DETAIL'">
+    <ng-template mat-tab-label>  
+      Asignación de roles
+    </ng-template>
+    <form [formGroup]="formulario" >
+    <div>
+      <app-full-table
+        [data]="rolListado"
+        [columnConfigs]="columnConfigsRol"
+        [nombreTabla]="'Catalogo de Roles'"
+        [tableConfigs]="tableConfigsCatalogoRol"
+        [showCreateButton]="false"
+        [showExportarButton]="false"
+        [actions]="tableActionsCatalogo"
+        [showRefreshButton]="false"
+        [showConfColumnsButton]="false"
+        [showFilterInactivos]="false"
+      ></app-full-table>
+    </div>
+
+    </form>
+  </mat-tab>
+</mat-tab-group>

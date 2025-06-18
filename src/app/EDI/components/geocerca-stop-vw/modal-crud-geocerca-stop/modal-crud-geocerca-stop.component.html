@@ -1,0 +1,63 @@
+<app-modal-header [TITULO_MODAL]="TITULO_MODAL" [TIPO_MODAL]="TIPO_MODAL" [IS_EDITABLE]="IS_EDITABLE"
+  (isEditableEvent)="editableChange($event)" (submitEvent)="onSubmit()"
+  (closeModalEvent)="cerrarModal()">
+</app-modal-header>
+
+<div class="body">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <mat-label>Cliente Parada</mat-label>
+          <app-dropdown-fullV2
+            [fetchDataFunction]="apiEDI.getEdiClienteParadas.bind(apiEDI)"
+            [parametros]="parametrosEdiClienteParada"
+            [placeholder]="'Selecciona un cliente parada'"
+            [IS_EDITABLE]="IS_EDITABLE"
+            [tableConfigs]="tableConfigsEdiClienteParadas"
+            [columnConfigs]="columnConfigsEdiClienteParadas"
+            [displayColumnConfigDF]="displayColumnConfigDFEdiClienteParadas"
+            [itemDefault]="ediClienteParadaSelected"
+            (enviarItemEvent)="onSeleccionaEdiClienteParada($event)"
+            formControlName="idEdiClienteParadas">
+          </app-dropdown-fullV2>
+        </div>
+        <div class="col-md-12 mb-3">
+          <mat-label>Geocercas</mat-label>
+          <!-- <app-dropdown-fullV3
+          [fetchDataFunction]="apiMantenimiento.getGeocercasAllV2.bind(apiMantenimiento)"
+          [valColumnToFormControl]="[{ valueColumn: 'idGeocerca', formControl: 'idGeocerca' }]"
+          [parametros]="parametrosGeocerca"
+          [placeholder]="'Selecciona una o más geocercas'"
+          [IS_EDITABLE]="IS_EDITABLE"
+          [tableConfigs]="tableConfigsGeocerca"
+          [columnConfigs]="columnConfigsGeocerca"
+          [displayColumnConfigDF]="displayColumnConfigDFGeocerca"
+          (eliminarItemEvent)="onDeleteGeocerca($event)"
+          (enviarItemEvent)="onAddGeocerca($event)"
+          formControlName="geocercas">
+        </app-dropdown-fullV3> -->
+
+        <app-dropdown-multi-select
+          [formGroup]="formulario"
+          [valColumnToFormControl]="[{ valueColumn: 'idGeocerca', formControl: 'idGeocerca' }]"
+          style="margin-bottom: 20px !important; position: relative; display: block;"
+          [fetchDataFunction]="apiMantenimiento.getGeocercasAllV2.bind(apiMantenimiento)"
+          [parametros]="parametrosGeocerca"
+          [columnConfigs]="columnConfigsGeocerca"
+          [placeholder]="'Selecciona una geocerca'"
+          [IS_EDITABLE]="IS_EDITABLE"
+          [displayColumnConfigDF]="displayColumnConfigDFGeocerca"
+          (enviarItemEvent)="onSeleccionaGeocerca($event)" #myTable
+          [tableConfigs]="tableConfigsGeocerca"
+          >
+        </app-dropdown-multi-select>
+
+        </div>
+        <div class="col-md-12 mb-3">
+          <div id="map" class="map-container" style="width: 100%; height: 400px; border-radius: 4px; border: 1px solid #ccc;"></div>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </form>
+</div>

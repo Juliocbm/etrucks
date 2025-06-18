@@ -1,0 +1,153 @@
+<app-modal-header 
+    [TITULO_MODAL]="TITULO_MODAL"
+    [IS_EDITABLE]="!(data.tipo == 'DETAIL')"
+    (submitEvent)="onSubmit()"
+    (closeModalEvent)="cerrar()"></app-modal-header>
+
+<app-loading [isLoading]="isLoading" [fondo]="true"></app-loading>
+<div class="container-fluid mt-2">
+    <div class="row" *ngIf="data.tipo == 'CREATE'">
+        <div class="col">
+            <form [formGroup]="formGroup">
+                <div class="row">
+                    <div class="col" *ngIf="false">
+                        <mat-form-field class="w-100">
+                            <mat-label>Cliente principal</mat-label>
+                            <input matInput formControlName="idClientePrincipal"/>
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                        <label for="myTable">Cliente principal</label>
+                        <app-dropdown-fullV2
+                            [fetchDataFunction]="apiServicioCliente.getClientesV2.bind(apiServicioCliente)"
+                            [columnConfigs]="columnConfigsCliente"
+                            placeholder="Selecciona Cliente principal"
+                            [IS_EDITABLE]="!(data.tipo == 'DETAIL')"
+                            [itemDefault]="clientePrincipalSelected"
+                            [displayColumnConfigDF]="displayColumnConfCliente"
+                            (enviarItemEvent)="onSeleccionaClientePrincipal($event)"
+                            #myTable
+                            [tableConfigs]="tableConfigs"
+                            style="width: 100%">
+                        </app-dropdown-fullV2>
+                    </div>
+                </div>
+                <ng-container formArrayName="idClientesAlternos" class="mt-4">
+                    <div class="row" *ngFor="let idClienteAlterno of idClientesAlternosArray.controls; let i = index" [formGroupName]="i">
+                        <div class="col-11" *ngIf="false">
+                            <mat-form-field class="w-100">
+                                <mat-label>Cliente Alterno</mat-label>
+                                <input matInput formControlName="idClienteAlterno"/>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-11">
+                            <label for="myTable">Cliente Alterno {{i+1}}</label>
+                            <app-dropdown-fullV2
+                                [fetchDataFunction]="apiServicioCliente.getClientesV2.bind(apiServicioCliente)"
+                                [columnConfigs]="columnConfigsCliente"
+                                placeholder="Selecciona Cliente Alterno"
+                                [IS_EDITABLE]="!(data.tipo == 'DETAIL')"
+                                [itemDefault]="clientesAlternosSelected[i]"
+                                [displayColumnConfigDF]="displayColumnConfCliente"
+                                (enviarItemEvent)="onSeleccionaClienteAlterno($event,i)"
+                                #myTable
+                                [tableConfigs]="tableConfigs"
+                                style="width: 100%">
+                            </app-dropdown-fullV2>
+                        </div>
+                        <div class="col-1 mt-4" *ngIf="i==0">
+                            <button mat-button color="primary" [disabled]="this.data.tipo === 'DETAIL'" matTooltip="Agregar cliente alterno" (click)="agregarClienteAlterno()"><mat-icon>add</mat-icon></button>
+                        </div>
+                        <div class="col-1 mt-4" *ngIf="i!=0">
+                            <button mat-button color="primary" [disabled]="this.data.tipo === 'DETAIL'" matTooltip="Quitar cliente alterno" (click)="removerClienteAlterno(i)"><mat-icon>remove</mat-icon></button>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="data.tipo == 'DETAIL' || data.tipo == 'EDIT'">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <label for="myTable">Cliente principal</label>
+                    <app-dropdown-fullV2
+                        [fetchDataFunction]="apiServicioCliente.getClientesV2.bind(apiServicioCliente)"
+                        [columnConfigs]="columnConfigsCliente"
+                        placeholder="Cliente principal"
+                        [IS_EDITABLE]="false"
+                        [itemDefault]="clientePrincipalSelected"
+                        [displayColumnConfigDF]="displayColumnConfCliente"
+                        (enviarItemEvent)="onSeleccionaClientePrincipal($event)"
+                        #myTable
+                        [tableConfigs]="tableConfigs"
+                        style="width: 100%">
+                    </app-dropdown-fullV2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <app-full-table
+                        [data]="dataTable"
+                        [columnConfigs]="columnConfigs"
+                        [tableConfigs]="tableConfigs"
+                        [isLoading]="isLoadingTable"
+                        [actions]="data.tipo == 'DETAIL'?[]:tableActions"
+                        [showConfColumnsButton]="false"
+                        [showExportarButton]="false"
+                        [showCreateButtonModal]="false"
+                        [showFilterInactivos]="true"
+                        [showRefreshButton]="false"
+                        nombreMenu="Clientes alternos EDI"
+                        nombreTabla="Clientes alternos EDI"
+                    ></app-full-table>
+                </div>
+            </div>
+            <div class="row mt-3" *ngIf="data.tipo == 'EDIT' && idClientesAlternosArray.controls.length == 0">
+                <div class="col">
+                    <button class="w-100" color="primary" mat-flat-button (click)="agregarClienteAlterno()">Agregar nuevo cliente alterno</button>
+                </div>
+            </div>
+            <div class="row mt-3" *ngIf="data.tipo == 'EDIT'">
+                <div class="col">
+                    <form [formGroup]="formGroup">
+                        <ng-container formArrayName="idClientesAlternos" class="mt-4">
+                            <div class="row" *ngFor="let idClienteAlterno of idClientesAlternosArray.controls; let i = index" [formGroupName]="i">
+                                <div class="col-11" *ngIf="false">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>Cliente Alterno</mat-label>
+                                        <input matInput formControlName="idClienteAlterno"/>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-11">
+                                    <label for="myTable">Cliente Alterno {{i+1}}</label>
+                                    <app-dropdown-fullV2
+                                        [fetchDataFunction]="apiServicioCliente.getClientesV2.bind(apiServicioCliente)"
+                                        [columnConfigs]="columnConfigsCliente"
+                                        placeholder="Selecciona Cliente Alterno"
+                                        [IS_EDITABLE]="!(data.tipo == 'DETAIL')"
+                                        [itemDefault]="clientesAlternosSelected[i]"
+                                        [displayColumnConfigDF]="displayColumnConfCliente"
+                                        (enviarItemEvent)="onSeleccionaClienteAlterno($event,i)"
+                                        #myTable
+                                        [tableConfigs]="tableConfigs"
+                                        style="width: 100%">
+                                    </app-dropdown-fullV2>
+                                </div>
+                                <div class="col-1 mt-4" *ngIf="i==0">
+                                    <button mat-button color="primary" [disabled]="this.data.tipo === 'DETAIL'" matTooltip="Agregar cliente alterno" (click)="agregarClienteAlterno()"><mat-icon>add</mat-icon></button>
+                                </div>
+                                <div class="col-1 mt-4" *ngIf="i!=0">
+                                    <button mat-button color="primary" [disabled]="this.data.tipo === 'DETAIL'" matTooltip="Quitar cliente alterno" (click)="removerClienteAlterno(i)"><mat-icon>remove</mat-icon></button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

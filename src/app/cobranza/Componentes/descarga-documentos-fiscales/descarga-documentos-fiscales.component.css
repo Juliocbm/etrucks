@@ -1,0 +1,100 @@
+
+.mat-elevation-z8 {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* .table-container {
+  max-height: 500px;
+  overflow-y: auto;
+}
+ */
+.mat-elevation-z8 {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* .mat-cell,
+.mat-header-cell {
+  min-width: 120px; 
+} */
+
+/*MANTENER VISIBLES LAS CABECERAS DE LA TABLA AUN AL BAJAR EN SCROLL*/
+/*  table {
+  width: 100%;
+  min-width: 1000px; 
+  border-collapse: collapse; 
+} 
+
+th.mat-header-cell {
+  background: white; 
+  position: sticky;
+  top: 0; 
+  z-index: 100; 
+}
+
+.mat-cell,
+.mat-header-cell {
+  min-width: 120px; 
+  padding: 10px; 
+  border-bottom: 1px solid #e0e0e0;
+} */
+
+/* HABILITAR SCROLL VERTICAL */
+/* .table-container {
+  max-height: 500px; 
+  overflow-y: auto;
+  overflow-x: auto;
+} */
+
+/*RECUADRO GRIS PARA CUANDO LA TABLA ESTA VACIA SIGA TENIENDO CUERPO*/
+.empty-state {
+  text-align: center;
+  color: #626262;
+  font-size: 18px;
+  /*     padding: 250px; */
+  height: 200px;
+  background-color: #c5c5c59e;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  color: #ccc;
+}
+
+.empty-state button {
+  margin-top: 15px;
+}
+
+/*SPINNER LOADING*/
+.loading-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+
+
+  /*estilos tablas*/
+  .container-principal {
+    display: flex; /* Usa flexbox para controlar los elementos hijos */
+    flex-direction: column; /* Organiza los hijos en una columna */
+    height: 100%;
+  }
+  
+  .container {
+    flex: 1; 
+  padding: 15px;
+    margin-bottom: 15px; 
+  }
+
+  .table-container {
+    flex: 1; 
+    overflow-y: auto; 
+    max-height: 250px;
+  overflow-y: auto;
+    /* Asegúrate de no tener un margen/padding que pueda interferir con la altura */
+  }
+  
+  

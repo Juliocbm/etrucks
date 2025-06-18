@@ -1,0 +1,7 @@
+<div *ngIf="isLoading && fondo" class="loading-overlay">
+  <mat-spinner diameter="30"></mat-spinner>
+</div>
+
+<div *ngIf="isLoading && !fondo" class="loading-overlay-sin-fondo">
+  <mat-spinner diameter="30"></mat-spinner>
+</div>

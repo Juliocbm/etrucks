@@ -1,0 +1,25 @@
+/* .dialog
+{
+  display: flex;
+  width: auto;
+  height: auto;
+} */
+/* .mat-dialog-container
+{
+  display: flex;
+  width:auto;
+  height:auto;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+} */
+
+.mat-mdc-dialog-surface
+{
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+}

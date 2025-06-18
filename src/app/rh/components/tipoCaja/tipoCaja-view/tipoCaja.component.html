@@ -1,0 +1,8 @@
+<app-layout titulo="Tipo caja de ahorro">
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+  <app-full-table
+    [nombreMenu]="'tipoCaja'"       [data]="datosFiltrados"         [actions]="tableActions"
+    [columnConfigs]="columnConfigs" [tableConfigs]="tableConfigs"   [excelFileName]="'CatalogoTipoCajaAhorro'"
+    (refreshEvent)="retriveData()"  [showCreateButtonModal]="true"  [isLoading]="isLoading">
+  </app-full-table>
+</app-layout>

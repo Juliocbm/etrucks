@@ -1,0 +1,13 @@
+
+  <app-layout titulo="Roles">
+    <app-full-tableV2
+      [data]="datosFiltrados" 
+      [actions]="tableActions"
+      [columnConfigs]="columnConfigs"
+      [tableConfigs]="tableConfigs" 
+      [showCreateButtonModal]="true"
+      [fetchDataFunction]="observableRoles"
+      [idMenu]="MENU_ACTUAL.idMenu"
+      excelFileName="CatalogoRoles"> 
+    </app-full-tableV2>
+  </app-layout>

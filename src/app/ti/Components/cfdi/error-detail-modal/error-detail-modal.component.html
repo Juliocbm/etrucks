@@ -1,0 +1,25 @@
+
+<mat-card class="example-card">
+  <mat-card-header style="justify-content: space-between; background-color: #a9a9a926; padding: 15px;;">
+    <mat-card-title>Detalles de los Errores</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+    <div class="right-elements">
+      <mat-icon (click)="close()" style="cursor: pointer; color: rgb(44, 44, 44); vertical-align: bottom;">highlight_off</mat-icon>
+    </div>
+
+  </mat-card-header>
+  <br>
+  <mat-card-content>
+    <mat-dialog-content>
+      <div *ngFor="let error of data">
+        <p><strong>Error:</strong> {{ error.error }}</p>
+        <p><strong>Fecha:</strong> {{ error.fechaInsert | date: 'medium' }}</p>
+        <hr>
+      </div>
+    </mat-dialog-content>
+<!--     <mat-dialog-actions>
+      
+    </mat-dialog-actions>
+ -->
+  </mat-card-content>
+</mat-card>

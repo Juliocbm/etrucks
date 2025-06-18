@@ -1,0 +1,58 @@
+<app-layout titulo="Trazabilidad de viajes">
+    <div class="container-fluid">
+        <form class="row" [formGroup]="formFiltros">
+            <div class="col-3">
+                <mat-form-field class="w-100">
+                    <mat-label>Desde</mat-label>
+                    <input matInput [matDatepicker]="pickerDesde" formControlName="fechaDesde" [max]="formFiltros.value.fechaHasta" [min]="min25">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerDesde"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerDesde></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-3">
+                <mat-form-field class="w-100">
+                    <mat-label>Hasta</mat-label>
+                    <input matInput [matDatepicker]="pickerHasta" formControlName="fechaHasta" [min]="formFiltros.value.fechaDesde">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerHasta"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerHasta></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-3">
+                <mat-form-field class="w-100">
+                    <mat-label>Viaje</mat-label>
+                    <input matInput formControlName="idViaje">
+                </mat-form-field>
+            </div>
+            <div class="col-3">
+                <mat-form-field class="w-100">
+                    <mat-label>Pedido</mat-label>
+                    <input matInput formControlName="idPedido">
+                </mat-form-field>
+            </div>
+            <div class="col-3">
+                <app-dropdown-fullV2
+                  [formGroup]="formFiltros"
+                  [valColumnToFormControl]="[{
+                    valueColumn: 'nombre',
+                    formControl: 'estatus'
+                  }]"
+                  [fetchDataFunction]="estatusViaje$"
+                  [placeholder]="'Estatus viaje'"
+                  [columnConfigs]="columnConfigEstatusViaje"
+                  [itemDefault]="estatusViajeSelect"
+                  [displayColumnConfigDF]="displayColConfEstatusViaje"
+                  [tableConfigs]="tableConfigs">
+                </app-dropdown-fullV2>
+            </div>
+        </form>
+    </div>
+    <app-full-tableV2
+        nombreMenu="Trazabilidad de viajes"
+        [columnConfigs]="columnConfigs"
+        excelFileName="ReporteDeTazabilidadDeViajes"
+        [tableConfigs]="tableConfigs"
+        [fetchDataFunction]="viajesObs$"
+        [parametros]="params"
+        [actions]="actions">
+    </app-full-tableV2>
+</app-layout>

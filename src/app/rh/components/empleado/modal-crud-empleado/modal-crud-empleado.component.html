@@ -1,0 +1,893 @@
+ <!-- <app-modal-header
+  [TITULO_MODAL]="TITULO_MODAL"
+  [TIPO_MODAL]="TIPO_MODAL"
+  [IS_EDITABLE]="IS_EDITABLE"
+  (isEditableEvent)="editableChange($event)"
+  (submitEvent)="onSubmit()"
+  [isStepper]="true"
+  [isLoading]="isLoading"
+  [stepLenght]="stepper.steps.length" [stepSelect]="stepper.selectedIndex" (antStep)="previousStep()" (sigStep)="nextStep()"
+  (closeModalEvent)="cerrarModal()"
+></app-modal-header>  -->
+<app-modal-header [TITULO_MODAL]="TITULO_MODAL" [TIPO_MODAL]="TIPO_MODAL" [IS_EDITABLE]="IS_EDITABLE"
+    (isEditableEvent)="editableChange($event)" (submitEvent)="onSubmit()" 
+    (closeModalEvent)="cerrarModal()"></app-modal-header>
+
+<alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+<app-loading [isLoading]="isLoading" [fondo]="true"></app-loading>
+<!-- Campos para las propiedades del Operador -->
+<div style="margin: 20px 5px 20px 5px">
+
+  <div class="col-md-12 stepperEspecial">
+      <mat-stepper
+      orientation="horizontal"
+      style="padding: 25px !important"
+      [linear]="isLinear"
+      #stepper
+    >
+    <mat-step label="Datos Personales" >
+      <form [formGroup]="formulario" class="permisionario-form">
+        <mat-card-header style="justify-content: space-between;">
+
+
+
+      </mat-card-header>
+        <div class="row">
+          <div class="col-3 transform mx-auto translate-y-n1/2 text-white position-relative" style="display: flex; justify-content: center; align-items: center;">
+            
+            <div class="image-preview-container" *ngIf="imagenUrl">
+              <img class="rounded-circle preview-image" [src]="imagenUrl" alt="Foto del empleado" width="100" height="100">
+              <div class="image-overlay" (click)="showFullImage()">
+                <mat-icon class="preview-icon">visibility</mat-icon>
+              </div>
+            </div>
+            <div class="no-image-container" *ngIf="!imagenUrl">
+              <mat-icon class="no-image-icon">person</mat-icon>
+            </div>
+
+            <button mat-mini-fab color="primary" (click)="onImageClick()" 
+                    class="upload-button" 
+                    matTooltip="Agregar o cambiar foto">
+              <mat-icon>add_a_photo</mat-icon>
+            </button>
+
+            <input type="file" #fileInput 
+                   accept="image/jpeg,image/jpg,image/png,image/webp" 
+                   style="display: none;" 
+                   (change)="onFileSelected($event)">
+          </div>
+
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Nombre</mat-label>
+              <input [readonly]="!IS_EDITABLE" matInput formControlName="nombre" toUpperCase/>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Apellido Paterno</mat-label>
+              <input [readonly]="!IS_EDITABLE" matInput formControlName="apellidoPaterno" toUpperCase/>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Apellido Materno</mat-label>
+              <input [readonly]="!IS_EDITABLE" matInput formControlName="apellidoMaterno" toUpperCase/>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Sexo</mat-label>
+              <mat-select  (selectionChange)="cambiarModuloSistema($event)" formControlName="idGenero">
+                <mat-option *ngFor="let sis of generosSelected" [value]="sis.idCatGenDetalle">{{ sis.nombre }}</mat-option>
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Sexo</mat-label>
+            <input matInput formControlName="genero" readonly />
+        </mat-form-field>
+          </div>
+
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Telefono de Emergencia</mat-label>
+              <input type="tel" [readonly]="!IS_EDITABLE" matInput formControlName="telefonoEmergencia" toUpperCase/>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>RFC</mat-label>
+              <input [readonly]="!IS_EDITABLE" matInput formControlName="rfc" toUpperCase/>
+              <mat-error>Formato incorrecto. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>NSS</mat-label>
+              <input [readonly]="!IS_EDITABLE" matInput formControlName="nss" toUpperCase/>
+              <mat-error>Formato inválido.</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>CURP</mat-label>
+              <input [readonly]="!IS_EDITABLE" matInput formControlName="curp" toUpperCase/>
+              <mat-error>Formato inválido.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-3">
+            <mat-form-field>
+              <mat-label>Fecha Nacimiento</mat-label>
+              <input matInput [readonly]="!IS_EDITABLE" [matDatepicker]="pickerfechaNacimiento" [min]="minDate"
+              [max]="maxDate" formControlName="fechaNacimiento">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerfechaNacimiento"></mat-datepicker-toggle>
+              <mat-datepicker #pickerfechaNacimiento></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Escolaridad</mat-label>
+              <mat-select  (selectionChange)="cambiarModuloSistema($event)" formControlName="idNivelEscolar">
+                <mat-option *ngFor="let sis of nivelEscolar" [value]="sis.idCatGenDetalle">{{ sis.nombre }}</mat-option>
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Escolaridad</mat-label>
+            <input matInput formControlName="nivelEscolar" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Profesion</mat-label>
+              <input [readonly]="!IS_EDITABLE" matInput formControlName="profesion" toUpperCase/>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4"></div>
+          <div class="col-4">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Email Personal</mat-label>
+              <input [readonly]="!IS_EDITABLE" matInput formControlName="emailPersonal" toUpperCase/>
+              <mat-error>Correo no válido. </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- <mat-card-content>
+
+        </mat-card-content> -->
+        <button mat-button *ngIf="!isCreate" [disabled]="!IS_EDITABLE" style="display: flex; align-items:center;justify-content:center;" (click)="verGafete()" >
+          <mat-icon>print</mat-icon>
+          Imprimir Gafete
+        </button>
+      </form>
+    </mat-step>
+    <!-- ===================== Formulario de Domicilio ===================== -->
+    <mat-step label="Domicilio">
+      <form [formGroup]="formulario" class="permisionario-form">
+        <div class="row">
+          <div class="col-4">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Lugar de Nacimiento</mat-label>
+              <mat-select
+                (selectionChange)="cambiarModuloSistema($event)"
+                formControlName="idLugarNacimiento"
+              >
+                <mat-option
+                  *ngFor="let sis of estado"
+                  [value]="sis.idEstado"
+                  >{{ sis.nombre }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Lugar de Nacimiento</mat-label>
+            <input matInput formControlName="lugarNacimiento" readonly />
+        </mat-form-field>
+          </div>
+          <div class="col-4">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Estado de Residencia</mat-label>
+              <mat-select
+                (selectionChange)="cambiarEstado($event)"
+                formControlName="idEstado"
+              >
+                <mat-option
+                  *ngFor="let sis of estado"
+                  [value]="sis.idEstado"
+                  >{{ sis.nombre }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Estado Recidencia</mat-label>
+            <input matInput formControlName="estado" readonly />
+        </mat-form-field>
+          </div>
+          <div class="col-4">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Municipio de Residencia</mat-label>
+              <mat-select
+                (selectionChange)="cambiarModuloSistema($event)"
+                formControlName="idMunicipio"
+              >
+                <mat-option
+                  *ngFor="let sis of municipio"
+                  [value]="sis.idMunicipio"
+                >{{ sis.nombre }}</mat-option>
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Municipio Recidencia</mat-label>
+            <input matInput formControlName="municipio" readonly />
+        </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Colonia</mat-label>
+              <input
+                [readonly]="!IS_EDITABLE"
+                matInput
+                formControlName="colonia"
+                toUpperCase
+              />
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Calle</mat-label>
+              <input
+                [readonly]="!IS_EDITABLE"
+                matInput
+                formControlName="calle"
+                toUpperCase
+              />
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>No Exterior</mat-label>
+              <input
+                [readonly]="!IS_EDITABLE"
+                matInput
+                formControlName="noExterior"
+                toUpperCase
+              />
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Código Postal</mat-label>
+              <input
+                [readonly]="!IS_EDITABLE"
+                matInput
+                formControlName="codigoPostal"
+                toUpperCase
+              />
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+
+    </mat-step>
+    <!-- ===================== Formulario de datos familiares ===================== -->
+    <mat-step label="Datos Familiares">
+      <form [formGroup]="formulario" class="permisionario-form">
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Estado Civil</mat-label>
+              <mat-select   (selectionChange)="cambiarEstadoCivil($event)"
+                formControlName="idEstadoCivil"
+              >
+                <mat-option
+                  *ngFor="let sis of estadoCivil"
+                  [value]="sis.idCatGenDetalle"
+                  >{{ sis.nombre }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Estado Civil</mat-label>
+            <input matInput formControlName="estadoCivil" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Cantidad De Hijos</mat-label>
+              <input [disabled]="esCasado" type="number"
+                [readonly]="!IS_EDITABLE"
+                matInput
+                formControlName="cantHijos"
+                (input)="cambiarCantidadHijos($event)"
+                toUpperCase
+              />
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+           <div class="col-12">
+            <app-full-table [data]="familiaSelect" [columnConfigs]="columnConfigs"
+                [nombreTabla]="'Familiares'" [tableConfigs]="tableConfigs" [dataSelect]="parentescoSelect"
+                [showCreateButton]="false" [showExportarButton]="false" [actions]="tableActions"
+                [showConfColumnsButton]="false"  [showAddButton]="true" (AddEvent)="agregarRegistro()"
+                [showRefreshButton]="false"></app-full-table>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <!-- ===================== Formulario de sucursal asignacion ===================== -->
+    <mat-step label="Sucursal Asignacion">
+      <form [formGroup]="formulario" class="permisionario-form">
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>No Nomina (SURFING)</mat-label>
+              <input
+                [readonly]="!IS_EDITABLE"
+                matInput
+                formControlName="noNomina"
+                toUpperCase
+              />
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>ID Personal (Trucks)</mat-label>
+              <input
+                [readonly]="true"
+                matInput
+                formControlName="idPersonalRef"
+                toUpperCase
+              />
+              <mat-error> Formato incorrecto. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>ID Referencia LIS </mat-label>
+              <input
+                [readonly]="!IS_EDITABLE"
+                matInput
+                formControlName="idLisRef"
+                toUpperCase
+              />
+              <mat-error> Formato incorrecto. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Compañía</mat-label>
+              <mat-select
+                (selectionChange)="cambiarCompania($event)"
+                formControlName="idCompania"
+              >
+                <mat-option
+                  *ngFor="let sis of companias"
+                  [value]="sis.idCompania"
+                  >{{ sis.nombre  }}  </mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Compania</mat-label>
+            <input matInput formControlName="compania" readonly />
+            </mat-form-field>
+          </div>
+          
+
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Sucursal</mat-label>
+              <mat-select
+                formControlName="idSucursal"
+              >
+                <mat-option
+                  *ngFor="let sis of sucursal"
+                  [value]="sis.idSucursal"
+                  >{{ sis.nombre  }} - {{sis.compania}} </mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Sucursal</mat-label>
+            <input matInput formControlName="sucursal" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Departamento</mat-label>
+              <mat-select
+                (selectionChange)="cambiarModuloSistema($event)"
+                formControlName="idDepartamento"
+              >
+                <mat-option
+                  *ngFor="let sis of departamento"
+                  [value]="sis.idDepartamento"
+                  >{{ sis.nombre  }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Departamento</mat-label>
+            <input matInput formControlName="departamento" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Categoria</mat-label>
+              <mat-select
+
+                (selectionChange)="cambiarCategoriaEmpleado($event)"
+                formControlName="idCategoria"
+              >
+                <mat-option
+                  *ngFor="let sis of categoria"
+                  [value]="sis.idCategoria"
+                  >{{ sis.nombre  }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Categoria</mat-label>
+            <input matInput formControlName="categoria" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Tipo Contrato</mat-label>
+              <mat-select
+                (selectionChange)="cambiarModuloSistema($event)"
+                formControlName="idTipoContrato"
+              >
+                <mat-option
+                  *ngFor="let sis of tipoContrato"
+                  [value]="sis.idCatGenDetalle"
+                  >{{ sis.nombre  }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Tipo Contrato</mat-label>
+            <input matInput formControlName="tipoContrato" readonly />
+            </mat-form-field>
+          </div>
+          <!-- Revision -->
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Tipo Nómina</mat-label>
+              <mat-select
+                formControlName="idTipoNomina"
+              >
+                <mat-option
+                  *ngFor="let sis of tipoNomina"
+                  [value]="sis.idCatGenDetalle"
+                  >{{ sis.nombre  }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Tipo Nomina</mat-label>
+            <input matInput formControlName="tipoNomina" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field class="custom-form-field">
+              <mat-label>Email</mat-label>
+              <input
+                [readonly]="!IS_EDITABLE"
+                matInput
+                formControlName="email"
+                toUpperCase
+              />
+              <mat-error> Formato incorrecto. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Causa de Alta</mat-label>
+              <mat-select
+
+                (selectionChange)="cambiarModuloSistema($event)"
+                formControlName="idCausaAlta"
+              >
+                <mat-option
+                  *ngFor="let sis of causaAlta"
+                  [value]="sis.idCatGenDetalle"
+                  >{{ sis.nombre  }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Causa Alta</mat-label>
+            <input matInput formControlName="causaAlta" readonly />
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-form-field>
+              <mat-label>Fecha de Ingreso</mat-label>
+              <input matInput [readonly]="!IS_EDITABLE"  [matDatepicker]="pickerfechaIngreso" formControlName="fechaIngreso" >
+              <mat-datepicker-toggle matIconSuffix [for]="pickerfechaIngreso"></mat-datepicker-toggle>
+              <mat-datepicker #pickerfechaIngreso></mat-datepicker>
+            </mat-form-field>
+          </div>
+          
+          <div class="col-3">
+            <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+              <mat-label>Estatus</mat-label>
+              <mat-select
+                formControlName="idEstatusPersonal"
+                (selectionChange)="cambiarEstatusPersonal($event)"
+              >
+                <mat-option
+                  *ngFor="let estatus of estatusPersonal"
+                  [value]="estatus.idCatGenDetalle"
+                  >{{ estatus.nombre  }}</mat-option
+                >
+              </mat-select>
+              <mat-error> Campo obligatorio. </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+            class="custom-form-field">
+            <mat-label>Estatus</mat-label>
+            <input matInput formControlName="estatusActual" readonly />
+            </mat-form-field>
+          </div>
+        </div>
+        
+      </form>
+      <div>
+          <mat-card *ngIf="IS_BAJA">
+            <mat-card-header>
+              <mat-card-title>Estatus de Baja</mat-card-title>
+　　 　 　 　
+            </mat-card-header>
+            <mat-card-content>
+              <div class="row">
+                <div class="col-4">
+                  <mat-form-field *ngIf="IS_BAJA && IS_EDITABLE" appearance="fill" class="custom-form-field">
+                    <mat-label>Causa de Baja</mat-label>
+                    <mat-select
+                    [(ngModel)]="nuevoEstatus.idEstatus"
+                      (selectionChange)="cambiarCausaBaja($event)"
+                    >
+                      <mat-option
+                        *ngFor="let estatus of causaBaja"
+                        [value]="estatus.idCatGenDetalle"
+                        >{{ estatus.nombre  }}</mat-option
+                      >
+                    </mat-select>
+                    <mat-error> Campo obligatorio. </mat-error>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+                  class="custom-form-field">
+                  <mat-label>Causa de Baja</mat-label>
+                  <input matInput [(ngModel)]="causaBajaActual" readonly />
+                  </mat-form-field>
+                </div>
+                <div class="col-8">
+                  <mat-form-field *ngIf="IS_BAJA" class="custom-form-field">
+                    <mat-label>Observación de Baja</mat-label>
+                    <input [readonly]="!IS_EDITABLE" matInput   [(ngModel)]="nuevoEstatus.observacion" toUpperCase/>
+                    <mat-error> Campo obligatorio. </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+ 　 　 　
+      </div>
+    </mat-step>
+    <!-- ===================== Formulario de Salud ===================== -->
+    <mat-step label="Salud">
+      <mat-card>
+        <mat-card-header>
+          Estado de Salud
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-3">
+              <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+                <mat-label>Grupo Sanguíneo</mat-label>
+                <mat-select
+                 
+                  [(ngModel)]="personalSalud.idGrupoSanguineo"
+                >
+                  <mat-option
+                    *ngFor="let sis of grupoSanguineo"
+                    [value]="sis.idCatGenDetalle"
+                    >{{ sis.nombre  }}</mat-option
+                  >
+                </mat-select>
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>
+              <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+              class="custom-form-field">
+              <mat-label>Grupo Sanguíneo</mat-label>
+              <input matInput [(ngModel)]="personalSalud.grupoSanguineo" readonly />
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+                <mat-label>Factor RH</mat-label>
+                <mat-select
+                 
+                  [(ngModel)]="personalSalud.idFactorRh"
+                >
+                  <mat-option
+                    *ngFor="let sis of factorRh"
+                    [value]="sis.idCatGenDetalle"
+                    >{{ sis.nombre  }}</mat-option
+                  >
+                </mat-select>
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>
+              <mat-form-field *ngIf="!IS_EDITABLE" appearance="fill"
+              class="custom-form-field">
+              <mat-label>Factor RH</mat-label>
+              <input matInput [(ngModel)]="personalSalud.factorRh" readonly />
+              </mat-form-field>
+            </div>
+            <div class="col-3" *ngIf="IS_OPERADOR" >
+              <form [formGroup]="formulario" >
+                <mat-form-field>
+                  <mat-label>Fecha Apto Medico</mat-label>
+                  <input matInput [readonly]="!IS_EDITABLE"  [matDatepicker]="pickerfechaAptoMedico" formControlName="fechaAptoMedico" >
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerfechaAptoMedico"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerfechaAptoMedico></mat-datepicker>
+                </mat-form-field>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2">
+              <mat-label>Alergias</mat-label>
+              <div style="display: flex; justify-content:flex-end;">
+                <mat-slide-toggle [disabled]="!IS_EDITABLE" [(ngModel)]="personalSalud.alergia">
+                  <div style="color: #4f4f4f; font-family: system-ui; font-weight: 600;">
+                    {{ personalSalud.alergia ? "Si" : "No" }}
+                  </div>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="col-2">
+              <mat-label>Hipertensión</mat-label>
+              <div style="display: flex; justify-content:flex-end;">
+                <mat-slide-toggle [disabled]="!IS_EDITABLE" [(ngModel)]="personalSalud.hipertension">
+                  <div style="color: #4f4f4f; font-family: system-ui; font-weight: 600;">
+                    {{ personalSalud.hipertension ? "Si" : "No" }}
+                  </div>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="col-2">
+              <mat-label>Lentes</mat-label>
+              <div style="display: flex; justify-content:flex-end;">
+                <mat-slide-toggle [disabled]="!IS_EDITABLE" [(ngModel)]="personalSalud.lentes">
+                  <div style="color: #4f4f4f; font-family: system-ui; font-weight: 600;">
+                    {{ personalSalud.lentes ? "Si" : "No" }}
+                  </div>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="col-2">
+              <mat-label>Diabetes</mat-label>
+              <div style="display: flex; justify-content:flex-end;">
+                <mat-slide-toggle [disabled]="!IS_EDITABLE" [(ngModel)]="personalSalud.diabetes">
+                  <div style="color: #4f4f4f; font-family: system-ui; font-weight: 600;">
+                    {{ personalSalud.diabetes ? "Si" : "No" }}
+                  </div>
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="col-3">
+              <mat-label>Estado de Salud</mat-label>
+              <div style="display: flex; justify-content:flex-end;">
+                
+                <mat-slide-toggle [disabled]="!IS_EDITABLE" [(ngModel)]="personalSalud.estadoSalud">
+                  <div style="color: #4f4f4f; font-family: system-ui; font-weight: 600;">
+                    {{ personalSalud.estadoSalud ? "Aceptable" : "No aceptable" }}
+                  </div>
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Descripción de Enfermedad</mat-label>
+                <input [readonly]="!IS_EDITABLE" matInput [(ngModel)]="personalSalud.descripcionEnfermedad" toUpperCase/>
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-step>
+     <!-- ===================== Formulario de Licencia ===================== -->
+     <mat-step *ngIf="IS_OPERADOR" label="Operador">
+      <mat-card>
+        <mat-card-header>
+          Agrega la(s) licencia(s) del Operador
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-3">
+              <mat-form-field *ngIf="IS_EDITABLE" appearance="fill" class="custom-form-field">
+                <mat-label>Tipo Licencia</mat-label>
+                <mat-select
+                (selectionChange)="cambiarTipoLicencia($event)"
+                  [(ngModel)]="idTipoLicencia"
+                >
+                  <mat-option
+                    *ngFor="let sis of tipoLicenciaSelected"
+                    [value]="sis.id"
+                    >{{ sis.nombre  }}</mat-option
+                  >
+                </mat-select>
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>  
+            </div>
+            <div class="col-4">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Folio Licencia</mat-label>
+                <input [readonly]="!IS_EDITABLE" matInput [(ngModel)]="personalLicenciaSelected.folioLicencia" toUpperCase/>
+                <mat-error> Campo obligatorio. </mat-error>
+              </mat-form-field>
+            </div>
+            
+            <div class="col-3">
+              <mat-form-field>
+                <mat-label>Fecha Vence Licencia</mat-label>
+                <input matInput [readonly]="!IS_EDITABLE"  [matDatepicker]="pickerfechaVenceLicencia" [(ngModel)]="personalLicenciaSelected.fechaVenceLicencia" >
+                <mat-datepicker-toggle matIconSuffix [for]="pickerfechaVenceLicencia"></mat-datepicker-toggle>
+                <mat-datepicker #pickerfechaVenceLicencia></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-2">
+              <button mat-fab extended (click)="agregarLicencia()" >Agregar</button>
+            </div>
+            
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+
+      <form [formGroup]="formulario" class="permisionario-form">
+        <div class="row">
+          <div class="col-12">
+           <app-full-table [data]="personalLicenciaSelect" [columnConfigs]="columnConfigsLicencia"
+               [nombreTabla]="'Licencia Operador'" [tableConfigs]="tableConfigs" [dataSelect]="tipoLicenciaSelected"
+               [showCreateButton]="false" [showExportarButton]="false" [actions]="tableActionsLicencia"
+               [showConfColumnsButton]="false"  [showAddButton]="false" 
+               [showRefreshButton]="false"></app-full-table>
+         </div>
+       </div>
+        
+      </form>
+      
+    </mat-step>
+    </mat-stepper>
+
+  </div>
+
+  <div *ngIf="TIPO_MODAL == 'DETAIL'" class="col-md-12">
+    <form [formGroup]="formulario" class="permisionario-form">
+       <mat-card>
+        <mat-card-header>
+          <mat-card-title>Auditoria</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col-2">
+              <mat-form-field class="custom-form-field">
+                <mat-label>ID Personal</mat-label>
+                <input
+                  [readonly]="true"
+                  matInput
+                  formControlName="idPersonal"
+                  toUpperCase
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-2">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Creado por</mat-label>
+                <input
+                  [readonly]="true"
+                  matInput
+                  formControlName="usuarioCreadoPor"
+                  toUpperCase
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-2">
+              <mat-form-field class="custom-form-field">
+                <mat-label>Modificado por</mat-label>
+                <input
+                  [readonly]="true"
+                  matInput
+                  formControlName="usuarioModificadoPor"
+                  toUpperCase
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field appearance="fill" class="custom-form-field">
+                <mat-label>Fecha de Creación</mat-label>
+                <input
+                  [readonly]="true"
+                  matInput
+                  formControlName="fechaCreacion"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field appearance="fill" class="custom-form-field">
+                <mat-label>Fecha de modificación</mat-label>
+                <input
+                  [readonly]="true"
+                  matInput
+                  formControlName="fechaModificacion"
+                />
+              </mat-form-field>
+            </div>
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+</div>

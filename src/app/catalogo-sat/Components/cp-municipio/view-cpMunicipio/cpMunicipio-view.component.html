@@ -1,0 +1,19 @@
+<app-layout title="Catalogo Codigo Postal / Municipio">
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+  
+   <app-full-table
+   crearRoute="/catalogoCp/CrearCpmunicipio"
+   [data]="datosFiltrados"
+   [nombreMenu]="'CP Municipio'"
+   [columnConfigs]="columnConfigs"
+   (refreshEvent)="refreshData()"
+   [excelFileName]="'catalogoCp'" 
+   [actions]="tableActions"
+    [tableConfigs]="tableConfigs"
+    [isLoading]="isLoading"
+   [showCreateButton]="true"
+   ></app-full-table>
+  
+  </app-layout>
+  
+   

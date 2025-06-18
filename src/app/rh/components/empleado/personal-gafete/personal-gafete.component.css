@@ -1,0 +1,219 @@
+/* Estilos generales para el gafete */
+.gafete-container {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  padding: 20px;
+}
+
+.gafete {
+  /* width: 300px;
+  height: auto; */
+
+  width: 200px;
+  height: 320px;
+
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.name {
+  background-color: black;
+  color: white;
+  width: 100%;
+  text-align: start;
+  padding: 5px 0;
+}
+
+.categoria {
+  background-color: #603f34;
+  color: white;
+  width: 85%;
+  text-align: start;
+  padding: 5px 0;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+.foto {
+  margin-bottom: 15px;
+}
+
+.foto img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+.datos-empleado {
+  margin-bottom: 15px;
+}
+
+.datos-empleado p {
+  margin: 5px 0;
+}
+
+.codigo-barras {
+  margin-top: 10px;
+}
+
+.codigo-barras img {
+  width: 100%;
+  height: auto;
+}
+
+/* Ocultar los botones de acción en la impresión */
+@media print {
+  .print-hidden {
+    display: none !important;
+  }
+}
+
+/* Opcional: Estilos para ocultar el ícono por defecto en móviles pequeños durante impresión */
+@media print and (max-width: 600px) {
+  .gafete {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .name, .categoria {
+    width: 100%;
+  }
+}
+
+/* Botones de acción */
+.botones-acciones {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 12px;
+}
+
+.button-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+/* Estilos adicionales para el ícono por defecto */
+.fa-user-circle {
+  font-size: 100px;
+  color: #ccc;
+}
+
+
+
+
+
+
+
+
+
+/* GAFETE TRASERO */
+
+.header, .footer {
+  text-align: center;
+  /* border-bottom: 1px solid #d1d5db; border-b border-gray-300 */
+  /* padding-bottom: 1rem; */
+}
+
+.footer {
+  border-top: 1px solid #d1d5db; /* border-t border-gray-300 */
+  /* margin-top: 1rem;  */
+}
+
+.header p {
+  font-size: 8px; /* text-xs */
+  margin: 0.25rem 0;
+}
+
+.header .font-bold {
+  font-weight: bold;
+  font-size: 0.875rem; /* text-sm */
+}
+
+
+.data-section {
+  /* margin-top: 1rem;  */
+  /* height: 10rem; h-44 */
+}
+
+.data-section .info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.data-section p {
+  margin: 0.25rem 0;
+  font-size: 0.875rem; /* text-sm */
+}
+
+.mt-16 {
+  margin-top: 4rem; /* mt-16 */
+}
+
+.logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem; /* space-x-2 */
+}
+
+.logos img {
+  height: 1rem;
+}
+
+.logos img:nth-child(2) {
+  height: 1.5rem;
+}
+
+.logos img:nth-child(3) {
+  height: 2rem;
+}
+
+.logos img:nth-child(4) {
+  height: 2rem;
+}
+
+.logos img:nth-child(5) {
+  height: 2rem;
+}
+
+.barcode {
+  width: 100%;
+  /* height: 2rem; h-8 */
+  margin-top: 1rem; /* mt-4 */
+}
+
+.circle {
+  background-color: black;
+  color: white;
+  font-size: 0.875rem; /* text-xs */
+  font-weight: bold;
+  border-radius: 50%;
+  height: 1.25rem; /* h-5 */
+  width: 1.25rem; /* w-5 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.validez {
+  font-size: 0.875rem;
+  font-weight: bold;
+}

@@ -1,0 +1,40 @@
+<!-- Componente Home con Slider de Imágenes -->
+<div class="home-container">
+  
+  <div class="slider-container">
+    <div class="slider" *ngIf="images.length > 0">
+      <div class="slide" [ngClass]="{'active': currentIndex === i}" *ngFor="let image of images; let i = index">
+        <img [src]="image.url" [alt]="image.alt" class="slide-img">
+        <div class="slide-caption">
+          <h3>{{ image.title }}</h3>
+          <p>{{ image.description }}</p>
+        </div>
+      </div>
+      
+      <div class="slider-controls">
+        <!-- <button class="control-btn prev" (click)="prevSlide()">
+          <i class="fas fa-chevron-left"></i>
+        </button> -->
+        <div class="slider-indicators">
+          <span 
+            *ngFor="let dot of images; let i = index" 
+            class="dot" 
+            [ngClass]="{'active': currentIndex === i}"
+            (click)="goToSlide(i)">
+          </span>
+        </div>
+        <!-- <button class="control-btn next" (click)="nextSlide()">
+          <i class="fas fa-chevron-right"></i>
+        </button> -->
+      </div>
+    </div>
+  </div>
+  
+  <div class="welcome-message">
+    <h1 style="text-align: center; font-size: 2rem;">Bienvenido al Portal de 
+      <span style="display: inline;"><strong>HG</strong><span style="color: #ff8c00; font-weight: bold;">Tools</span></span>
+    </h1>
+    <p style="text-align: center; font-size: 1.2rem; line-height: 1.6; max-width: 800px; margin: 0 auto;">Plataforma centralizada de herramientas y recursos para optimizar tus procesos de trabajo.</p>
+  </div>
+  
+</div>

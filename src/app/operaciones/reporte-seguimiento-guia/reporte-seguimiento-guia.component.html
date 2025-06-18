@@ -1,0 +1,60 @@
+<app-layout titulo="Reporte: Seguimiento de guias">
+  <!-- 👇 Esta es la clave para que todos los campos estén en un mismo formulario reactivo -->
+  <form [formGroup]="filtrosForm" class="filtros-container">
+
+    <!-- Filtro: Tipo de Documento -->
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de Documento</mat-label>
+      <mat-select formControlName="tipoDocumento">
+        <mat-option [value]="2">Carta Porte</mat-option>
+        <mat-option [value]="1">Factura</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Filtro: Estado -->
+    <mat-form-field appearance="fill">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="statusGuia" multiple>
+        <mat-option [value]="'A'">Pendiente</mat-option>
+        <mat-option [value]="'C'">Transferida</mat-option>
+        <mat-option [value]="'R'">Regreso</mat-option>
+        <mat-option [value]="'B'">Cancelada</mat-option>
+        <mat-option [value]="'T'">Tránsito</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Filtro: Cliente -->
+    <app-dropdown-fullV2 style="position: relative; display: block;"
+      [fetchDataFunction]="apiServicioClienteService.getClientesAsync.bind(apiServicioClienteService)"
+      [valColumnToFormControl]="[{valueColumn: 'id', formControl: 'idCliente'}]"
+      [columnConfigs]="columnConfigsCliente" [placeholder]="'Cliente'" [IS_EDITABLE]="true"
+      [itemDefault]="clienteSelected" [displayColumnConfigDF]="displayColumnConfCliente"
+      [tableConfigs]="tableConfigsCliente" [IS_REQUIRED]="false" [formGroup]="filtrosForm">
+    </app-dropdown-fullV2>
+
+    <!-- Filtro: Rango de fechas -->
+    <mat-form-field appearance="fill">
+      <mat-label>Rango de fechas</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate formControlName="fechaInicio" placeholder="Desde">
+        <input matEndDate formControlName="fechaFin" placeholder="Hasta">
+      </mat-date-range-input>      
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <!-- Checkbox: Con carta cobro -->
+    <mat-checkbox formControlName="conCartaCobro">Con carta cobro</mat-checkbox>
+    
+    <button mat-raised-button color="warn" (click)="limpiarFiltros()" matTooltip="Limpiar filtros"  class="btn-limpiar-filtros">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </form>
+
+  <app-full-tableV2 [fetchDataFunction]="apiRptTrucksService.getSeguimientoGuia.bind(apiRptTrucksService)"
+    [showCreateButtonModal]="false" [showFilterInactivos]="false" [parametros]="(parametrosSegGuia$ | async)!"
+    [nombreMenu]="'Reporte de deducciones de operador - Subtotal'" [columnConfigs]="columnConfigsSegGuia"
+    [excelFileName]="'SeguimientoGuia'" [isReport]="false" [tableConfigs]="tableConfigsSegGuia"
+    [mostrarFiltroGeneralFechas]="false">
+  </app-full-tableV2>
+</app-layout>

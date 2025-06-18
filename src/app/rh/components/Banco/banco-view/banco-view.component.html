@@ -1,0 +1,7 @@
+
+<app-layout titulo="Banco">
+    <app-full-table  [data]="datosFiltrados" [actions]="tableActions"
+      [nombreMenu]="'Banco'" [columnConfigs]="columnConfigs"
+      (refreshEvent)="retriveData()" [excelFileName]="'CatalogoBanco'" [tableConfigs]="tableConfigs" [showCreateButtonModal]="true"
+      [isLoading]="isLoading"></app-full-table>
+  </app-layout>

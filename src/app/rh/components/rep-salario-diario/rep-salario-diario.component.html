@@ -1,0 +1,31 @@
+<app-layout titulo="Salario diario">
+
+  <div class="container-fluid">
+    <form class="row" [formGroup]="formFiltros">
+      <div class="col-4">
+        <mat-form-field class="w-100">
+          <mat-label>Desde</mat-label>
+          <input matInput [matDatepicker]="pickerDesde" formControlName="fechaDesde"
+            [max]="formFiltros.value.fechaHasta" [min]="min23">
+          <mat-datepicker-toggle matIconSuffix [for]="pickerDesde"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDesde></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field class="w-100">
+          <mat-label>Hasta</mat-label>
+          <input matInput [matDatepicker]="pickerHasta" formControlName="fechaHasta"
+            [min]="formFiltros.value.fechaDesde">
+          <mat-datepicker-toggle matIconSuffix [for]="pickerHasta"></mat-datepicker-toggle>
+          <mat-datepicker #pickerHasta></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+
+  <app-full-tableV2 [showCreateButtonModal]="false"
+    [showFilterInactivos]="false" [nombreMenu]="'Salario diario'" [columnConfigs]="columnConfigs"
+    [fetchDataFunction]="viajesObs$" [parametros]="parametrosGeneralesSueldoDiario"
+    [excelFileName]="'SalarioDiario'" [tableConfigs]="tableConfigs"></app-full-tableV2>
+
+</app-layout>

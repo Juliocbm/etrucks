@@ -1,0 +1,400 @@
+.logo {
+  padding-top: 0px !important;
+  padding-bottom: 5px !important;
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  padding: 8px !important;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+}
+
+.navbar-brand {
+  float: left;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.navbar-nav {
+  margin: 5px 0px;
+}
+
+/* Estructura principal del navbar */
+.navbar {
+  padding: 0;
+  height: 56px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  background-color: #f8f9fa !important;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-collapse {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  height: 100%;
+  background-color: #f8f9fa;
+}
+
+/* Estructura de secciones del navbar */
+.navbar-section {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background-color: #f8f9fa;
+}
+
+/* Sección del logo */
+.logo-section {
+  min-width: 60px;
+  padding: 0 15px;
+  margin-right: 5px;
+  background-color: #f8f9fa;
+  flex: 0 0 auto;
+}
+
+/* Sección del selector de compañía */
+.company-section {
+  min-width: 180px;
+  max-width: 250px;
+  padding: 0 10px;
+  margin-right: 5px;
+  background-color: #f8f9fa;
+  flex: 0 0 auto;
+}
+
+/* Sección del menú principal */
+.menu-section {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  background-color: #f8f9fa;
+  overflow: visible;
+  max-width: calc(100% - 400px); /* Aumentar el espacio reservado para otras secciones */
+  padding-right: 130px; /* Espacio adicional para evitar superposición con user-section */
+}
+
+/* Botones de desplazamiento del menú */
+.menu-scroll-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: rgba(240, 240, 240, 0.8);
+  color: #555;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+  margin: 0 4px;
+}
+
+/* Estilo específico para los botones de borde */
+.menu-edge-button {
+  width: 24px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: rgba(248, 249, 250, 0.75);
+  box-shadow: none;
+  margin: 0;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.menu-edge-button:hover {
+  background-color: rgba(230, 230, 230, 0.9);
+}
+
+.menu-edge-button mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  opacity: 0.7;
+}
+
+.menu-edge-button:hover mat-icon {
+  opacity: 1;
+}
+
+.menu-scroll-left.menu-edge-button {
+  border-right: 1px solid #e0e0e0;
+  margin-right: 0;
+}
+
+.menu-scroll-right.menu-edge-button {
+  border-left: 1px solid #e0e0e0;
+  margin-left: 0;
+}
+
+/* Resto de los estilos para los botones normales */
+.menu-scroll-button:hover {
+  background-color: #eec752 !important;
+  color: #000 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.menu-scroll-button:focus {
+  outline: none;
+}
+
+.menu-scroll-button mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+}
+
+.menu-scroll-left {
+  margin-right: 2px;
+}
+
+.menu-scroll-right {
+  margin-left: 2px;
+}
+
+/* Sección del usuario */
+.user-section {
+  min-width: 130px;
+  padding: 0 15px;
+  white-space: nowrap;
+  justify-content: flex-end;
+  background-color: #f8f9fa;
+  flex: 0 0 auto;
+  margin-left: auto; /* Empuja la sección a la derecha */
+  position: absolute; /* Posicionamiento absoluto */
+  right: 0; /* Siempre a la derecha */
+  top: 0; /* Alineado con la parte superior */
+  height: 100%; /* Altura completa del navbar */
+  display: flex;
+  align-items: center;
+  z-index: 100; /* Asegurar que esté por encima de otros elementos */
+}
+
+.container-combobox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+}
+
+select {
+  height: 35px;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  color: rgb(49 49 49 / 73%);
+  font-size: 13px;
+  border-color: rgba(116, 115, 114, 0.507);
+  cursor: pointer;
+  border-width: 1px;
+  padding: 0 10px;
+}
+
+/* Estilos para los botones de navegación con el color amarillo de hover */
+.navbar-nav button.mat-button.nav-button {
+  font-weight: 500;
+  border-radius: 0;
+  margin: 0 2px;
+  background-color: transparent;
+}
+
+.navbar-nav button.mat-button.active,
+.navbar-nav button.mat-mdc-button.active {
+  background-color: #eec752 !important;
+  color: #000 !important;
+}
+
+/* Estilos para el contenedor con scroll horizontal */
+.menu-scroll-container {
+  display: flex;
+  flex: 1;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE y Edge */
+  position: relative;
+  height: 100%;
+  overflow-y: hidden !important;
+  background-color: #f8f9fa;
+  scroll-behavior: smooth; /* Para un desplazamiento suave */
+}
+
+/* Ocultar la barra de desplazamiento para Chrome, Safari y Opera */
+.menu-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Solo mostrar indicadores sutiles en los bordes cuando hay overflow */
+.menu-scroll-container.has-overflow::before,
+.menu-scroll-container.has-overflow::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.7;
+}
+
+.menu-scroll-container.has-overflow::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(248, 249, 250, 0.9),
+    rgba(248, 249, 250, 0)
+  );
+}
+
+.menu-scroll-container.has-overflow::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(248, 249, 250, 0.9),
+    rgba(248, 249, 250, 0)
+  );
+}
+
+/* Añadir flechas sutiles en los bordes para indicar desplazamiento */
+.menu-scroll-container.has-overflow::before {
+  background-image: linear-gradient(
+    to right,
+    rgba(248, 249, 250, 0.9),
+    rgba(248, 249, 250, 0)
+  );
+}
+
+.menu-scroll-container.has-overflow::after {
+  background-image: linear-gradient(
+    to left,
+    rgba(248, 249, 250, 0.9),
+    rgba(248, 249, 250, 0)
+  );
+}
+
+/* Clase para el menú desplazable */
+.scrollable-menu {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  height: 100%;
+  background-color: #f8f9fa;
+}
+
+.scrollable-menu li.nav-item {
+  height: 100%;
+  background-color: transparent;
+}
+
+/* Estilizado del nombre de usuario */
+.user-section .nav-link {
+  font-weight: 500;
+  padding: 0 15px;
+}
+
+.right-align {
+  margin-left: auto !important;
+  margin-right: 25px;
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 992px) {
+  .navbar-nav button.mat-button,
+  .navbar-nav button.mat-mdc-button {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start;
+    height: 48px;
+  }
+
+  .navbar {
+    height: auto;
+    min-height: 56px;
+  }
+
+  .navbar-collapse {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .navbar-section {
+    width: 100%;
+    margin-bottom: 10px;
+    height: auto;
+    border: none !important;
+  }
+
+  .menu-section {
+    order: 3;
+  }
+
+  .user-section {
+    order: 4;
+  }
+
+  .company-section {
+    order: 2;
+    max-width: 100%;
+  }
+
+  /* Ajustar botones de desplazamiento en móvil */
+  .menu-scroll-button {
+    width: 20px;
+    height: 20px;
+  }
+
+  .menu-scroll-button mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.company-select {
+  min-width: 200px; /* Establece el ancho mínimo */
+  width: auto; /* Permite crecer según el contenido */
+  max-width: 400px; /* Opcional: limita el crecimiento máximo */
+  padding: 4px 8px; /* Añade algo de padding para mejor apariencia */
+  margin: 0 10px; /* Espacio a los lados */
+}
+
+.dropdown-item:hover {
+  background-color: #eec752 !important;
+  color: #000 !important;
+}
+
+.dropdown-item.active {
+  background-color: #eec752 !important;
+  color: #000 !important;
+}

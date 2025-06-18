@@ -1,0 +1,6 @@
+<!-- CustomSnackbarComponent.html -->
+<div class="custom-snackbar">
+    <mat-icon class="snackbar-icon">{{data?.icon}}</mat-icon>
+    <span class="snackbar-message">{{data?.message}}</span>
+    <button mat-button (click)="closeSnackebar()" class="snackbar-action">{{data?.action}}</button>
+</div>

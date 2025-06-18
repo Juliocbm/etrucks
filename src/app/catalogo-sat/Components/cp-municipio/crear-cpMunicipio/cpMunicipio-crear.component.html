@@ -1,0 +1,39 @@
+<app-layout title="Nuevo Codigo Postal / Municipio">
+  <app-toolbar [showFilterActivos]="false" [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false" [showFilter]="false"
+    [showExportButton]="false" (saveClicked)="onSubmit(CpForm)"></app-toolbar>
+
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <div class="card mt-5 col-md-6">
+    <div class="card-header"><h5>Codigo Postal / Municipio</h5></div>
+    <div class="card-body">
+      <form #CpForm="ngForm" (ngSubmit)="onSubmit(CpForm)">
+
+        <div class="form-group">
+          <label for="cp">Codigo Postal:</label>
+          <input type="number" class="form-control" id="cp" name="cp" [(ngModel)]="cp.cp"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="estado">Estado:</label>
+          <input type="text" class="form-control" id="estado" name="estado" [(ngModel)]="cp.estado"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="municipio">Municipio:</label>
+          <input type="number" class="form-control" id="municipio" name="municipio" [(ngModel)]="cp.municipio"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="localidad">Localidad:</label>
+          <input type="number" class="form-control" id="localidad" name="localidad" [(ngModel)]="cp.localidad"
+            required>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</app-layout>

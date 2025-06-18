@@ -1,0 +1,55 @@
+/* .filter-container{
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+.lblCliente{
+    font-size: 20px;
+}
+
+  .txtFiltro {
+    width: 500px;
+    padding: 5px;
+  } */
+
+  /* .modal-main { */
+    /* width: 1000px; */
+    /* max-height: 700px; */
+    /* background-color: red; */
+  /* } */
+
+
+  /* .modal-table{
+    max-height: 80vh;
+    overflow-y: auto;
+    margin-top: 15px;
+  } */
+
+
+  .filter-container{
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .close-modal-container {
+    font-size: 21px;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .lblCliente{
+font-size: 23px;
+  }
+
+  .txtFiltro {
+    width: 300px;
+    padding: 5px;
+  }
+
+  .modal-table{
+    max-height: 80vh;
+    overflow-y: auto;
+    margin-top: 15px;
+  }

@@ -1,0 +1,22 @@
+<app-layout title="Reporte de seguimiento de viajes">
+    <!-- <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert> -->
+  
+    <app-full-table
+    [data]="datosFiltrados"
+    [nombreMenu]="'Reporte de seguimiento de viajes'"
+    [columnConfigs]="columnConfigs"
+    (refreshEvent)="refreshData()"
+    [excelFileName]="'SeguimientoViajes'"
+    [tableConfigs]="tableConfigs"
+    [isLoading]="isLoading"
+    [showCreateButton]="false"
+    [showExportarButton]="true"
+    [showRefreshButton]="true"
+    [showConfColumnsButton]="false"
+    [isReport]="true"
+    [actions]="tableActions"
+    [mostrarFiltroText]="true"
+    (filtroTextEvent)="filtrarByText($event)"
+    ></app-full-table>
+  
+  </app-layout>

@@ -1,0 +1,1084 @@
+/* Selectores específicos para el componente full-tableV2 */
+.table-v2-container .disabled {
+  pointer-events: none;
+  background-color: #e5e5e5 !important;
+  border-color: gray !important;
+  /* más estilos para indicar que el elemento está deshabilitado */
+}
+
+.table-v2-container .disabled-record {
+  background-color: #f0f0f0; /* Color de fondo para registros desactivados */
+  color: #cccccc; /* Color del texto para registros desactivados */
+  pointer-events: none; /* Desactiva eventos del mouse, incluido el click */
+}
+
+.table-v2-container .toolbar {
+  position: relative;
+  display: flex;
+  height: 50px;
+  margin: 0;
+  padding: 7px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 15;
+}
+
+.table-v2-container .left-buttons,
+.table-v2-container .right-buttons {
+  display: flex; /* Usa flexbox para contener los botones */
+  align-items: center; /* Alinea verticalmente */
+}
+
+.table-v2-container .left-buttons {
+  padding: 5px;
+  justify-content: flex-start; /* Alinea los botones a la izquierda */
+  flex: 1; /* Opcional, si quieres que ocupe un espacio específico */
+}
+
+.table-v2-container .right-buttons {
+  padding: 5px;
+  justify-content: flex-end; /* Alinea los botones a la derecha */
+  flex: 1; /* Opcional, si quieres que ocupe un espacio específico */
+}
+
+.table-v2-container .center-buttons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1; /* Asegura que esté sobre los otros elementos si se superponen */
+  width: auto; /* O define un ancho específico */
+}
+
+/* O si solo quieres mover los últimos botones a la derecha sin cambiar la estructura HTML */
+.table-v2-container .toolbar > button:last-child {
+  margin-left: auto; /* Esto empujará el último botón a la derecha */
+}
+
+.table-v2-container .custom-button {
+  background-color: black !important; /* Cambiar el color de fondo a negro */
+}
+
+.table-v2-container .flex-container {
+  display: flex;
+  align-items: center;
+}
+.table-v2-container .filtro-width {
+  min-width: 65px;
+  width: 100%;
+}
+
+/* Clase para ancho mínimo de columna ID */
+.table-v2-container .columna-id {
+  min-width: 65px !important;
+  width: auto;
+  max-width: 100px; /* Establecer un ancho máximo */
+}
+
+.table-v2-container .filtro-fecha-width {
+  width: 260px;
+}
+
+.table-v2-container .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: var(--color-select-toggle) !important;
+  border-color: var(--color-select-toggle) !important;
+}
+.table-v2-container .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+/* Especificidad para el toggle dentro de right-buttons */
+.table-v2-container .right-buttons .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb,
+.table-v2-container .right-buttons
+  .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+  .mdc-switch__thumb {
+  background-color: var(--color-select-toggle) !important;
+  border-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .right-buttons .mat-slide-toggle.mat-checked .mat-slide-toggle-bar,
+.table-v2-container .right-buttons
+  .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+  .mdc-switch__track {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+/* Estilos para el tooltip en el hover del toggle */
+.table-v2-container .right-buttons .mat-slide-toggle:hover .mat-slide-toggle-thumb,
+.table-v2-container .right-buttons .mat-mdc-slide-toggle:hover .mdc-switch__thumb {
+  border-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .refresh-button {
+  padding: 6px 12px; /* Ajusta según la necesidad */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px; /* Redondeo de los bordes */
+  transition: background-color 0.3s;
+}
+
+.table-v2-container .refresh-button:hover {
+  background-color: rgba(0, 0, 0, 0.04); /* Color de fondo al pasar el cursor */
+}
+
+.table-v2-container .refresh-button mat-icon {
+  font-size: 21px; /* Ajusta según la necesidad */
+  margin: 0;
+}
+
+.table-v2-container tr.mat-header-row {
+  z-index: 1;
+  position: relative; /* Esto asegura que los encabezados están por encima de las filas */
+}
+
+.table-v2-container .mat-mdc-table {
+  overflow-y: visible;
+  max-height: none;
+  height: auto !important;
+}
+
+/* Estilo para hover en filas (solo registros normales, no eliminados) */
+.table-v2-container tr:not(:first-child):not(.registroEliminado):hover {
+  cursor: pointer;
+  background-color: lightgray;
+}
+
+/* Hacer que el hover se aplique a los botones cuando se hace hover en la fila (solo registros normales) */
+.table-v2-container tr:not(:first-child):not(.registroEliminado):hover .btn-action {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+}
+
+/* Hacer que el hover se aplique a la fila cuando se hace hover en los botones (solo registros normales) */
+.table-v2-container tr:not(:first-child):not(.registroEliminado) .btn-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.table-v2-container tr:not(:first-child):not(.registroEliminado) .btn-action:hover ~ td,
+.table-v2-container tr:not(:first-child):not(.registroEliminado) .btn-action:hover ~ th,
+.table-v2-container tr:not(:first-child):not(.registroEliminado) td:has(.btn-action:hover),
+.table-v2-container tr:not(:first-child):not(.registroEliminado) .mat-cell-with-actions:hover ~ td {
+  background-color: lightgray !important;
+}
+
+/* Estilo para las filas normales en hover */
+.table-v2-container tr:not(:first-child):not(.registroEliminado):hover td,
+.table-v2-container tr:not(:first-child):not(.registroEliminado):hover th {
+  background-color: lightgray !important;
+}
+
+/* Asegurar que los botones de acción en hover se vean bien (solo registros normales) */
+.table-v2-container tr:not(:first-child):not(.registroEliminado):hover .mat-cell-with-actions {
+  background-color: lightgray !important;
+}
+
+.table-v2-container tr:not(:first-child):not(.registroEliminado):hover .flex-container {
+  background-color: lightgray !important;
+}
+
+/* Estilos específicos para hover en registros eliminados (hover más sutil) */
+.table-v2-container tr.registroEliminado:hover {
+  background-color: #e8e8e8 !important;
+}
+
+/* Botones en registros eliminados solo cambian ligeramente en hover */
+.table-v2-container tr.registroEliminado .btn-action:hover {
+  opacity: 1;
+}
+
+/* Remover estilos globales de hover para rows que ya no necesitamos */
+.table-v2-container tr:not(:first-child):hover {
+  cursor: pointer;
+}
+
+/* Reducir el tamaño de la fuente de la tabla */
+.table-v2-container mat-table {
+  font-size: 0.8rem !important;
+  max-height: none;
+  overflow-y: visible;
+}
+
+/* Ajustar los botones dentro de la tabla */
+.table-v2-container mat-table button {
+  padding: 4px 8px !important; /* Reducir el relleno para hacer los botones más pequeños */
+  font-size: 0.7rem !important; /* Reducir el tamaño de la fuente dentro de los botones */
+  min-width: 30px !important; /* Establecer un ancho mínimo para los botones si es necesario */
+  min-height: 30px !important; /* Establecer una altura mínima para los botones si es necesario */
+}
+
+/* Ajustar el espaciado de las celdas de la tabla */
+.table-v2-container mat-table td,
+.table-v2-container mat-table th {
+  padding: 2px 4px !important;
+  font-size: 0.8rem !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important; /* Alineación vertical central para todas las celdas */
+  line-height: 1.2 !important; /* Mejorar alineación de línea */
+}
+
+/* Alineación vertical específica para celdas con números */
+.table-v2-container mat-table td:first-child,
+.table-v2-container mat-table th:first-child {
+  vertical-align: middle !important;
+  text-align: center !important; /* Centrar IDs horizontalmente */
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+/* Asegurar que los textos tienen la misma alineación vertical */
+.table-v2-container mat-table td {
+  display: table-cell !important;
+  vertical-align: middle !important;
+}
+
+/* Ajustar línea de altura para contenido de celdas */
+.table-v2-container mat-table .mat-cell > div,
+.table-v2-container mat-table .mat-header-cell > div {
+  vertical-align: middle !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+
+/* Centrar números y texto verticalmente */
+.table-v2-container mat-table td > div,
+.table-v2-container mat-table td > span,
+.table-v2-container mat-table td > p {
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  min-height: 28px !important;
+}
+
+.table-v2-container .btn-action {
+  min-width: 28px !important;
+  width: 28px !important;
+  height: 28px !important;
+  text-align: center;
+  margin: 4px 7px !important; /* Aumentar margen horizontal entre botones */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border-radius: 4px;
+  background-color: var(--color-boton-accion, #f0ad4e) !important;
+  color: var(--color-boton-accion-texto, white) !important;
+  border: none !important;
+  transition: all 0.3s ease;
+}
+
+.table-v2-container .btn-action:hover {
+  opacity: 0.9;
+  background-color: var(--color-boton-accion-hover, #e09c38) !important;
+  color: var(--color-boton-accion-hover-texto, white) !important;
+  transform: translateY(-2px); /* Efecto de elevación al hacer hover */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+.table-v2-container button span {
+  vertical-align: middle; /* Alinea el texto verticalmente con el ícono */
+}
+
+/* Si tienes un span al lado del icono y quieres ocultarlo (por ejemplo, para móviles) */
+.table-v2-container .btn-action span {
+  display: none;
+}
+
+/* Estilos adicionales para el mat-icon si es necesario */
+.table-v2-container .btn-action mat-icon {
+  font-size: 16px !important; /* Reducido el tamaño del icono */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 18px !important; /* Reducido el alto del icono */
+  width: 18px !important; /* Reducido el ancho del icono */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.table-v2-container .icono-grande {
+  font-size: 30px !important;
+  color: #747474 !important;
+  width: max-content;
+  height: max-content;
+}
+
+.table-v2-container .empty-state {
+  text-align: center;
+  color: #626262;
+  font-size: 18px;
+  /* padding: 17px; */
+  padding: 41px;
+  background-color: #f5f5f59e;
+  width: 100%;
+  height: 100%;
+}
+
+.table-v2-container .empty-state mat-icon {
+  font-size: 48px;
+  color: #ccc;
+}
+
+.table-v2-container .empty-state button {
+  margin-top: 15px;
+}
+
+.table-v2-container .float-right {
+  float: right;
+}
+
+.table-v2-container .text-align-right {
+  text-align: right;
+  margin: 0 0 1px !important;
+}
+
+.table-v2-container .resaltar-renglon {
+  background-color: #ededed; /* Cambia esto por el color que quieras */
+}
+
+.table-v2-container .loading-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* O un valor específico que desees para la altura */
+  margin-left: 10px;
+}
+
+.table-v2-container ::-webkit-scrollbar {
+  width: 5px; /* Ancho inicial del scrollbar vertical */
+  height: 5px; /* Ancho inicial del scrollbar horizontal - igual que el vertical */
+}
+
+.table-v2-container ::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.table-v2-container ::-webkit-scrollbar:hover {
+  width: 15px; /* Ancho más grande al hacer hover */
+  height: 15px; /* Alto más grande al hacer hover - igual que el vertical */
+}
+
+.table-v2-container ::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Cambio de color opcional al hacer hover */
+}
+
+.table-v2-container .registroEliminado {
+  cursor: not-allowed !important;
+  background-color: #6e727517 !important;
+  position: relative;
+  color: #7c787875 !important; /* Opcional para ocultar el texto */
+}
+
+/* Asegurar que los botones de acción no pierdan su estilo en registros eliminados */
+.table-v2-container .registroEliminado .btn-action,
+.table-v2-container td.mat-cell-with-actions.registroEliminado .btn-action,
+.table-v2-container .mat-cell-with-actions.registroEliminado .btn-action {
+  background-color: var(--color-boton-accion, #f0ad4e) !important;
+  color: var(--color-boton-accion-texto, #7c787875) !important;
+  opacity: 0.85;
+}
+
+/* Mejorar visibilidad de iconos en botones de registros eliminados */
+.table-v2-container .registroEliminado .btn-action mat-icon,
+.table-v2-container td.mat-cell-with-actions.registroEliminado .btn-action mat-icon,
+.table-v2-container .mat-cell-with-actions.registroEliminado .btn-action mat-icon {
+  color: var(--color-boton-accion-texto, #7c787875) !important;
+}
+
+/* Forzar fondo opaco en la celda de acciones */
+.table-v2-container td.mat-cell-with-actions.registroEliminado {
+  background-color: #f2f2f3 !important;
+}
+
+/* Forzar el fondo de los contenedores de botones */
+.table-v2-container .mat-cell-with-actions.registroEliminado .flex-container,
+.table-v2-container td.mat-cell-with-actions.registroEliminado .flex-container {
+  background-color: #f2f2f3 !important;
+}
+
+/* Estilos para botones de guardar - Hover negro */
+.table-v2-container button[matTooltip="Guardar"]:hover,
+.table-v2-container button[matTooltip="Nuevo"]:hover,
+.table-v2-container button.btn.btn-secondary:hover {
+  background-color: var(--color-primario) !important;
+  color: var(--color-texto-contraste) !important;
+  transition: all 0.3s ease;
+}
+
+/* Específicamente para los botones mat-button y mat-raised-button */
+.table-v2-container .mat-button:hover,
+.table-v2-container .mat-raised-button:hover,
+.table-v2-container .mat-mdc-button:hover,
+.table-v2-container .mat-mdc-raised-button:hover,
+.table-v2-container .mat-mdc-outlined-button:hover {
+  background-color: var(--color-primario) !important;
+  color: var(--color-texto-contraste) !important;
+  transition: all 0.3s ease;
+}
+
+/* Para botones con clase btn-secondary específicamente */
+.table-v2-container .btn-secondary:hover {
+  background-color: var(--color-primario) !important;
+  color: var(--color-texto-contraste) !important;
+  transition: all 0.3s ease;
+}
+
+/* Mantener el efecto hover en botones deshabilitados */
+.table-v2-container button[disabled]:hover {
+  background-color: var(--color-primario) !important;
+  opacity: 0.6;
+  color: var(--color-texto-contraste) !important;
+}
+
+/* Estilos específicos para el toggle "Incluir eliminados" */
+[matTooltip="Incluir eliminados"]
+  .mdc-switch__thumb-underlay
+  .mdc-switch__thumb,
+[matTooltip="Incluir eliminados"].mat-slide-toggle.mat-checked
+  .mat-slide-toggle-thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+[matTooltip="Incluir eliminados"] .mdc-switch__track,
+[matTooltip="Incluir eliminados"].mat-slide-toggle.mat-checked
+  .mat-slide-toggle-bar {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+[matTooltip="Incluir eliminados"]:hover .mdc-switch__thumb,
+[matTooltip="Incluir eliminados"]:hover .mat-slide-toggle-thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"]
+  .mat-slide-toggle-thumb,
+.table-v2-container .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"].mat-checked
+  .mat-slide-toggle-thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"]
+  .mat-slide-toggle-bar,
+.table-v2-container .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"].mat-checked
+  .mat-slide-toggle-bar {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+.table-v2-container .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"].mat-mdc-slide-toggle
+  .mdc-switch__thumb,
+.table-v2-container .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"].mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+  .mdc-switch__thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"].mat-mdc-slide-toggle
+  .mdc-switch__track,
+.table-v2-container .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"].mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+  .mdc-switch__track {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+.table-v2-container
+  .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"].mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+  .mdc-switch__thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container
+  .right-buttons
+  mat-slide-toggle[matTooltip="Incluir eliminados"].mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+  .mdc-switch__track {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+/* Estilos para todos los estilos actuales del componente Angular Material */
+.table-v2-container mat-slide-toggle.mat-slide-toggle.mat-accent.mat-checked
+  .mat-slide-toggle-thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container mat-slide-toggle.mat-slide-toggle.mat-accent.mat-checked .mat-slide-toggle-bar {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+/* Estilos para versión MDC de Angular Material 15+ */
+.table-v2-container mat-slide-toggle.mat-mdc-slide-toggle.mat-accent.mat-mdc-slide-toggle-checked
+  .mdc-switch__thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container mat-slide-toggle.mat-mdc-slide-toggle.mat-accent.mat-mdc-slide-toggle-checked
+  .mdc-switch__track {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+/* Sobreescribir colores de accent en Angular Material */
+.table-v2-container .mat-accent .mat-slider-track-fill,
+.table-v2-container .mat-accent .mat-slider-thumb,
+.table-v2-container .mat-accent .mat-slider-thumb-label {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+/* Estilos específicos para nuestro toggle con clase personalizada */
+.table-v2-container .toggle-color-amarillo.mat-checked .mat-slide-toggle-thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .toggle-color-amarillo.mat-checked .mat-slide-toggle-bar {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+/* Versión MDC */
+.table-v2-container .toggle-color-amarillo.mat-mdc-slide-toggle-checked .mdc-switch__thumb {
+  background-color: var(--color-select-toggle) !important;
+}
+
+.table-v2-container .toggle-color-amarillo.mat-mdc-slide-toggle-checked .mdc-switch__track {
+  background-color: var(--color-select-toggle-transparente) !important;
+}
+
+/* Con atributos personalizados */
+.table-v2-container .toggle-color-amarillo {
+  --mdc-switch-selected-handle-color: var(--color-select-toggle) !important;
+  --mdc-switch-selected-track-color: var(
+    --color-select-toggle-transparente
+  ) !important;
+  --mdc-switch-selected-icon-color: var(--color-texto-contraste) !important;
+}
+
+/* Estilo inline */
+.table-v2-container mat-slide-toggle.toggle-color-amarillo.mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+  .mdc-switch {
+  --mdc-switch-selected-handle-color: var(--color-select-toggle) !important;
+  --mdc-switch-selected-track-color: var(
+    --color-select-toggle-transparente
+  ) !important;
+}
+
+/* 
+ * Clase para centrar el texto verticalmente en los botones de las tablas
+ * Se aplica a todos los botones mat-raised-button dentro del componente full-tableV2
+ * Esto corrige el problema del padding-top excesivo que descentra el texto
+ */
+.table-v2-container .btn-tabla-centrado {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: normal !important;
+  padding: 0 16px !important; /* Mantiene el padding horizontal pero elimina el vertical */
+  height: 36px !important; /* Altura estándar de botones Material */
+}
+
+.table-v2-container .btn-tabla-centrado mat-icon {
+  margin: 0 !important;
+  vertical-align: middle !important;
+}
+
+/* Ajuste para la columna de acciones - ancho fijo para mejor alineación */
+.table-v2-container th.mat-header-cell.acciones-header,
+.table-v2-container td.mat-cell.mat-cell-with-actions {
+  position: sticky !important;
+  right: 0 !important;
+  z-index: 10 !important;
+  background-color: #fff !important;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) !important;
+  padding: 0 5px !important; /* Aumentar padding para más espacio */
+  width: 150px !important; /* Ancho fijo para la columna de acciones */
+  min-width: 150px !important;
+  text-align: center !important;
+}
+
+/* Mejorar centrado de botones */
+.table-v2-container .mat-cell-with-actions .flex-container {
+  display: flex !important;
+  justify-content: flex-end !important; /* Cambiar a flex-end para alinear a la derecha */
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  padding: 2px 5px 2px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+
+/* Estilo para contenedor de botones de acción - mejorar espaciado */
+.table-v2-container .action-button-container {
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 2px !important;
+  text-align: center !important;
+}
+
+/* Aumentar ligeramente el alto de las filas para dar más espacio */
+.table-v2-container tr.mat-row,
+.table-v2-container tr.mat-mdc-row {
+  height: 40px !important; /* Aumentar altura para más espacio vertical */
+  min-height: 40px !important;
+}
+
+/* Encabezados de columna fijos */
+.table-v2-container tr.mat-header-row {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9 !important;
+  background-color: white !important;
+}
+
+/* Asegura que todos los encabezados tengan el fondo blanco */
+.table-v2-container th.mat-header-cell {
+  background-color: white !important;
+}
+
+/* Esquina superior derecha (encabezado de acciones) con la mayor prioridad */
+.table-v2-container th.mat-header-cell.acciones-header {
+  position: sticky !important;
+  top: 0 !important;
+  right: 0 !important;
+  z-index: 11 !important; /* Mayor z-index para estar por encima de todo */
+  background-color: white !important;
+}
+
+/* Mejora de sombras para indicar el scroll horizontal */
+.table-v2-container .mat-table-wrapper::-webkit-scrollbar-track {
+  background-color: #f5f5f5 !important;
+  border-radius: 10px !important;
+}
+
+/* Estilos para los encabezados cuando hay scroll */
+.table-v2-container .mat-table-wrapper.scrolled th.mat-header-cell {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Nuevos estilos para controles de formulario y botones */
+.table-v2-container .form-control-date {
+  width: 200px;
+  height: 32px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.table-v2-container .checkbox-container {
+  margin-left: 15px;
+}
+
+/* Mejoras para los botones de acción */
+.table-v2-container .action-button-container {
+  margin: 0 2px;
+}
+
+.table-v2-container .action-icon {
+  font-size: 20px !important;
+  padding-top: 2px !important;
+}
+
+.table-v2-container .btn-action {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Ajustes para el contenedor principal */
+.table-v2-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  min-height: 400px;
+  box-sizing: border-box;
+}
+
+.table-v2-container .table-v2-wrapper {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-v2-container .table-v2-content {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto !important; /* Forzar scroll horizontal */
+  overflow-y: auto;
+  max-height: calc(100vh - 200px); /* Ajusta este valor según el tamaño de tu header y footer */
+}
+
+/* Estilos para el sticky footer */
+.table-v2-container .sticky-footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  justify-content: flex-end;
+  height: 35px;
+  min-height: 35px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Asegurar que la tabla tenga ancho mínimo para generar scroll horizontal */
+.table-v2-container .mat-table {
+  min-width: 100%;
+  width: max-content !important; /* Permitir que la tabla se expanda según su contenido */
+  table-layout: auto;
+}
+
+/* Estilos para los scrollbars */
+.table-v2-container ::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar vertical */
+  height: 8px; /* Altura del scrollbar horizontal */
+}
+
+.table-v2-container ::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.6);
+  border-radius: 4px;
+}
+
+.table-v2-container ::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.8);
+}
+
+.table-v2-container ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+/* Filas alternadas */
+.table-v2-container tr.mat-row:nth-child(even) {
+  background-color: #f9f9f9 !important;
+}
+
+.table-v2-container tr.mat-row:nth-child(odd) {
+  background-color: white !important;
+}
+
+/* Ajustar el sombreado para mejor indicación visual */
+.table-v2-container .mat-table-wrapper.scrolled th.mat-header-cell {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Clase para centrar la tabla V2 */
+.table-v2-centered {
+  max-width: 1400px; /* Ancho máximo para que se vea bien en pantallas grandes */
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+/* Ajustes para el contenedor con centrado activado */
+.table-v2-centered .table-v2-content {
+  box-shadow: none; /* Eliminar sombra de scroll en tablas centradas */
+}
+
+/* Mejora para los bordes de la tabla centrada */
+.table-v2-centered {
+  border: 2px solid #f0f0f0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.table-v2-container .table-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px;
+  color: #7d7d7d;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.table-v2-container .left-buttons button {
+  margin-right: 15px;
+}
+
+.table-v2-container .right-buttons button {
+  margin-left: 15px;
+}
+
+.table-v2-container .mat-table {
+  min-width: 100%; /* Asegura que la tabla ocupe al menos todo el ancho disponible */
+  table-layout: auto; /* Permite que las columnas se ajusten a su contenido */
+}
+
+/* Mejora para el encabezado sticky */
+.table-v2-container th.mat-header-cell {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+}
+
+.table-v2-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos mejorados para las celdas de acciones */
+.table-v2-container .mat-cell-with-actions {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: white !important;
+  z-index: 5 !important;
+  padding: 4px !important;
+  text-align: center !important;
+  min-width: 160px !important;
+}
+
+/* Asegurar que los botones tengan un fondo sólido para no mostrar contenido de atrás */
+.table-v2-container .flex-container {
+  display: flex !important;
+  justify-content: center !important;
+  background-color: white !important;
+  flex-wrap: nowrap !important;
+  gap: 3px !important;
+}
+
+/* Ajustes para la cabecera de acciones */
+.table-v2-container th.acciones-header {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: white !important;
+  z-index: 11 !important;
+  text-align: center !important;
+}
+
+/* Ajuste del contenedor de la tabla para evitar overflow */
+.table-v2-wrapper {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* Eliminar los estilos inline en la tabla para mejor consistencia */
+.table-v2-container button[style],
+.table-v2-container div[style],
+.table-v2-container td[style],
+.table-v2-container th[style] {
+  margin: 0 !important;
+}
+
+/* Mejora visual para distinguir la tabla del footer */
+.table-v2-container .mat-table {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Estilo para la última fila de la tabla */
+.table-v2-container tr.mat-row:last-child {
+  border-bottom: 3px solid #ff1a1a; /* Línea roja en la parte inferior */
+  margin-bottom: 5px;
+  position: relative; /* Posición relativa para poder agregar la línea negra */
+}
+
+/* Agregar línea negra después de la última fila */
+.table-v2-container tr.mat-row:last-child::after {
+  content: "";
+  position: absolute;
+  bottom: -8px; /* Posición por debajo de la línea roja */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000000; /* Color negro para la línea */
+  z-index: 10; /* Asegurar que esté por encima de otros elementos */
+}
+
+/* Estilo específico para cuando hay espacio vacío después de la última fila */
+.table-v2-container .mat-table.has-empty-space tr.mat-row:last-child {
+  border-bottom: 5px solid #ff1a1a; /* Línea más ancha para mayor visibilidad */
+  box-shadow: 0 2px 6px rgba(255, 26, 26, 0.3); /* Sombra roja para mayor énfasis */
+}
+
+/* Ajustar la línea negra cuando hay espacio vacío */
+.table-v2-container .mat-table.has-empty-space tr.mat-row:last-child::after {
+  bottom: -10px; /* Posición ajustada para línea roja más ancha */
+  height: 3px; /* Línea negra más gruesa */
+}
+
+/* Asegurarse que las filas impares mantengan fondo consistente */
+.table-v2-container tr.mat-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Espacio para separar la última fila del footer */
+.table-v2-container .mat-table {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Estilos específicos para el paginador de la tabla V2 */
+.table-v2-container .mat-mdc-paginator {
+  height: 35px !important;
+  min-height: 35px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Ajustar los controles dentro del paginador */
+.table-v2-container .mat-mdc-paginator .mat-mdc-paginator-range-label,
+.table-v2-container .mat-mdc-paginator .mat-mdc-paginator-page-size-label {
+  margin: 0 4px !important;
+  font-size: 12px !important;
+}
+
+/* Hacer los botones de paginación más pequeños */
+.table-v2-container .mat-mdc-paginator .mat-mdc-icon-button {
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  line-height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Ajuste específico para la etiqueta de página */
+.table-v2-container .mat-mdc-paginator .mat-mdc-paginator-range-label {
+  margin: 0 4px !important;
+}
+
+/* Ajuste para el selector de tamaño de página */
+.table-v2-container .mat-mdc-paginator .mat-mdc-paginator-page-size {
+  height: 30px !important;
+  margin: 0 4px !important;
+  align-items: center !important;
+}
+
+/* Líneas originales que ocultan el borde (comentadas) */
+.mdc-data-table__row:last-child .mat-mdc-cell {
+  /* border-bottom: none !important; */
+  border-bottom: 1px solid #e0e0e0 !important; /* Mostrar el borde inferior negro */
+}
+
+/* Asegurar que el borde se muestre */
+.mat-mdc-table .mdc-data-table__row:last-child td.mat-mdc-cell {
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+/* Asegurar que los estilos personalizados no sean sobrescritos */
+.table-v2-container
+  .mat-mdc-table
+  .mdc-data-table__row:last-child
+  td.mat-mdc-cell {
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+/* Asegurar compatibilidad con diferentes versiones de Angular Material */
+.mat-mdc-cell.mdc-data-table__cell {
+  border-bottom-color: #e0e0e0;
+}
+
+.mat-mdc-row:last-of-type .mat-mdc-cell {
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+/* Estilos para las acciones fijas a la derecha */
+.table-v2-container .mat-cell-with-actions {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: white !important;
+  z-index: 5 !important;
+  padding: 4px !important;
+  text-align: center !important;
+  min-width: 160px !important;
+}
+
+/* Header de acciones fijo a la derecha */
+.table-v2-container th.acciones-header {
+  position: sticky !important;
+  right: 0 !important;
+  background-color: white !important;
+  z-index: 11 !important;
+}
+
+/* Estilo para las filas de la tabla */
+.table-v2-container tr.mat-row,
+.table-v2-container tr.mat-header-row {
+  display: table-row;
+  min-width: 100%;
+  white-space: nowrap;
+}
+
+/* Estilo para las celdas - asegurar que no haya wrap */
+.table-v2-container th.mat-header-cell,
+.table-v2-container td.mat-cell {
+  padding: 0 12px !important;
+  white-space: nowrap;
+}
+
+/* Evitar que la última fila se pegue al footer */
+.table-v2-container tr.mat-row:last-child {
+  margin-bottom: 4px;
+}
+
+/* Mejora responsive para dispositivos móviles */
+@media (max-width: 768px) {
+  .table-v2-container .toolbar {
+    flex-direction: column;
+    height: auto;
+    padding: 5px;
+  }
+
+  .table-v2-container .left-buttons,
+  .table-v2-container .right-buttons {
+    width: 100%;
+    justify-content: center;
+    margin: 5px 0;
+  }
+
+  .table-v2-container .table-title {
+    position: relative !important;
+    transform: none !important;
+    left: 0 !important;
+    text-align: center;
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+/* Asegurar que todas las columnas tengan un ancho mínimo */
+.table-v2-container th.mat-header-cell {
+  min-width: 100px; /* Ancho mínimo para cada columna excepto las específicas */
+}
+
+/* Asegurar que los encabezados tengan el ancho necesario para el contenido */
+.table-v2-container th.mat-header-cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Clase para texto en mayúsculas */
+.text-uppercase {
+  text-transform: uppercase !important;
+}

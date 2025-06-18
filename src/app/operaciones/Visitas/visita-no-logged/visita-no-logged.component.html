@@ -1,0 +1,72 @@
+<div style="padding:24px;" >
+
+  <h2>Registro temporal</h2>
+  <hr>
+
+  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Ingresa la informacion de los campos correspondientes para continuar el procedimiento.</ng-template>
+
+        <!-- Correo Electrónico -->
+        <mat-form-field style="width: 100%; margin-top:12px;">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput placeholder="prueba@hgtransportaciones.com" formControlName="correoCtrl" required>
+          <mat-error *ngIf="firstFormGroup.get('correoCtrl')?.hasError('invalidDomain')">
+            El correo debe pertenecer al dominio de la empresa seleccionada.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Empresas -->
+        <!-- <mat-form-field style="width: 100%">
+          <mat-label>Selecciona una empresa</mat-label>
+          <mat-select formControlName="empresaCtrl">
+            <mat-option *ngFor="let empresa of empresas; trackBy: trackByFn" [value]="empresa.value">{{empresa.name}}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <!-- Sucursales -->
+        <!-- <mat-form-field style="width: 100%;">
+          <mat-label>Selecciona una sucursal</mat-label>
+          <mat-select formControlName="sucursalCtrl">
+            <mat-option *ngFor="let sucursal of sucursales; trackBy: trackByFn" [value]="sucursal.value">{{sucursal.name}}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <div>
+          <button mat-button matStepperNext (click)="enviarVisita()" >
+            Siguiente
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Ingresar codigo de authentificacion. </ng-template>
+        <mat-form-field>
+          <mat-label>Authentificacion</mat-label>
+            <input matInput formControlName="auth" placeholder="123456" required maxlength="6" pattern="[0-9]*" inputmode="numeric">
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Regresar</button>
+          <button mat-button matStepperNext (click)="validarVisita()" >
+            Siguiente
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Finalizacion.</ng-template>
+      <p>Has terminado.</p>
+      <div>
+        <button mat-button matStepperPrevious>Regresar</button>
+        <button mat-button matStepperClose >Finalizar</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>
+
+
+

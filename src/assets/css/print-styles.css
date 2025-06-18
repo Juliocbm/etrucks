@@ -1,0 +1,109 @@
+/* print-styles.css */
+
+/* @media print {
+  .name-bar {
+    background-color: black;
+    color: white;
+    width: 100%;
+    text-align: start;
+    padding: 5px 0;
+  }
+
+  .category-bar {
+    background-color: #603f34;
+    color: white;
+    width: 85%;
+    text-align: start;
+    padding: 5px 0;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+  }
+
+  @page {
+    size: 400px 700px;
+    margin: 0;
+    position: relative;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .screen-design {
+    display: none;
+  }
+
+  .print-design {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 500px;
+    height: 800px;
+    visibility: visible;
+    overflow: hidden;
+  }
+
+  .logo-print {
+    max-width: 50%;
+  }
+
+  .personal-id {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2px;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 388px;
+    height: 309px;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .personal-info {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+  }
+
+  .name-bar {
+    background-color: black;
+    color: white;
+    width: 100%;
+    text-align: start;
+    padding: 5px 0;
+    margin-left: 10px;
+    font-size: 1.2em;
+  }
+  .category-bar {
+    background-color: #603f34;
+    color: white;
+    width: 85%;
+    text-align: start;
+    padding: 5px 0;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+    margin-left: 10px;
+    font-size: 1.2em;
+  }
+
+  .location-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+} */
+
+/* Diseño de impresion con un tamaño de 800px y ancho de 600px */
+@media print {
+  @page {
+    size: 600px 800px;
+    margin: 0;
+    position: relative;
+  }
+}

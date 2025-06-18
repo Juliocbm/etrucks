@@ -1,0 +1,286 @@
+<div class="content-wrapper">
+  <div class="cabecera">
+    <form [formGroup]="cartaPorteForm" style="margin-top: 15px;">
+      <div class="row" style="justify-content: space-between; align-items: center;">
+
+        <div class="col-md-8 d-flex" style="font-size: 19px;">
+          <div>
+            <span><strong>{{ cartaPorte?.numGuia }}</strong></span>
+          </div>
+          <div style="margin-left: 15px;">
+            <div>
+              <span *ngIf="cartaPorteForm.get('estatusTrasladoLis')?.value === 0" style="color:gray;">Sin timbrar</span>
+              <span *ngIf="cartaPorteForm.get('estatusTrasladoLis')?.value === 1"
+                style="color:blue;">Trasladando...</span>
+              <span *ngIf="cartaPorteForm.get('estatusTrasladoLis')?.value === 2" style="color:red;">Error al
+                trasladar</span>
+              <span *ngIf="cartaPorteForm.get('estatusTrasladoLis')?.value === 3" style="color:green">Ya se encuentra en
+                ZAM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 d-flex align-items-center justify-content-end">
+          <div *ngIf="isLoading" class="spinner-border" role="status" style="margin-right: 15px; color:blue;">
+            <span class="sr-only"></span>
+          </div>
+          <button
+            [disabled]="cartaPorteForm.get('estatusTrasladoLis')?.value == 3 || cartaPorteForm.get('estatusTrasladoLis')?.value == 1 || cartaPorte?.numGuia?.length! <= 0"
+            class="mx-3" mat-raised-button color="primary" type="button" (click)="guardarCartaPorte()">Guardar</button>
+          <button
+            [disabled]="cartaPorteForm.get('estatusTrasladoLis')?.value == 3 || cartaPorteForm.get('estatusTrasladoLis')?.value == 1 || cartaPorte?.numGuia?.length! <= 0"
+            mat-raised-button color="primary" type="button" (click)="trasladarRemision()">Trasladar</button>
+        </div>
+
+      </div>
+    </form>
+
+
+    <div *ngIf="erroresAmigables?.length" class="tabla-errores" style="margin-top:35px; margin-bottom:15px;">
+      <table class="table" style="font-size: 12px;">
+        <thead>
+          <tr>
+            <th class="pedido-header">Errores</th>
+            <th class="pedido-header">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let error of erroresAmigables; let i = index">
+            <td style="cursor:pointer; color:red;" class="pedido-columna">{{ error.error }}</td>
+            <td style="cursor:pointer;" class="pedido-columna">{{ error.fechaInsert | date:'dd-MM-yyyy HH:mm' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <form [formGroup]="cartaPorteForm" style="margin-top: 15px;">
+      <!-- 🔹 Sección superior con 3 columnas -->
+      <div class="row" style="margin-bottom: 20px;">
+        <div class="col-md-2">
+          <label class="form-label-sm">Sucursal</label>
+          <select class="form-control form-control-sm" formControlName="idSucursalLis">
+            <option [ngValue]="null">Selecciona...</option>
+            <option *ngFor="let sucursal of sucursalOptions" [value]="sucursal.value">
+              {{ sucursal.key }}
+            </option>
+          </select>
+          <small class="text-danger"
+            *ngIf="cartaPorteForm.get('idSucursalLis')?.touched && cartaPorteForm.get('idSucursalLis')?.invalid">
+            Requerido
+          </small>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label-sm">Tipo de servicio</label>
+          <select class="form-control form-control-sm" formControlName="idTipoServicioLis">
+            <option [ngValue]="null">Selecciona...</option>
+            <option *ngFor="let servicio of tipoServicioOptions" [value]="servicio.value">
+              {{ servicio.key }}
+            </option>
+          </select>
+          <small class="text-danger"
+            *ngIf="cartaPorteForm.get('idTipoServicioLis')?.touched && cartaPorteForm.get('idTipoServicioLis')?.invalid">
+            Requerido
+          </small>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label-sm">Tipo de operación</label>
+          <select class="form-control form-control-sm" formControlName="idTipoOperacionLis">
+            <option [ngValue]="null">Selecciona...</option>
+            <option *ngFor="let tipo of tipoOperacionOptions" [value]="tipo.value">
+              {{ tipo.key }}
+            </option>
+          </select>
+          <small class="text-danger"
+            *ngIf="cartaPorteForm.get('idTipoOperacionLis')?.touched && cartaPorteForm.get('idTipoOperacionLis')?.invalid">
+            Requerido
+          </small>
+        </div>
+
+        <div class="col-md-5">
+          <label class="form-label-sm">Observaciones</label>
+          <input type="text" class="form-control form-control-sm" formControlName="observacionesPedido"
+            placeholder="observaciones" />
+        </div>
+
+      </div>
+
+      <mat-tab-group>
+        <mat-tab label="Datos generales">
+          <table class="table table-bordered table-striped compact-table">
+            <thead>
+              <tr>
+                <th>Campo</th>
+                <th>Trucks</th>
+                <th>ZAM</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Unidad</strong></td>
+                <td>{{ cartaPorte?.idUnidad }}</td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" formControlName="idUnidadLis"
+                    placeholder="Unidad" />
+                  <small class="text-danger"
+                    *ngIf="cartaPorteForm.get('idUnidadLis')?.touched && cartaPorteForm.get('idUnidadLis')?.invalid">
+                    Requerido
+                  </small>
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Remolque</strong></td>
+                <td>{{ cartaPorte?.idRemolque }}</td>
+                <td>
+                  <div class="row g-1">
+                    <div class="col-6">
+                      <label class="form-label-sm">Remolque</label>
+                      <input type="text" class="form-control form-control-sm" formControlName="idRemolqueLis"
+                        placeholder="Remolque" />
+                      <small class="text-danger"
+                        *ngIf="cartaPorteForm.get('idRemolqueLis')?.touched && cartaPorteForm.get('idRemolqueLis')?.invalid">
+                        Requerido
+                      </small>
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label-sm">Línea remolque</label>
+                      <input type="text" class="form-control form-control-sm" formControlName="idLineaRem1Lis"
+                        placeholder="Línea remolque" />
+                      <small class="text-danger"
+                        *ngIf="cartaPorteForm.get('idLineaRem1Lis')?.touched && cartaPorteForm.get('idLineaRem1Lis')?.invalid">
+                        Requerido
+                      </small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Operador</strong></td>
+                <td>{{ cartaPorte?.idOperador }}</td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" formControlName="idOperadorLis"
+                    placeholder="Operador" />
+                  <small class="text-danger"
+                    *ngIf="cartaPorteForm.get('idOperadorLis')?.touched && cartaPorteForm.get('idOperadorLis')?.invalid">
+                    Requerido
+                  </small>
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Cliente receptor</strong></td>
+                <td>{{ cartaPorte?.cteReceptorId }}</td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" formControlName="idClienteLis"
+                    placeholder="Cliente receptor" />
+                  <small class="text-danger"
+                    *ngIf="cartaPorteForm.get('idClienteLis')?.touched && cartaPorteForm.get('idClienteLis')?.invalid">
+                    Requerido
+                  </small>
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Cliente remitente</strong></td>
+                <td>{{ cartaPorte?.idClienteRemitente }}</td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" formControlName="idClienteRemitenteLis"
+                    placeholder="Cliente remitente" />
+                  <small class="text-danger"
+                    *ngIf="cartaPorteForm.get('idClienteRemitenteLis')?.touched && cartaPorteForm.get('idClienteRemitenteLis')?.invalid">
+                    Requerido
+                  </small>
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Cliente destinatario</strong></td>
+                <td>{{ cartaPorte?.idClienteDestinatario }}</td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" formControlName="idClienteDestinatarioLis"
+                    placeholder="Cliente destinatario" />
+                  <small class="text-danger"
+                    *ngIf="cartaPorteForm.get('idClienteDestinatarioLis')?.touched && cartaPorteForm.get('idClienteDestinatarioLis')?.invalid">
+                    Requerido
+                  </small>
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Plaza origen</strong></td>
+                <td>{{ cartaPorte?.idPlazaOrigen }}</td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" formControlName="idPlazaOrLis"
+                    placeholder="Plaza origen" />
+                  <small class="text-danger"
+                    *ngIf="cartaPorteForm.get('idPlazaOrLis')?.touched && cartaPorteForm.get('idPlazaOrLis')?.invalid">
+                    Requerido
+                  </small>
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Plaza destino</strong></td>
+                <td>{{ cartaPorte?.idPlazaDestino }}</td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" formControlName="idPlazaDeLis"
+                    placeholder="Plaza destino" />
+                  <small class="text-danger"
+                    *ngIf="cartaPorteForm.get('idPlazaDeLis')?.touched && cartaPorteForm.get('idPlazaDeLis')?.invalid">
+                    Requerido
+                  </small>
+                </td>
+              </tr>
+
+              <tr>
+                <td><strong>Ruta</strong></td>
+                <td>{{ cartaPorte?.idRuta }}</td>
+                <td>
+                  <input type="text" class="form-control form-control-sm" formControlName="idRutaLis"
+                    placeholder="Ruta" />
+                  <small class="text-danger"
+                    *ngIf="cartaPorteForm.get('idRutaLis')?.touched && cartaPorteForm.get('idRutaLis')?.invalid">
+                    Requerido
+                  </small>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+        <mat-tab label="Conceptos facturables">
+          <table class="table table-bordered table-striped compact-table">
+            <thead>
+              <tr>
+                <th>Trucks</th>
+                <th>ZAM</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="detalles">
+              <!-- Recorremos el FormArray -->
+              <tr *ngFor="let detalleCtrl of detalles.controls; let i = index" [formGroupName]="i">
+                <!-- Mostramos la descripción del modelo original -->
+                <td>{{ cartaPorte.cartaPorteDetalles[i].descripcion }}</td>
+                <!-- Control editable para idConceptolis -->
+                <td>
+                  <input type="number" formControlName="idConceptolis" class="form-control"
+                    placeholder="Ingresa idConceptoLis" />
+                  <!-- Puedes mostrar errores de validación si lo deseas -->
+                  <div *ngIf="detalleCtrl.get('idConceptolis')?.touched && detalleCtrl.get('idConceptolis')?.invalid"
+                    class="text-danger">
+                    <small>El idConceptoLis es obligatorio.</small>
+                  </div>
+                  
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+      </mat-tab-group>
+
+
+    </form>
+  </div>
+</div>

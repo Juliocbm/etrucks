@@ -1,0 +1,18 @@
+<app-modal-header
+  [TITULO_MODAL]="'Detalle de viaje'"
+  (closeModalEvent)="cerrarModal()"
+></app-modal-header>
+<app-loading [isLoading]="isLoading" [fondo]="true"></app-loading>
+<app-layout >
+    <app-full-table
+    [data]="datosFiltrados"
+    [nombreMenu]="'Reporte de seguimiento de viajes'"
+    [columnConfigs]="columnConfigs"
+    (refreshEvent)="retriveData()"
+    [excelFileName]="'CatalogoRoles'"
+    [tableConfigs]="tableConfigs"
+    [showCreateButtonModal]="false"
+    [isLoading]="isLoading"
+  ></app-full-table>
+
+</app-layout>

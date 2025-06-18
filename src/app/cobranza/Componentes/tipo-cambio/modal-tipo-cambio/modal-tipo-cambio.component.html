@@ -1,0 +1,69 @@
+<app-modal-header [TITULO_MODAL]="tituloModal" [TIPO_MODAL]="tipoModal" [IS_EDITABLE]="isEditable"
+  (submitEvent)="onSubmit()" (closeModalEvent)="cerrar()"></app-modal-header>
+
+<div style="margin: 15px;">
+  <mat-tab-group>
+    <!-- TAB 1: DATOS GENERALES -->
+    <mat-tab label="General">
+      <form [formGroup]="formulario">
+        <mat-card>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-6">
+                <mat-form-field appearance="fill" class="custom-form-field" style="width: 100%;">
+                  <mat-label>Fecha</mat-label>
+                  <input  matInput [readonly]="true"
+                    [value]="formulario.get('fecha')?.value | date:'dd/MM/yyyy'" />
+                </mat-form-field>
+
+              </div>
+              <div class="col-6">
+                <mat-form-field appearance="fill" class="custom-form-field" style="width: 100%;">
+                  <mat-label>Valor ($)</mat-label>
+                  <input  matInput type="text" formControlName="valor" [readonly]="!isEditable" 
+                    appOnlyDecimal maxlength="9" />
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-tab>
+
+    <!-- TAB 2: AUDITORÍA (SOLO SI tipoModal === 'DETAIL') -->
+    <mat-tab *ngIf="tipoModal === 'DETAIL'" label="Auditoría">
+      <form [formGroup]="formulario" class="permisionario-form">
+        <mat-card>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-3">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>Fecha de Creación</mat-label>
+                  <input [readonly]="true" matInput formControlName="fechaCreacion" dateFormat />
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field class="custom-form-field">
+                  <mat-label>Creado por</mat-label>
+                  <input [readonly]="true" matInput formControlName="usuarioCreadoPor" toUpperCase />
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="fill" class="custom-form-field">
+                  <mat-label>Fecha de modificación</mat-label>
+                  <input [readonly]="true" matInput formControlName="fechaModificacion" dateFormat />
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field class="custom-form-field">
+                  <mat-label>Modificado por</mat-label>
+                  <input [readonly]="true" matInput formControlName="usuarioModificadoPor" toUpperCase />
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</div>

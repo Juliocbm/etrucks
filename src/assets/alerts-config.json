@@ -1,0 +1,459 @@
+{
+    "default": {
+      "success": {
+        "200": "Operación completada con éxito.",
+        "201": "El recurso '{resource} default' ha sido creado exitosamente.",
+        "204": "No hay contenido disponible para mostrar.",
+        "eliminado": "Registro eliminado exitosamente."
+      },
+      "error": {
+        "400": "Solicitud incorrecta. Verifica los datos enviados.",
+        "401": "No estás autorizado para realizar esta operación.",
+        "403": "No tienes permisos para acceder a este recurso.",
+        "404": "El recurso solicitado no fue encontrado.",
+        "405": "Método no permitido. Verifica la solicitud.",
+        "408": "Tiempo de espera agotado. Inténtalo más tarde.",
+        "500": "Error interno del servidor. Inténtalo más tarde.",
+        "502": "Error de gateway. El servidor no pudo procesar tu solicitud.",
+        "503": "Servicio no disponible. Inténtalo de nuevo más tarde.",
+        "504": "Tiempo de espera agotado en el gateway.",
+        "abortada": "Accion abortada exitosamente."
+      },
+      "warning": {
+        "200": "hola dice.",
+        "cancelar": "Accion cancelada exitosamente."
+      },
+      "formulario": {
+        "success": {
+          "parametroCreado": "Parametro creado exitosamente.",
+          "parametroEditado": "Parametro editado exitosamente."
+        },
+        "error": {
+          "invalido": "Formulario no valido.",
+          "dropdownCompañia": "Es necesario seleccionar una compañia.",
+          "tablaCatalogoRoles": "Es necesario selecionar un Rol del Catalogo de Roles.",
+          "configVehicular": "Es necesario selecionar configuracion vehicular.",
+          "campos": "Es necesario capurar el campo {source}.",
+          "tabla": "Es necesario capurar un campo en la tabla {source}."
+        }
+      }
+    },
+    "login": {
+      "default": {
+        "success": {
+           "autenticacion": "Autenticación exitosa, bienvenido."},
+        "error": {
+          "autenticacion": "Error en la autenticación, favor de verificar usuario y/o contraseña."
+        }
+      }
+    },
+    "administrador": {
+      "default": {
+        "success": {},
+        "error": {}
+      },
+      "catalogos": {
+        "usuarios": {
+          "questions": {
+            "get": {
+              "usuarios": "¿Desea consultar los usuarios?"
+            }
+          },
+          "success": {
+            "creado": "El usuario {resource} ha sido creado exitosamente.",
+            "editado": "El usuario {resource} ha sido editado  exitosamente."
+          },
+          "error": {},
+          "info": {},
+          "warning": {}
+        },
+        "roles": {
+          "success": {
+            "creado": "Rol creado exitosamente.",
+            "editado": "Rol actualizado exitosamente."
+          },
+          "error": { "permisos": "Debe seleccionar al menos un permiso." },
+          "info": {},
+          "warning": {}
+        }
+      },
+      "procesos": {
+        "asignacion-roles": {
+          "success": {},
+          "error": {},
+          "info": {},
+          "warning": {}
+        },
+        "asignacion-permisos": {
+          "success": {},
+          "error": {},
+          "info": {},
+          "warning": {}
+        }
+      }
+    },
+    "despacho": {
+      "procesos": {
+        "asignacionDeViaje": {
+          "default": {
+            "success": {
+              "asignacionviaje": "Asignacion unidad-operador realizada con exito.",
+              "cancelaViaje": "Viaje cancealdo.",
+              "seguimientoEstatusViaje": "Seguimiento de estatus guardado con exito.",
+              "marca": "Marca creado exitosamente.",
+              "viaje": "Viaje actualizado exitosamente.",
+              "deleteMarca": "Marca eliminada exitosamente",
+              "estatusViaje": "Estatus de Viaje creado exitosamente",
+              "estatusViajeActualizado": "Estatus del viaje actualizizado exitosamente.",
+              "estatusUnidad": "Estatus unidad creado exitosamente",
+              "estatusUnidadActualizado": "Estatus actualizado exitosamente"
+            },
+            "error": {
+              "documentos": "Documentos pendientes de impresion."
+            }
+          },
+          "ponerEnTransito": {
+            "success": {
+              "viajeEnTransito": "Viaje puesto en transito."
+            }
+          },
+          "anticipos": {
+            "success": {
+              "editar": "Anticipo editado exitosamente."
+            },
+            "error": {
+              "monto": "Debe capturar el monto de todos los anticipos."
+            }
+          }
+        },
+        "rendimientoMotor": {
+          "success": {
+            "creado": "Rendimiento de motor creada exitosamente.",
+            "editado": "Rendimiento de motor actualizada exitosamente."
+          }
+        },
+        "relacionUnidadoperador": {
+          "success": {
+            "creado": "Realcion creada exitosamente.",
+            "editado": "Relacion actualizada exitosamente."
+          }
+        },
+        "bitacoraDeincidencias": {
+          "success": {
+            "creado": "Asistencia creada exitosamente.",
+            "editado": "Asistencia actualizada exitosamente."
+          }
+        },
+        "seguimientoRemolquesAmericanos": {
+          "success": {
+            "creado": "Seguimiento del remolque: {remolque}. Creado exitosamente.",
+            "editado": "Seguimiento del remolque: {remolque}. Actualizado exitosamente.",
+            "question": "¿Confirme la modificacion al seguimiento?",
+            "selectLinea": "Seleccione una linea."
+          }
+        }
+      },
+      "catalogos": {
+        "tramos": {
+          "success": {
+            "creado": "Tramo creado exitosamente.",
+            "actualizado": "Tramo actualizado exitosamente."
+          },
+          "error": {
+            "casetas": "Debe seleccionar almenos una caseta"
+          }
+        },
+        "casetasDePeaje": {
+          "success": {
+            "creado": "Caseta creada exitosamente.",
+            "editado": "Caseta actualizada exitosamente."
+          },
+          "error": {
+            "validaCarril": "Es necesario capturar los campos de los carriles agregados.",
+            "validaTarifa": "Es necesario capturar los campos de las tarifas agregadas.",
+            "validaCarrilTarifa": "Es necesario capturar alemenos un carril y tarifa.",
+            "validaAddCarril": "Por favor, completa todos los campos del último carril antes de agregar otro.",
+            "validaAddTarifa": "Por favor, completa todos los campos de la última tarifa antes de agregar otra.",
+            "validaDeleteCarril": "Este carril ya está siendo utilizado en tarifas y no puede ser eliminado.",
+            "validaDeleteTarifa": "Es necesario capturar alemenos un carril y tarifa."
+          }
+        },
+        "conceptoContables": {
+          "success": {
+            "creado": "Concepto contable creado exitosamente.",
+            "editado": "Concepto contable actualizado exitosamente."
+          }
+        },
+        "conceptoFaturable": {
+          "success": {
+            "creado": "Concepto facturable creado exitosamente.",
+            "editado": "Concepto contable actualizado exitosamente."
+          }
+        },
+        "operador": {
+          "success": {
+            "creado": "Operador creado exitosamente.",
+            "editado": "Operador actualizado exitosamente."
+          }
+        },
+        "ruta": {
+          "success": {
+            "creado": "Ruta creada exitosamente.",
+            "editado": "Ruta actualizado exitosamente."
+          },
+          "error": {
+            "tramos": "Debe seleccionar almenos un tramo.",
+            "tramoValidaCampos": "Es necesario capturar los campos de los tramos seleccionados."
+          }
+        },
+        "sucursales": {
+          "success": {
+            "creado": "Sucursal creada exitosamente.",
+            "editado": "Sucursal actualizado exitosamente."
+          }
+        },
+        "estatusRemolque": {
+          "success": {
+            "creado": "Estatus de remolque creado exitosamente.",
+            "editado": "Estatus de remolque actualizado exitosamente."
+          }
+        },
+        "tiposeguimiento": {
+          "success": {
+            "creado": "Estatus de remolque creado exitosamente.",
+            "editado": "Estatus de remolque actualizado exitosamente."
+          }
+        },
+        "seguimientoViaje": {
+          "success": {
+            "creado": "Tipo de Seguimiento creado exitosamente.",
+            "editado": "Tipo de Seguimiento actualizado exitosamente."
+          }
+        },
+        "flota": {
+          "success": {
+            "creado": "Flota creada exitosamente.",
+            "editado": "Flota editada exitosamente."
+          }
+        },
+        "liquidaciones": {
+          "success": {
+            "creado": "Liquidacion creada exitosamente.",
+            "editado": "Liquidacion editada exitosamente."
+          }
+        },
+        "percepciones": {
+          "success": {
+            "creado": "Liquidacion creada exitosamente.",
+            "editado": "Liquidacion editada exitosamente."
+          }
+        },
+        "deducciones": {
+          "success": {
+            "creado": "Liquidacion creada exitosamente.",
+            "editado": "Liquidacion editada exitosamente."
+          }
+        },
+        "permisionario": {
+          "success": {
+            "creado": "Permisionario creada exitosamente.",
+            "editado": "Permisionario editada exitosamente."
+          }
+        },
+        "plaza": {
+          "success": {
+            "creado": "Plaza creada exitosamente.",
+            "editado": "Plaza editada exitosamente."
+          }
+        }
+      }
+    },
+    "servicioAlCliente": {
+      "catalogos": {
+        "convenio": {
+          "success": {
+            "creado": "Convenio creada exitosamente.",
+            "editado": "Convenio editado exitosamente."
+          }
+        }
+      }
+    },
+    "mantenimiento": {
+      "default": {
+        "success": {},
+        "error": {}
+      },
+      "catalogos": {
+        "linea": {
+          "success": {
+            "creado": "Linea creada exitosamente.",
+            "editado": "Linea actualizada exitosamente."
+          },
+          "error": {}
+        },
+        "marca": {
+          "success": {
+            "creado": "Marca creada exitosamente.",
+            "editado": "Marca actualizada exitosamente."
+          },
+          "error": {}
+        },
+        "proveedorDiesel": {
+          "success": {
+            "creado": "Proveedor de diesel creado exitosamente.",
+            "editado": "Proveedor de diesel actualizado exitosamente."
+          },
+          "error": {}
+        },
+        "remolque": {
+          "success": {
+            "creado": "Remolque creado exitosamente.",
+            "editado": "Remolque actualizado exitosamente."
+          },
+          "error": {}
+        },
+        "remolqueAmericano": {
+          "success": {
+            "creado": "Remolque americano creado exitosamente.",
+            "editado": "Remolque americano actualizado exitosamente."
+          },
+          "error": {}
+        },
+        "tipoMotor": {
+          "success": {
+            "creado": "Tipo de motor creado exitosamente.",
+            "editado": "Tipo de motor actualizado exitosamente."
+          },
+          "error": {}
+        },
+        "tipoUnidad": {
+          "success": {
+            "creado": "Tipo de unidad creado exitosamente.",
+            "editado": "Tipo de unidad actualizado exitosamente."
+          },
+          "error": {}
+        },
+        "unidad": {
+          "success": {
+            "creado": "Unidad creada exitosamente.",
+            "editado": "Unidad actualizada exitosamente."
+          },
+          "error": {}
+        },
+        "patio": {
+          "success": {
+            "creado": "Patio creado exitosamente.",
+            "editado": "Patio actualizado exitosamente."
+          },
+          "error": {}
+        },
+        "polizas": {
+          "errores": {
+            "INCISO_ERROR": "Este inciso no esta disponible para esta poliza.",
+            "TIPO_POLIZA_ERROR": "La unidad esta dentro de una poliza del mismo tipo.",
+            "DESCONOCIDO_ERROR": "Sucedio un error desconocido."
+          }
+        }
+      },
+      "procesos": {
+        "asignacionUnidadAntena": {
+          "success": {
+            "asignado": "Antena asignada correctamente."
+          },
+          "question": "Estas seguro de desasignar la antena a esta unidad {resource}?"
+        }
+      }
+    },
+    "sistemaGeneral": {
+      "default": {
+        "success": {
+          "creado": "Servicio creado exitosamente.",
+          "editado": "Servicio editado exitosamente."
+        }
+      }
+    },
+    "servicioCliente": {
+      "default": {
+        "success": {},
+        "error": {}
+      },
+      "catalogos": {
+        "ajusteCombustible": {
+          "success": {
+            "creado": "CPAC creado exitosamente.",
+            "editado": "CPAC actualizado exitosamente."
+          },
+          "error": {}
+        },
+        "cliente": {
+          "success": {
+            "creado": "Cliente creado exitosamente.",
+            "editado": "Cliente actualizado exitosamente."
+          },
+          "error": {}
+        },
+        "tipoServicio": {
+          "success": {
+            "creado": "Tipo de servicio creado exitosamente.",
+            "editado": "Tipo de servicio actualizado exitosamente."
+          },
+          "error": {}
+        }
+      }
+    },
+    "recursosHumanos": {
+      "catalogos": {
+        "fuentesDePedidos": {
+          "success": {
+            "creado": "Fuente de pedido: {resource} creado exitosamente.",
+            "editado": "Fuente de pedido: {resource} actualizado exitosamente."
+          }
+        },
+        "sueldosDeOperador": {
+          "success": {
+            "creado": "Sueldo creado exitosamente.",
+            "editado": "Sueldo actualizado exitosamente."
+          }
+        },
+        "periodos": {
+          "success": {
+            "creado": "Periodo creado exitosamente.",
+            "editado": "Periodo actualizado exitosamente."
+          }
+        },
+        "prestamos": {
+          "success": {
+            "creado": "Prestamo creado exitosamente.",
+            "editado": "Prestamo actualizado exitosamente."
+          }
+        },
+        "estatusAsistencia": {
+          "success": {
+            "creado": "Estatus creado exitosamente.",
+            "editado": "Estatus actualizado exitosamente."
+          }
+        },
+        "impuestosNomina": {
+          "success": {
+            "creado": "Impuesto creado exitosamente.",
+            "editado": "Impuesto actualizado exitosamente."
+          }
+        },
+        "prestaciones": {
+          "success": {
+            "creado": "Impuesto creado exitosamente.",
+            "editado": "Impuesto actualizado exitosamente."
+          }
+        }
+      },
+      "procesos": {
+        "pensionAlimenticia": {
+          "success": {
+            "creado": "Prestamo creado exitosamente.",
+            "editado": "Prestamo actualizado exitosamente."
+          }
+        }
+      }
+    }
+  }
+  

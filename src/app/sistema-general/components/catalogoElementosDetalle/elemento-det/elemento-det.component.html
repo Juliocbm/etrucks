@@ -1,0 +1,16 @@
+<app-layout [title]="nomCatalogo">
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+ <app-full-table
+ (onCreate)="goToCrear()"
+ [data]="datosFiltrados"
+ [nombreMenu]="nomCatalogo"
+ (cambiarEstatusEvent)="cambiarEstado($event)"
+ [columnConfigs]="columnConfigs"
+ (refreshEvent)="retriveData()"
+ [excelFileName]="'Catalogo_'"
+ [showCreateButtonDetGral]="true"
+ [showCreateButton]="false"
+ ></app-full-table>
+ 
+</app-layout>

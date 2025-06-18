@@ -1,0 +1,116 @@
+<!-- Contenedor con altura mínima -->
+<div class="tabla-contenedor">
+
+  <div *ngIf="this.datosConceptos === 0" class="overlay">
+    <div class="overlay-message">
+      La guia/remision no tiene conceptos facturables asociados, favor de revisar la guia o el convenio.
+    </div>
+  </div>
+  <table *ngIf="this.datosConceptos > 0" mat-table [dataSource]="dataSourceConceptos" class="mat-elevation-z8" style="margin-top: 30px;">
+
+    <!-- Id -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>IdConcepto</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <!-- Número de Guía -->
+    <ng-container matColumnDef="noGuia">
+      <th mat-header-cell *matHeaderCellDef>Número de Guía</th>
+      <td mat-cell *matCellDef="let element">{{ element.noGuia }}</td>
+    </ng-container>
+
+    <!-- Cantidad -->
+    <ng-container matColumnDef="cantidad">
+      <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.cantidad}">
+        <ng-container *ngIf="!element.editable; else editCantidad">
+          {{ element.cantidad }}
+        </ng-container>
+        <ng-template #editCantidad>
+          <input type="number" [(ngModel)]="element.cantidad" (ngModelChange)="validarConceptos()"
+            [disabled]="!element.editable" min="0.01">
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <!-- Importe -->
+    <ng-container matColumnDef="importe">
+      <th mat-header-cell *matHeaderCellDef>Importe</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.importe}">
+        <ng-container *ngIf="!element.editable; else editImporte">
+          {{ element.importe | currency:"USD" }}
+        </ng-container>
+        <ng-template #editImporte>
+          <input type="number" [(ngModel)]="element.importe" (ngModelChange)="validarConceptos()"
+            [disabled]="!element.editable" min="0.01">
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <!-- Descripción -->
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef>Descripción</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.descripcion }}
+      </td>
+    </ng-container>
+
+    <!-- Factor IVA -->
+    <ng-container matColumnDef="factorIva">
+      <th mat-header-cell *matHeaderCellDef>Factor IVA</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.factorIva }}
+      </td>
+    </ng-container>
+
+    <!-- Factor Retención -->
+    <ng-container matColumnDef="factorRetencion">
+      <th mat-header-cell *matHeaderCellDef>Factor Retención</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.factorRetencion }}
+      </td>
+    </ng-container>
+
+    <!-- Clave Producto/Servicio -->
+    <ng-container matColumnDef="claveProdServ">
+      <th mat-header-cell *matHeaderCellDef>Clave Prod/Serv</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="{'error-field': element.errores.claveProdServ}">
+        <ng-container *ngIf="!element.editable; else editClaveProd">
+          {{ element.claveProdServ }}
+        </ng-container>
+        <ng-template #editClaveProd>
+          <input type="text" [(ngModel)]="element.claveProdServ" (ngModelChange)="validarConceptos()"
+            [disabled]="!element.editable" OnlyDigitBase maxlength="8">
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <!-- CPE No Identificador -->
+    <ng-container matColumnDef="cpeNoIdentificador">
+      <th mat-header-cell *matHeaderCellDef>CPE No Identificador</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.cpeNoIdentificador || 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- Botón Editar/Guardar -->
+    <ng-container matColumnDef="editar">
+      <th mat-header-cell *matHeaderCellDef>Acción</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="element.editable ? guardarCambiosConcepto(element) : toggleEditMode(element)">
+          <mat-icon>{{ element.editable ? 'save' : 'edit' }}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Encabezados y Filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsConceptos"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsConceptos"></tr>
+  </table>
+
+  <mat-paginator  *ngIf="this.datosConceptos > 0"  #conceptosPaginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons></mat-paginator>
+
+
+</div>

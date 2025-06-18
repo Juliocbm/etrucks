@@ -1,0 +1,26 @@
+/* operador-pedido-table.component.css */
+.table-wrapper {
+  max-height: 80dvh; /* Altura máxima para el scroll */
+  height: 70dvh; /* Altura total */
+  overflow-y: auto; /* Permitir el scroll vertical */
+  width: 100%; /* Asegurarse de que tome todo el ancho */
+  margin: 20px; /* Margen superior e inferior */
+
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0; /* La cabecera se "pegará" en la parte superior cuando se haga scroll */
+  background-color: white; /* Fondo blanco para que se vea correctamente */
+  z-index: 1; /* Asegura que la cabecera se mantenga encima del resto de filas */
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); /* Sombra opcional para distinguir mejor la cabecera */
+}
+
+.full-screen-table {
+  max-height: 100vh; /* Ocupa toda la pantalla */
+  width: 100vw; /* Ancho completo */
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 20px;
+}

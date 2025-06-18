@@ -1,0 +1,27 @@
+<!-- <app-layout title="Monitor de timbrados"> -->
+  <!-- <div style="display:flex; padding: 20px; margin-right:200px">
+    <h4 >Monitor de timbrados</h4>
+  </div> -->
+
+  <mat-horizontal-stepper [selectedIndex]="currentIndex" (selectionChange)="selectionChanged($event)">
+    <mat-step *ngFor="let step of steps; let i = index">
+      <h6 [innerHTML]="step.content"></h6>
+      <ng-template (click)="completeStep(i)" matStepLabel >{{ step.label }}</ng-template>
+
+      <app-full-table
+        [data]="datos"
+        [columnConfigs]="columnConfigs"
+        [excelFileName]="'Timbrados'"
+        [tableConfigs]="tableConfigs"
+        [showCreateButton]="false"
+        [resaltarSeleccion]="true"
+        [showRefreshButton]="false"
+        [showConfColumnsButton]="false"
+        [showExportarButton]="false"
+        (enviarItemEvent)="goToEnviar($event)"
+      ></app-full-table>
+
+
+    </mat-step>
+  </mat-horizontal-stepper>
+<!-- </app-layout> -->

@@ -1,0 +1,36 @@
+<app-layout title="{{'Detalle: ' + elementoDetalle.tituloPantalla}}">
+
+  <div class="row mt-4">
+    <!-- Columna Izquierda -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Información del Elemento
+        </div>
+        <div class="card-body">
+          <p><strong>ID Elemento: </strong>{{elementoDetalle.idElemento }}</p>
+          <p><strong>Clave: </strong>{{ elementoDetalle.clave}}</p>
+          <p><strong>Nombre: </strong>{{ elementoDetalle.nombre }}</p>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna Derecha -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Detalles de Modificación
+        </div>
+        <div class="card-body">
+          <p><strong>Creado por: </strong>{{ elementoDetalle.usuarioCreadoPor }}</p>
+          <p><strong>Fecha de Creación: </strong>{{ elementoDetalle.fechaCreacion | date:'dd-MM-yyyy HH:mm:ss' }}</p>
+          <p><strong>Modificado por: </strong>{{ elementoDetalle.usuarioModificadoPor }}</p>
+          <p><strong>Fecha de Modificación: </strong>{{ elementoDetalle.fechaModificacion | date:'dd-MM-yyyy HH:mm:ss'
+            }}</p>
+          <p><strong>Activo: </strong>{{ elementoDetalle.activo ? 'Si' : 'No' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-layout>

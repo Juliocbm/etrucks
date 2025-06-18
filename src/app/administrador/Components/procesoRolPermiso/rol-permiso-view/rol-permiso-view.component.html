@@ -1,0 +1,13 @@
+<app-layout titulo= {{NOMBRE_PANTALLA}}>
+    <app-full-tableV2
+      [data]="datosFiltrados" 
+      [actions]="tableActions"
+      [columnConfigs]="columnConfigs"
+      [tableConfigs]="tableConfigs" 
+      [showCreateButtonModal]="true"
+      [fetchDataFunction]="observableRoles"
+      [showCreateButtonModal]="false"
+      nombreMenu= {{NOMBRE_PANTALLA}} 
+      excelFileName="CatalogoRolesPermisos"> 
+    </app-full-tableV2>
+  </app-layout>

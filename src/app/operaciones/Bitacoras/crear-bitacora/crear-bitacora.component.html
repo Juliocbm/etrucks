@@ -1,0 +1,333 @@
+<app-layout title="{{ 'Nueva bitacora' }}">
+
+  <form [formGroup]="bitacoraForm">
+    <!-- <form [formGroup]="bitacoraForm" (ngSubmit)="crearBitacora()"> -->
+
+    <div class="card" style="width: 100%; margin-bottom: 12px">
+      <div class="card-body" style="display: flex;">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group" style="margin-top: 12px">
+              <label for="idPeriodo">Periodo</label>
+              <mat-form-field style="width: 100%">
+                <input
+                  matInput
+                  disabled
+                  type="text"
+                  placeholder="Periodo"
+                  [value]="periodoSeleccionado"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+             <!-- Fecha Inicio del periodo -->
+             <div style="margin-top: 12px">
+              <label for="fechaInicio">Fecha Inicio</label>
+              <mat-form-field style="width: 100%">
+                <input
+                  matInput
+                  disabled
+                  type="text"
+                  placeholder="Fecha Inicio"
+                  [value]="periodos?.fechaIni | date: 'dd/MM/yyyy'"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <!-- Fecha Fin del periodo -->
+            <div style="margin-top: 12px">
+              <label for="fechaFin">Fecha Fin</label>
+              <mat-form-field style="width: 100%">
+                <input
+                  matInput
+                  disabled
+                  type="text"
+                  placeholder="Fecha Fin"
+                  [value]="periodos?.fechaFin | date: 'dd/MM/yyyy'"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div
+      class="Header"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 2px;
+      "
+    >
+      <!-- Dos columnas de tamaño de 6 -->
+      <div
+        class="col-md-6"
+        style="display: flex; justify-content: center; align-items: center"
+      >
+        <!-- <p> columna 1 </p> -->
+        <div class="card" style="width: 100%">
+          <div class="card-body">
+
+            <div class="form-group" style="margin-top: 12px">
+              <!-- <label for="idFlota">Flotas</label>
+              <mat-form-field style="width: 100%">
+                <mat-label>Selecciona una Flota</mat-label>
+                <mat-select
+                  formControlName="idFlota"
+                  (selectionChange)="unidadesPorFlota($event.value)"
+                >
+                  <mat-option value="">-- None --</mat-option>
+                  <mat-option
+                    *ngFor="let item of flotas"
+                    [value]="item.idFlota"
+                    >{{ item.nombre }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field> -->
+              <label for="flota">Flota</label>
+              <mat-form-field style="width: 100%">
+                <input
+                  matInput
+                  formControlName="flota"
+                  [readonly]="true"
+                  type="text"
+                  placeholder="Flota"
+                  [value]="this.flotaObj?.nombre"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-group" style="margin-top: 12px">
+              <label for="idEstatus">Estatus</label>
+              <mat-form-field style="width: 100%">
+                <input
+                  matInput
+                  formControlName="idEstatus"
+                  [readonly]="true"
+                  type="text"
+                  placeholder="Estatus"
+                  [value]="obtenerNombreEstatus(estatusSeleccionado ?? '')"
+                />
+              </mat-form-field>
+              <!-- <label for="idEstatus">Estatus</label>
+              <mat-form-field style="width: 100%">
+                <mat-label>Selecciona un Estatus</mat-label>
+                <mat-select formControlName="idEstatus">
+                  <mat-option value="">-- None --</mat-option>
+                  <mat-option
+                    *ngFor="let item of estatus"
+                    [value]="item.idCatGenDetalle == '' "
+                    >{{ item.idCatGenDetalle }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field> -->
+            </div>
+
+           
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-md-6"
+        style="display: flex; justify-content: center; align-items: center"
+      >
+        <!-- <p>columna 2</p> -->
+
+        <div class="card" style="width: 100%">
+          <div class="card-body">
+            <!-- <div class="form-group" style="margin-top: 12px">
+              <label for="idCompania">Compania</label>
+              <mat-form-field formControlName="idCompania" style="width: 100%">
+                <input
+                  matInput
+                  disabled
+                  type="text"
+                  placeholder="Compania"
+                  [value]="idCompania"
+                />
+              </mat-form-field>
+            </div> -->
+
+            <div class="form-group" style="margin-top: 12px">
+              <!-- <label for="idCliente">Cliente</label>
+              <mat-form-field style="width: 100%">
+                <mat-label>Selecciona un Cliente</mat-label>
+                <mat-select formControlName="idCliente">
+                  <mat-option value="">-- None --</mat-option>
+                  <mat-option
+                    *ngFor="let item of clientes"
+                    [value]="item.idCliente"
+                    >{{ item.idCliente + '-' + item.nombre }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field> -->
+              <label for="cliente">Cliente</label>
+              <mat-form-field style="width: 100%">
+                <input
+                  matInput
+                  formControlName="cliente"
+                  [readonly]="true"
+                  type="text"
+                  placeholder="Cliente"
+                  [value]="this.flotaObj?.nombreCliente"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="form-group" style="margin-top: 12px">
+              <label for="idTurno">Turno</label>
+              <mat-form-field style="width: 100%">
+                <mat-label>Selecciona un Turno</mat-label>
+                <mat-select formControlName="idTurno">
+                  <mat-option value="">-- None --</mat-option>
+                  <mat-option
+                    *ngFor="let item of turnos"
+                    [value]="item.idCatGenDetalle"
+                    >{{ item.nombreDet }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="body"
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 12px;
+      "
+    >
+      <div class="card" style="width: 100%; display: flex">
+        <div class="card-body">
+          <div class="row">
+            <!-- <div class="col-md-4">
+              <div class="form-group" style="margin-top: 24px">
+                <label for="idOperador">Operador</label>
+                <mat-form-field style="width: 100%">
+                  <mat-label>Selecciona un Operador</mat-label>
+                  <mat-select formControlName="idOperador">
+                    <mat-option value="">-- None --</mat-option>
+                    <mat-option
+                      *ngFor="let item of operadores"
+                      [value]="item.id"
+                    >
+                      {{ item.vmUsuario }} - {{ item.nombres }}
+                      {{ item.apellidoPat }}
+                      {{ item.apellidoMat }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div> -->
+            <div class="col-md-8">
+              <div class="form-group" style="margin-top: 24px">
+                <label for="idUnidad">Vehiculo</label>
+                <mat-form-field style="width: 100%">
+                  <mat-label>Selecciona un Vehiculo</mat-label>
+                  <mat-select formControlName="idUnidad">
+                    <mat-option value="">-- None --</mat-option>
+                    <mat-option
+                      *ngFor="let item of unidadesFiltradas"
+                      [value]="item.idUnidad"
+                      >{{ item.idUnidad + " - " + item.nombreUsuario }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div
+              class="col-md-4"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                white-space: nowrap;
+              "
+            >
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="agregarRegistro()"
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <i class="material-icons">add</i>
+                Agregar registro
+              </button>
+
+              <!-- Guardar bitacora -->
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="crearBitacora()"
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  white-space: nowrap;
+                  margin-left: 12px;
+                "
+              >
+                <i class="material-icons">save</i>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div style="overflow-y: scroll; max-height: 120px;">
+    <table class="table table-striped" style="margin-top: 24px; width: 100%; height:150px ">
+      <thead style="position: sticky; top:0px; z-index: 10;">
+        <tr>
+          <th>Operador</th>
+          <th>Vehiculo</th>
+          <th>Estatus</th>
+          <th>Turno</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of bitacoraRegistro">
+          <!-- Cambiar el idOperador por su nombre con base a su funcion -->
+          <td>
+            {{ obtenerNombreOperador(item.idUsuario) }}
+          </td>
+
+          <td>{{ item.idUnidad }}</td>
+          <td>{{ obtenerNombreEstatus(item.idEstatus) }}</td>
+          <td>{{ obtenerNombreTurno(item.idTurno) }}</td>
+
+          <td>
+          <button mat-icon-button color="warn" (click)="eliminarRegistro(item)">
+              <i class="material-icons">delete</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</app-layout>

@@ -1,0 +1,81 @@
+
+<div>
+    <mat-card style="height: 100%; display: flex; flex-direction: column">
+      <mat-card-content fxFlexFill>
+        <div class="row">
+            <div *ngIf="!IS_EDITABLE">
+                <div style="align-self: CENTER" >
+                    <span style="font-size: medium; color: #7d7d7d">{{placeholder}}</span>
+                </div>
+            </div>    
+            <div *ngIf="IS_EDITABLE">
+                <mat-form-field appearance="fill" >
+                    <mat-label>{{placeholder}}</mat-label>
+                    <input autocomplete="off" matInput [readonly]="!IS_EDITABLE" id="multi" type="text"
+                    (click)="IS_EDITABLE ? toggleTable() : null" 
+                    [value]="displayText">
+                    <!-- Mostrar mensajes de error para todos los controles dinámicos -->         
+                </mat-form-field>
+            </div>
+        
+        </div>
+        <!-- Mostrar mensajes de error para todos los controles dinámicos -->
+        <ng-container>
+            <mat-error *ngIf="IS_REQUIRED && anyControlInvalid()" style="color:red;">
+            Este campo es requerido
+            </mat-error>
+        </ng-container>
+        <div class="dropdown" *ngIf="isTableVisible" [ngStyle]="{'visibility': tableVisibility}" #dropdownTable>
+            <app-loading [isLoading]="isLoading" [fondo]="true"></app-loading>
+            <div class="mat-table-wrapper">
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8 fixed-table">
+                <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ columnConfigs[column]?.displayName || column }}
+                    <!-- Filtro para la columna -->
+                    <div *ngIf="columnConfigs[column]?.showFilter">
+                    <input 
+                    class="form-control column-filter" 
+                    [style.width.px]="getColumnWidth(column)" 
+                    (input)="onInputFilter($event, column)"
+                    placeholder="Filtrar {{ columnConfigs[column]?.displayName || column }}" />
+                    </div>
+                </th>
+                <td mat-cell *matCellDef="let element" [ngClass]="{ 'disabled-record': shouldBlockRow(element) }">
+                    <ng-container [ngSwitch]="columnConfigs[column]?.type">
+                    <ng-container *ngSwitchCase="'boolean'">
+                        <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="element[column]"
+                            [disabled]="!columnConfigs[column]?.editable" />
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'date'">
+                        {{ element[column] | date: columnConfigs[column]?.format }}
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <input *ngIf="columnConfigs[column]?.editable; else readonlyField" 
+                        [(ngModel)]="element[column]" 
+                        style="width:200px; text-align:right;" matInput />
+                        <ng-template #readonlyField>{{ truncateText(element[column], 35) }}</ng-template>
+                    </ng-container>
+                    </ng-container>
+                </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns" class="sticky-header"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onItemSelected(row)"></tr>
+            </mat-table>
+            </div>
+            <mat-paginator [length]="totalRecords" [pageSize]="parametros.tamanoPagina"
+            [pageSizeOptions]="tableConfigs.pageSizeOptions" (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+        <!-- Listado de sellos agregados -->
+        <mat-chip-set>
+            <mat-chip *ngFor="let item of elemtosSeleccionados; let j = index" [removable]="IS_EDITABLE" (removed)="eliminarItem(j)" >
+              {{ item }}
+              <mat-icon *ngIf="IS_EDITABLE" matChipRemove >cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-set>
+    </mat-card-content>
+    </mat-card>
+</div>

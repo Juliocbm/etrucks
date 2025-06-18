@@ -1,0 +1,24 @@
+<div class="">
+    <!--     <input class="form-control" id="test" type="text" readonly (click)="toggleTable()" [value]="selectedItem ? getValueForDisplay(selectedItem, displayColumnConfigDF) : placeholder"> -->
+    <input [readonly]="!IS_EDITABLE" class="form-control" id="test" type="text" readonly (click)="IS_EDITABLE?toggleTable():null" [value]="getValueForDisplay(selectedItem, displayColumnConfigDF)">
+      <div *ngIf="IS_REQUIRED && SHOW_VALID">
+        <span style="color:red;">Se requiere seleccionar un valor.</span>
+      </div>
+        <div class="dropdown" *ngIf="isTableVisible" [ngStyle]="{'visibility': tableVisibility}" style="position: fixed; z-index: 99999999;
+        background-color: white;
+        border-radius: 10px;
+        border: solid 2px #d9d9d9;">
+            <app-full-table  #myTable
+            [data]="data" 
+            [columnConfigs]="columnConfigs" 
+            [showFilterInactivos]="false"
+            [tableConfigs]="tableConfigs"
+            (enviarItemEvent)="onItemSelected($event)" 
+            (changeData)="changeDataTable()"
+            [withHeader] = 'false'>
+            
+            </app-full-table>
+        </div>
+    
+    </div>
+    

@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="header">
+    <div class="title">
+      <i class="material-icons">assignment</i> Pedidos de tramo
+      <mat-spinner *ngIf="loading" diameter="20" style="margin-left: 10px;"></mat-spinner>
+    </div>
+  </div>
+  <mat-tab-group animationDuration="1000ms" style="background-color: whitesmoke; margin-top:10px;">
+    <mat-tab *ngFor="let sucursal of sucursales" [label]="sucursal">
+      <div cdkDropList class="pedidos-lista" (cdkDropListDropped)="drop($event, sucursal)">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="pedido-header">Id pedido</th>
+              <th class="pedido-header">Sucursal</th>
+              <th class="pedido-header">Cliente</th>
+              <th class="pedido-header">Ruta</th>
+              <th class="pedido-header">Fecha</th>
+              <th class="pedido-header">Manual</th>
+              <th class="pedido-header">Prioridad</th>
+              <th class="pedido-header">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pedido of paginatedPedidos[sucursal]; let i = index" cdkDrag>
+              <td style="font-weight: bold; font-size: 15px; cursor:pointer;" class="pedido-columna">{{ pedido.idPedido }}</td>
+              <td style="cursor:pointer;"  class="pedido-columna">{{ pedido.sucursal }}</td>
+              <td style="cursor:pointer;"  class="pedido-columna">{{ pedido.cliente }}</td>
+              <td style="cursor:pointer;"  class="pedido-columna">{{ pedido.ruta }}</td>
+              <td style="cursor:pointer;"  class="pedido-columna">{{ pedido.fechaPedido | date:'dd-MM-yyyy HH:mm' }}</td>
+              <td style="background-color: #f5f5f5;"  class="pedido-columna" (mousedown)="$event.stopPropagation()">
+                <i *ngIf="pedido.manualPosition" class="material-icons" style="color: #5b5b5b;" matTooltip="Prioridad editada">mode_edit</i>
+              </td>
+              <td style="background-color: #f5f5f5;" class="pedido-columna" (mousedown)="$event.stopPropagation()">
+                <input style="text-align: center;" [(ngModel)]="pedido.priorityPosition" type="number" min="1" [disabled]="loading" max="{{paginatedPedidos[sucursal].length}}" (keydown.enter)="confirmarCambioPrioridad(pedido, sucursal)" />
+              </td>
+              <td style="background-color: #f5f5f5;" class="pedido-columna" (mousedown)="$event.stopPropagation()">
+                <i class="material-icons" style="cursor:pointer;" (click)="confirmarCambioPrioridad(pedido, sucursal)" matTooltip="Actualizar prioridad" [class.disabled]="loading">check_circle</i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <button (click)="changePage(sucursal, currentPage[sucursal] - 1)" [disabled]="currentPage[sucursal] === 1 || loading">«</button>
+        <span *ngFor="let page of getPages(sucursal)">
+          <button (click)="changePage(sucursal, page)" [class.active]="page === currentPage[sucursal]" [disabled]="loading">{{page}}</button>
+        </span>
+        <button (click)="changePage(sucursal, currentPage[sucursal] + 1)" [disabled]="!canGoNext(sucursal) || loading">»</button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

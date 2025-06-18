@@ -1,0 +1,27 @@
+<app-layout title="{{'Nuevo: ' + elementoDetalle.tituloPantalla}}">
+    <app-toolbar [showFilterActivos]="false"  [showCreateButton]="false" [showCreateButtonDetGral]="false" [showFilterDate]="false" [showEditButton]="false" [showFilter]="false" [showExportButton]="false" [showExportButton]="false" (saveClicked)="onSubmit()"></app-toolbar>
+  
+    <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+  
+    <form [formGroup]="catElementoDetForm" (ngSubmit)="onSubmit()">   
+        <div class="col-md-6 mb-3">
+          <div class="card">     
+            <div class="card-body">
+              <div class="form-group">
+                <label for="idElemento">ID Elemento</label>
+                <input type="number" id="idElemento" class="form-control" formControlName="idElemento" >
+              </div>
+              <div class="form-group">
+                <label for="clave">Clave</label>
+                <input type="text" id="clave" class="form-control" formControlName="clave" maxlength="4">
+              </div>
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" class="form-control" formControlName="nombre">
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+  </app-layout>
+  

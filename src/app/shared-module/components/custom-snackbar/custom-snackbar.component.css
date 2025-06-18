@@ -1,0 +1,35 @@
+
+
+/* .cus-snackebar .mat-icon {
+    font-size: 2rem;
+    height: 2rem;
+    width: 2rem;
+    margin-right: 0.5rem;
+}
+ */
+
+/* styles.css o custom-snackbar.component.css */
+.custom-snackbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Esto separará el botón del resto del contenido */
+   /*  color: white; */
+}
+
+.custom-snackbar .snackbar-icon {
+    font-size: 2rem;
+    height: 2rem;
+    width: 4rem;
+    margin-right: 0.5rem;
+}
+
+.custom-snackbar .snackbar-message {
+    flex-grow: 1; /* Permite que el mensaje ocupe todo el espacio disponible */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-snackbar .snackbar-action {
+    background: #f1f1f1;
+    margin-left: 8px; /* Espacio entre el mensaje y el botón */
+}

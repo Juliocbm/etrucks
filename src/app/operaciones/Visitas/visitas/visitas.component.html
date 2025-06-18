@@ -1,0 +1,26 @@
+
+<app-layout>
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <div class="col-md-6" style="display: flex; justify-content:flex-start;">
+    <h3 class="text-center">Visitas</h3>
+  </div>
+
+  <div class="row">
+    <app-full-table
+      crearRoute="/visitas/crear"
+      [showCreateButtonModal]="true"
+      [data]="visitas"
+      [actions]="tableActions"
+      [nombreMenu]="'Visitas'"
+      [columnConfigs]="columnConfigs"
+      [isLoading]="isLoading"
+      (refreshEvent)="retriveData()"
+      [excelFileName]="'Visitas'"
+      [showExportarButton]="true"
+      [tableConfigs]="tableConfigs"
+      [showFilterInactivos]="false"
+
+    ></app-full-table>
+  </div>
+</app-layout>

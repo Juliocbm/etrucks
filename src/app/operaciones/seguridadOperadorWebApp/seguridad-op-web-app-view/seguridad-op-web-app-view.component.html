@@ -1,0 +1,18 @@
+<app-layout titulo="Acceso aplicación operadores">
+  <div class="row">
+      <div class="col">
+          <app-full-table
+              [data]="dataOperadorUsuarios"
+              [columnConfigs]="columnConfigsOperadorUsuario"
+              [tableConfigs]="tableConfigs"
+              [isLoading]="isLoading"
+              [actions]="tableActionsVwOperadorUsuario"
+              [showCreateButtonModal]="false"
+              [showFilterInactivos]="false"
+              (refreshEvent)="getData()"
+              nombreMenu="Acceso aplicación operadores"
+              excelFileName="AccesosOperadorApp"
+          ></app-full-table>
+      </div>
+  </div>
+</app-layout>

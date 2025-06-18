@@ -1,0 +1,9 @@
+input{
+    width: 85px;
+}
+
+.error-field {
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.2);
+  }
+  

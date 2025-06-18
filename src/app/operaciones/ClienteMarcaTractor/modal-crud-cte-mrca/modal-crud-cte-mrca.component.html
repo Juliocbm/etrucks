@@ -1,0 +1,52 @@
+<!-- <app-modal-header TITULO_MODAL="Relacion Cliente / Marca tracktor" ></app-modal-header> -->
+<app-modal-header
+  TITULO_MODAL="Relacion Cliente / Marca tracktor"
+  [TIPO_MODAL]="TIPO_MODAL"
+  [IS_EDITABLE]="IS_EDITABLE"
+  (isEditableEvent)="editableChange($event)"
+  (submitEvent)="onSubmit()"
+  (closeModalEvent)="cerrarModal()"
+></app-modal-header>
+
+<body style="display:flex; margin-top:12px; padding:20px; ">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+        <form [formGroup]="CteMarcaForm" (ngSubmit)="onSubmit()">
+
+          <div class="form-group">
+            <label for="cliente">Cliente</label>
+            <app-dropdown-fullV2
+              style="margin-bottom: 20px !important; position: relative; display: block;"
+              [fetchDataFunction]="apiOperacionesService.getClientes.bind(apiOperacionesService)"
+              [parametros]="parametrosClientes"
+              [columnConfigs]="columnConfigsClientes"
+              [placeholder]="'Selecciona un cliente'"
+              [IS_EDITABLE]="true"
+              [itemDefault]="clienteSelected"
+              [displayColumnConfigDF]="displayColumnConfCliente"
+              (enviarItemEvent)="onSeleccionaCliente($event)" #myTable>
+            </app-dropdown-fullV2>
+          </div>
+
+          <div class="form-group">
+            <label for="marca">Marca</label>
+
+            <mat-form-field style="width: 100%">
+              <mat-label>Selecciona un Vehiculo</mat-label>
+              <mat-select [formControl]="marcass" multiple>
+                <mat-option value="0">-- None --</mat-option>
+                <mat-option *ngFor="let item of Marcas" [value]="item.id_marca_unidad">
+                  {{ item.id_marca_unidad + " - " + item.nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>

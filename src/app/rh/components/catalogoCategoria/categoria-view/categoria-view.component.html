@@ -1,0 +1,7 @@
+
+<app-layout titulo="Categoria">
+    <app-full-table  [data]="datosFiltrados" [actions]="tableActions"
+      [nombreMenu]="'Categoria'" [columnConfigs]="columnConfigs"
+      (refreshEvent)="retriveData()" [excelFileName]="'CatalogoCategoria'" [tableConfigs]="tableConfigs" [showCreateButtonModal]="true"
+      [isLoading]="isLoading"></app-full-table>
+  </app-layout>

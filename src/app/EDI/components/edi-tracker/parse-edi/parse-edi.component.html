@@ -1,0 +1,60 @@
+<div class="parse-edi-container">
+  <div class="parse-edi-header">
+    <h2>Procesar archivo EDI</h2>
+    <button mat-icon-button (click)="cerrarModal()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="parse-edi-content">
+    <div class="file-upload-area" 
+         [class.has-content]="ediContent">
+      
+      <div class="upload-instructions" *ngIf="!ediContent">
+        <mat-icon>cloud_upload</mat-icon>
+        <h3>Carga tu archivo EDI</h3>
+        <p>Arrastra y suelta un archivo EDI aquí o selecciona uno desde tu computadora</p>
+        <button mat-raised-button color="primary" (click)="fileInput.click()">
+          <mat-icon>file_upload</mat-icon>
+          Seleccionar archivo
+        </button>
+        <input #fileInput type="file" accept=".edi,.txt" 
+               (change)="manejarArchivoSeleccionado($event)" hidden>
+        <div class="separator">
+          <span>O</span>
+        </div>
+        <p>Pega el contenido EDI directamente:</p>
+      </div>
+      
+      <div class="edi-content-area">
+        <textarea 
+          placeholder="Pega el contenido del EDI aquí..." 
+          [(ngModel)]="ediContent"
+          (paste)="manejarPegado($event)"
+          [disabled]="isParsing">
+        </textarea>
+      </div>
+      
+      <div class="error-message" *ngIf="errorMessage">
+        <mat-icon>error</mat-icon>
+        {{ errorMessage }}
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button mat-stroked-button (click)="cerrarModal()">
+        Cancelar
+      </button>
+      <button mat-raised-button 
+              color="primary" 
+              [disabled]="!ediContent || isParsing"
+              (click)="parsearEdi()">
+        <span *ngIf="!isParsing">Procesar EDI</span>
+        <span *ngIf="isParsing">
+          <mat-spinner diameter="20"></mat-spinner>
+          Procesando...
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

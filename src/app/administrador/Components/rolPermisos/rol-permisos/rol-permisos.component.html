@@ -1,0 +1,58 @@
+<app-layout titulo="Configurar permisos por rol">
+  <app-toolbar [showCreateButton]="false"  [showFilterActivos]="false"  [showFilterDate]="false" [showEditButton]="false" [showFilter]="false" [showExportButton]="false" (saveClicked)="onSubmit()"></app-toolbar>
+
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <div class="col-md-12 mt-4">
+        <div class="col-md-12 mt-4">
+          <div class="card">
+            <div class="card-header">
+              Información de rol
+            </div>
+            <div class="card-body">
+
+              <div class="row col-md-12">
+                <div class="row col-md-12 mb-3 mt-4">
+
+                  <div class="form-group col-md-3 mb-2">
+                    <label for="nombre">Rol:</label>
+                    <select  class="form-control comment" id="idrol" name="rolId" [(ngModel)]="rolFilter" (change)="cargarPermisos()">
+                      <option *ngFor="let rol of datosFiltrados" [ngValue]="rol">{{ rol.nombre  }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <div>
+                      <label for="nombre">Modulo:</label>
+                      <select  class="form-control comment" id="idmenu" name="menuId" [(ngModel)]="modSelect" (change)="cargarPantallas()">
+                        <option *ngFor="let mod of modulosFilter" [ngValue]="mod">{{ mod.nombre  }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6 form-group" style="display:flex ;" >
+                    <div>
+                      <label for="nombre">Asignar/Desasignar <br><span>todas las pantallas:</span></label>
+                      <div>
+                      <input class="form-check-input" type="checkbox" [(ngModel)]="check" name="todos" (change)="asignarModulo($event)">
+                    </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="container" style="display: flex; flex-direction: row; align-items: start;">
+                    <div class="col-md-12">
+                        <!-- Aquí va tu tabla -->
+                        <app-full-table [data]="pantallas" [columnConfigs]="columnConfigsRol"
+                            [nombreTabla]="'Cofigurar permisos de pantallas'" [tableConfigs]="tableConfigsPantallas"
+                            [showCreateButton]="false" [showExportarButton]="false"
+                            [showRefreshButton]="true" [showConfColumnsButton]="false"></app-full-table>
+                    </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+

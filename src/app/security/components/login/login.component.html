@@ -1,0 +1,35 @@
+
+<alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+<div class="d-flex justify-content-center align-items-center login-container">
+    <div class="col-md-6 login-form" style="box-shadow: 5px 8px 10px 10px #b1afaf26; border-radius: 10px;">
+      <h3>Iniciar Sesión</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> 
+        <div class="form-group item">
+            <label for="username">Usuario</label>
+            <input type="text" id="username" formControlName="username" class="form-control">
+        </div>
+        <div class="form-group item">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" formControlName="password" class="form-control">
+        </div>
+        <button style="width: -webkit-fill-available;" type="submit" [disabled]="!loginForm.valid" class="btn btn-primary item">
+          <div class="me-2">
+            <div *ngIf="isLoading" class="loading-overlay">
+              <mat-spinner diameter="30"></mat-spinner>
+            </div>
+            <div *ngIf="!isLoading">
+              Iniciar sesión
+            </div>
+            
+          </div>
+        </button>
+       
+        <div style="text-align: center;" class="form-group item">
+            <a (click)="forgotPassword()">Olvidé mi contraseña</a>
+          </div>
+      </form>
+    </div>
+    
+  </div>
+  

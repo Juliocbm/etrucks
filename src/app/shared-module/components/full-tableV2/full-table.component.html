@@ -1,0 +1,571 @@
+<div
+  class="table-v2-container"
+  [ngClass]="{ 'table-v2-centered': centerTable }"
+>
+  <div *ngIf="withHeader" class="toolbar">
+    <div class="left-buttons">
+      <button
+        *ngIf="showCreateButton"
+        mat-raised-button
+        [routerLink]="crearRoute"
+        class="btn-tabla-centrado"
+        [hasPermission]="['Crear', idMenu]"
+        matTooltip="Nuevo"
+        matTooltipPosition="above"
+        matTooltipShowDelay="150"
+      >
+        Crear
+      </button>
+      <button
+        *ngIf="showCreateButtonDetGral"
+        mat-raised-button
+        (click)="create()"
+        class="btn-tabla-centrado"
+        [hasPermission]="['Crear', idMenu]"
+        matTooltip="Nuevo"
+        matTooltipPosition="above"
+        matTooltipShowDelay="150"
+      >
+        Crear
+      </button>
+
+      <button
+        *ngIf="showCreateButtonModal"
+        mat-raised-button
+        (click)="tableConfigs.createCallback()"
+        class="btn-tabla-centrado"
+        [hasPermission]="['Crear', idMenu]"
+        matTooltip="Nuevo"
+        matTooltipPosition="above"
+        matTooltipShowDelay="150"
+      >
+        Crear
+      </button>
+
+      <input
+        *ngIf="mostrarFiltroGeneralFechas"
+        #filterInput
+        class="form-control-date"
+        bsDaterangepicker
+        placeholder="Filtrar por fecha"
+        type="text"
+        [bsConfig]="bsConfigGeneral"
+        (bsValueChange)="onValueChangeDateGeneral($event)"
+      />
+
+      <input
+        *ngIf="isReport"
+        #filterInput
+        class="form-control-date"
+        bsDatepicker
+        placeholder="Filtrar por fecha"
+        type="text"
+        [bsConfig]="bsConfigGeneral"
+        (bsValueChange)="onValueChangeDateReport($event)"
+      />
+
+      <div *ngIf="showSelectAll" class="checkbox-container">
+        <mat-checkbox [disabled]="false" (change)="onCheckSelectAll($event)"
+          >Todos</mat-checkbox
+        >
+      </div>
+    </div>
+
+    <div class="table-title">
+      <span>{{ nombreTabla }}</span>
+    </div>
+
+    <div class="right-buttons">
+      <style>
+        .toggle-color-amarillo.mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+          .mdc-switch__thumb {
+          background-color: var(--color-select-toggle) !important;
+        }
+        .toggle-color-amarillo.mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked
+          .mdc-switch__track {
+          background-color: var(--color-select-toggle-transparente) !important;
+        }
+        .toggle-color-amarillo.mat-slide-toggle.mat-checked
+          .mat-slide-toggle-thumb {
+          background-color: var(--color-select-toggle) !important;
+        }
+        .toggle-color-amarillo.mat-slide-toggle.mat-checked
+          .mat-slide-toggle-bar {
+          background-color: var(--color-select-toggle-transparente) !important;
+        }
+      </style>
+      <mat-slide-toggle
+        *ngIf="showFilterInactivos"
+        (change)="applyFilterActives($event.checked)"
+        matTooltip="Incluir eliminados"
+        matTooltipPosition="above"
+        matTooltipShowDelay="150"
+        class="toggle-color-amarillo"
+      >
+      </mat-slide-toggle>
+
+      <!-- Exportar a excel Si no se requiero deshabilitar el boton eliminar la funcion disabled -->
+      <button
+        *ngIf="showExportarButton"
+        mat-raised-button
+        class="btn btn-secondary btn-tabla-centrado"
+        (click)="exportTable()"
+        [disabled]="isExportInProgress"
+        matTooltip="{{
+          isExportInProgress ? 'Exportación en progreso...' : 'Exportar a excel'
+        }}"
+        matTooltipPosition="above"
+        matTooltipShowDelay="150"
+      >
+        <mat-icon>{{
+          isExportInProgress ? "hourglass_empty" : "file_download"
+        }}</mat-icon>
+      </button>
+
+      <button
+        *ngIf="showRefreshButton"
+        mat-raised-button
+        class="refresh-button btn-tabla-centrado"
+        (click)="refreshTable()"
+        matTooltip="Refrescar tabla"
+        matTooltipPosition="above"
+        matTooltipShowDelay="150"
+      >
+        <mat-icon>refresh</mat-icon>
+      </button>
+
+      <button
+        *ngIf="showAddButton"
+        mat-raised-button
+        class="refresh-button btn-tabla-centrado"
+        (click)="agregarRegistro()"
+        matTooltip="Agregar registro"
+        matTooltipPosition="above"
+        matTooltipShowDelay="150"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <button
+        *ngIf="showConfColumnsButton"
+        (click)="openColumnVisibilityDialog()"
+        mat-raised-button
+        class="btn btn-secondary settings-button btn-tabla-centrado"
+        matTooltip="Configurar columnas"
+        matTooltipPosition="above"
+        matTooltipShowDelay="150"
+      >
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-v2-wrapper" #matTableWrapper>
+    <div class="table-v2-content">
+      <mat-table
+        id="catalogoPrincipal"
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z0"
+      >
+        <!-- Columnas Dinámicas -->
+        <ng-container *ngFor="let column of columnKeys" [matColumnDef]="column">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            sticky
+            [ngClass]="{ 'columna-id': column === 'id' || column === 'Id' }"
+            [ngStyle]="{ width: widthColumn }"
+          >
+            <div style="display: flex; flex-direction: column">
+              <div>{{ columnConfigs[column]?.displayName || column }}</div>
+              <ng-container *ngIf="columnConfigs[column]?.showFilter">
+                <ng-container
+                  *ngIf="
+                    columnConfigs[column]?.type == 'default' ||
+                    columnConfigs[column]?.type == 'default-truncate'
+                  "
+                >
+                  <input
+                    #filterInput
+                    class="form-control form-control-sm"
+                    [ngClass]="{
+                      'filtro-width': column === 'id' || column === 'Id'
+                    }"
+                    type="text"
+                    (change)="applyFilter($event, column)"
+                    placeholder="Filtrar"
+                  />
+                </ng-container>
+                <ng-container *ngIf="columnConfigs[column]?.type == 'number'">
+                  <input
+                    #filterInput
+                    class="form-control form-control-sm"
+                    [ngClass]="{
+                      'filtro-width': column === 'id' || column === 'Id'
+                    }"
+                    type="text"
+                    (change)="applyFilter($event, column)"
+                    placeholder="Filtrar"
+                  />
+                </ng-container>
+                <ng-container *ngIf="columnConfigs[column]?.type == 'date'">
+                  <input
+                    #filterInput
+                    style="width: 100%"
+                    bsDaterangepicker
+                    placeholder="Filtrar"
+                    class="form-control form-control-sm"
+                    type="text"
+                    [bsConfig]="bsConfig"
+                    (bsValueChange)="onValueChangeDate($event, column)"
+                  />
+                </ng-container>
+                <!-- <ng-container *ngIf="columnConfigs[column]?.type === 'boolean' && !columnConfigs[column]?.editable"> -->
+                <ng-container *ngIf="columnConfigs[column]?.type === 'boolean'">
+                  <mat-slide-toggle
+                    [checked]="columnConfigs[column]?.iniFilterBool"
+                    (change)="
+                      applyBooleanFilter($event.checked ? true : null, column)
+                    "
+                  >
+                  </mat-slide-toggle>
+                </ng-container>
+                <!-- </ng-container> -->
+              </ng-container>
+            </div>
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [ngClass]="{
+              'disabled-record': shouldBlockRow(element),
+              registroEliminado: shouldHideText(element)
+            }"
+            (click)="!shouldBlockRow(element) ? enviarItem(element) : null"
+          >
+            <div *ngIf="!isLoading && !isDataEmpty">
+              <ng-container *ngIf="columnConfigs[column]?.type === 'boolean'">
+                <ng-container
+                  *ngIf="columnConfigs[column]?.editable; else elseBlock"
+                >
+                  <ng-container
+                    *ngIf="columnConfigs[column]?.event; else elseEvent"
+                  >
+                    <mat-checkbox
+                      [(ngModel)]="element[column]"
+                      (change)="columnConfigs[column]?.functionEvent(element)"
+                    >
+                    </mat-checkbox>
+                  </ng-container>
+
+                  <ng-template #elseEvent>
+                    <mat-checkbox [(ngModel)]="element[column]"> </mat-checkbox>
+                  </ng-template>
+                </ng-container>
+                <ng-template #elseBlock>
+                  {{
+                    element[column]
+                      ? columnConfigs[column].trueValue
+                      : columnConfigs[column].falseValue
+                  }}
+                </ng-template>
+              </ng-container>
+
+              <ng-container *ngIf="columnConfigs[column]?.type === 'date'">
+                <span class="text-uppercase">{{
+                  element[column] | date : "dd/MMM/yyyy"
+                }}</span>
+              </ng-container>
+              <ng-container *ngIf="columnConfigs[column]?.type === 'date-time'">
+                <span class="text-uppercase">{{
+                  element[column] | date : "dd/MMM/yyyy HH:MM"
+                }}</span>
+              </ng-container>
+              <ng-container *ngIf="columnConfigs[column]?.type === 'default'">
+                <ng-container
+                  *ngIf="
+                    columnConfigs[column]?.customRender;
+                    else elseBlockDefault
+                  "
+                >
+                  <span
+                    [ngClass]="{
+                      'text-uppercase':
+                        column === 'fechaCita' ||
+                        columnConfigs[column]?.type === 'date'
+                    }"
+                    >{{ columnConfigs[column]?.customRender(element) }}</span
+                  >
+                </ng-container>
+                <ng-template #elseBlockDefault>
+                  <ng-container
+                    *ngIf="
+                      columnConfigs[column]?.editable;
+                      else elseBlockDefaultEditable
+                    "
+                  >
+                    <ng-container
+                      *ngIf="
+                        columnConfigs[column]?.event;
+                        else elseEventDefault
+                      "
+                    >
+                      <input
+                        type="text"
+                        [(ngModel)]="element[column]"
+                        style="width: 100%"
+                        toUpperCase
+                        (blur)="columnConfigs[column]?.functionEvent(element)"
+                      />
+                    </ng-container>
+                    <ng-template #elseEventDefault>
+                      <input
+                        type="text"
+                        [(ngModel)]="element[column]"
+                        style="width: 100%"
+                        toUpperCase
+                      />
+                    </ng-template>
+                  </ng-container>
+                  <ng-template #elseBlockDefaultEditable>
+                    {{ element[column] }}
+                  </ng-template>
+                </ng-template>
+              </ng-container>
+
+              <ng-container *ngIf="columnConfigs[column]?.type === 'number'">
+                <ng-container
+                  *ngIf="columnConfigs[column]?.editable; else elseBlock"
+                >
+                  <ng-container
+                    *ngIf="columnConfigs[column]?.event; else elseEvent"
+                  >
+                    <input
+                      type="text"
+                      [(ngModel)]="element[column]"
+                      style="width: 100%; text-align: right"
+                      (keydown.enter)="
+                        columnConfigs[column]?.functionEvent(element)
+                      "
+                      onlyDigit="{{ columnConfigs[column]?.char }}"
+                    />
+                  </ng-container>
+                  <ng-template #elseEvent>
+                    <input
+                      type="text"
+                      [(ngModel)]="element[column]"
+                      style="width: 100%; text-align: right"
+                      onlyDigit="{{ columnConfigs[column]?.char }}"
+                    />
+                  </ng-template>
+                </ng-container>
+
+                <ng-template #elseBlock>
+                  <p class="text-align-right" *ngIf="!element.isEditing">
+                    {{
+                      element[column] | onlyDigit : columnConfigs[column]?.char
+                    }}
+                  </p>
+                </ng-template>
+              </ng-container>
+
+              <ng-container
+                *ngIf="columnConfigs[column]?.type === 'default-truncate'"
+              >
+                <ng-container
+                  *ngIf="columnConfigs[column]?.customRender; else elseBlock"
+                >
+                  <span matTooltip="{{ element[column] }}">{{
+                    columnConfigs[column]?.customRender(element) | truncate : 10
+                  }}</span>
+                </ng-container>
+                <ng-template #elseBlock>
+                  <span matTooltip="{{ element[column] }}">{{
+                    element[column] | truncate : 10
+                  }}</span>
+                </ng-template>
+              </ng-container>
+
+              <ng-container *ngIf="columnConfigs[column]?.type === 'percent'">
+                <ng-container
+                  *ngIf="columnConfigs[column]?.customRender; else elseBlock"
+                >
+                  <span matTooltip="{{ element[column] }}">{{
+                    columnConfigs[column]?.customRender(element) | percent
+                  }}</span>
+                </ng-container>
+                <ng-template #elseBlock>
+                  <span matTooltip="{{ element[column] }}">{{
+                    element[column] | percent
+                  }}</span>
+                </ng-template>
+              </ng-container>
+
+              <ng-container *ngIf="columnConfigs[column]?.type === 'select'">
+                <select
+                  [(ngModel)]="element[column]"
+                  style="width: 100%; height: 25px"
+                  disabled="{{ !columnConfigs[column]?.editable }}"
+                >
+                  <option
+                    *ngFor="
+                      let item of dataSelect[
+                        columnConfigs[column]?.positionDataSelect
+                      ]
+                    "
+                    [value]="item.id"
+                  >
+                    {{ item.nombre }}
+                  </option>
+                </select>
+              </ng-container>
+
+              <ng-container *ngIf="!columnConfigs[column]">
+                {{ element[column] }}
+              </ng-container>
+
+              <ng-container *ngIf="columnConfigs[column]?.type === 'dinamic'">
+                <ng-container
+                  *ngIf="columnConfigs[column]?.editable; else elseBlock"
+                >
+                  <ng-container
+                    *ngIf="columnConfigs[column]?.event; else elseEvent"
+                  >
+                    <input
+                      type="text"
+                      [(ngModel)]="element[column]"
+                      style="width: 100%; text-align: right"
+                      (keydown.enter)="
+                        columnConfigs[column]?.functionEvent(element)
+                      "
+                      onlyDigit="{{ columnConfigs[column]?.char }}"
+                    />
+                  </ng-container>
+                  <ng-template #elseEvent>
+                    <input
+                      type="text"
+                      [(ngModel)]="element[column]"
+                      style="width: 100%; text-align: right"
+                      onlyDigit="{{ columnConfigs[column]?.char }}"
+                    />
+                  </ng-template>
+                </ng-container>
+
+                <ng-template #elseBlock>
+                  <p class="text-align-right" *ngIf="!element.isEditing">
+                    {{ element[column] | onlyDigit : "" }}
+                    {{ columnConfigs[column]?.char }}
+                  </p>
+                </ng-template>
+              </ng-container>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Botones de acción -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef class="acciones-header">
+            Acciones
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            class="mat-cell-with-actions"
+            [ngClass]="{ registroEliminado: shouldHideText(element) }"
+          >
+            <div class="flex-container">
+              <ng-container *ngFor="let action of actions">
+                <div
+                  *ngIf="!action.isVisible || action.isVisible(element)"
+                  class="action-button-container"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-warning btn-sm btn-action"
+                    (click)="$event.stopPropagation(); action.callback(element)"
+                    matTooltip="{{ action.tooltip }}"
+                    matTooltipPosition="above"
+                    matTooltipShowDelay="150"
+                    [disabled]="
+                      action.showCondition
+                        ? !action.showCondition(element)
+                        : false
+                    "
+                    [hasPermission]="
+                      action.permission !== 'Ver'
+                        ? [action.permission || 'Ver', idMenu]
+                        : ['Ver', idMenu]
+                    "
+                    [ngClass]="{
+                      registroEliminado: action.showCondition
+                        ? !action.showCondition(element)
+                        : false
+                    }"
+                  >
+                    <mat-icon *ngIf="action.icon" class="action-icon">{{
+                      action.icon
+                    }}</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+            </div>
+          </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          [ngStyle]="styleRow"
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          [ngClass]="{
+            'resaltar-renglon': resaltarSeleccion && row === rowSeleccionada
+          }"
+          [matTooltip]="shouldHideText(row) ? 'Registro eliminado' : ''"
+          matTooltipPosition="right"
+        ></tr>
+      </mat-table>
+
+      <!-- Indicador de Carga -->
+      <!--   <div *ngIf="isLoading && !isDataEmpty" class="loading-overlay">
+        <mat-spinner></mat-spinner>
+        <p>Cargando datos.</p>
+      </div>
+     -->
+      <!-- Estado Vacío -->
+      <div *ngIf="!isLoading && isDataEmpty" class="empty-state">
+        <mat-icon aria-hidden="false" aria-label="Icono de datos vacíos"
+          >folder_open</mat-icon
+        >
+        <p>No pudimos encontrar datos para mostrar aquí.</p>
+        <!--  <button mat-button (click)="refreshTable()">Recargar Datos</button> -->
+      </div>
+
+      <div *ngIf="isLoading" class="empty-state">
+        <!-- <mat-icon class="icono-grande" aria-hidden="false" aria-label="Icono de datos vacíos">folder_open</mat-icon> -->
+        <div *ngIf="isLoading" class="loading-overlay" style="padding: 25px">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+        <p>Cargando datos, porfavor espere un momento...</p>
+      </div>
+    </div>
+  </div>
+  <div class="sticky-gran-total" *ngIf="showGranTotal">
+    Configurar para mostrar un gran total.
+  </div>
+  <div class="sticky-footer">
+    <mat-paginator
+      class="custom-paginator"
+      [length]="totalRecords"
+      [pageSize]="parametros.tamanoPagina"
+      [pageSizeOptions]="tableConfigs.pageSizeOptions"
+      (page)="onPageChange($event)"
+      showFirstLastButtons
+      aria-label="Seleccionar página de elementos"
+    >
+    </mat-paginator>
+  </div>
+</div>

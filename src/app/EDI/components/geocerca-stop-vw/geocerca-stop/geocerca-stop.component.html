@@ -1,0 +1,86 @@
+<alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+<app-layout [titulo]="'Cliente parada Geocerca'">
+    <app-dropdown-fullV2
+        *ngIf="conexionDetalleSelected?.idConexion != null"
+        style="margin-bottom: 20px !important; position: relative; display: block;"
+        [fetchDataFunction]="apiEDI.getConexionDetalle.bind(apiEDI)"
+        [parametros]="parametrosConexionDetalle"
+        [columnConfigs]="columnConfigsConexionDetalle"
+        [placeholder]="'Selecciona una conexión detalle'"
+        [IS_EDITABLE]="false"
+        [itemDefault]="conexionDetalleSelected"
+        [displayColumnConfigDF]="displayColumnConfigDFConexionDetalle"
+        (enviarItemEvent)="onSeleccionaConexionDetalle($event)"
+        #myTable
+        [tableConfigs]="tableConfigsConexionDetalle">
+    </app-dropdown-fullV2>
+
+
+    <app-full-table
+        [showCreateButtonModal]="true"
+        [data]="dataEdiClienteParadasGeocerca"
+        [actions]="tableActionsVwEdiClienteParadasGeocerca"
+        [nombreMenu]="'Geocerca Stop'"
+        [columnConfigs]="columnConfigsvwEdiClienteParadasGeocerca"
+        [isLoading]="isLoadingEdiClienteParadasGeocerca"
+        (refreshEvent)="initializeDataEdiClienteParadasGeocerca()"
+        [excelFileName]="'EdiClienteParadasGeocerca'"
+        [showExportarButton]="true"
+        [tableConfigs]="tableConfigsvwEdiClienteParadasGeocerca"
+        [showFilterInactivos]="false"
+        (editEvent)="onEditClickGeocerca($event)">
+    </app-full-table>
+
+
+
+    <!-- <mat-horizontal-stepper #stepper *ngIf="conexionDetalleSelected?.idConexionDetalle">
+
+        <mat-step>
+            <ng-template matStepLabel>Conexion Detalle</ng-template>
+            <div class="mt-3">
+                <app-full-table
+                    [crearRoute]="'/geocerca-stop/Crear'"
+                    [showCreateButtonModal]="true"
+                    [data]="dataTipoParadaEvento"
+                    [actions]="tableActionsVwTipoParadaEvento"
+                    [nombreMenu]="'Geocerca Stop'"
+                    [columnConfigs]="columnConfigsvwTipoParadaEvento"
+                    [isLoading]="isLoadingTipoParadaEvento"
+                    (refreshEvent)="initializeDataTipoParadaEvento()"
+                    [excelFileName]="'TipoParadaEvento'"
+                    [showExportarButton]="true"
+                    [tableConfigs]="tableConfigsvwTipoParadaEvento"
+                    [showFilterInactivos]="false"
+                    (editEvent)="onEditClickTipoParada($event)">
+                </app-full-table>
+            </div>
+            <div class="mt-3">
+                <button mat-button matStepperNext>Siguiente</button>
+            </div>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Geocercas</ng-template>
+            <div class="mt-3">
+                <app-full-table
+                    [showCreateButtonModal]="true"
+                    [data]="dataEdiClienteParadasGeocerca"
+                    [actions]="tableActionsVwEdiClienteParadasGeocerca"
+                    [nombreMenu]="'Geocerca Stop'"
+                    [columnConfigs]="columnConfigsvwEdiClienteParadasGeocerca"
+                    [isLoading]="isLoadingEdiClienteParadasGeocerca"
+                    (refreshEvent)="initializeDataEdiClienteParadasGeocerca()"
+                    [excelFileName]="'EdiClienteParadasGeocerca'"
+                    [showExportarButton]="true"
+                    [tableConfigs]="tableConfigsvwEdiClienteParadasGeocerca"
+                    [showFilterInactivos]="false"
+                    (editEvent)="onEditClickGeocerca($event)">
+                </app-full-table>
+            </div>
+            <div class="mt-3">
+                <button mat-button matStepperPrevious>Anterior</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper> -->
+</app-layout>

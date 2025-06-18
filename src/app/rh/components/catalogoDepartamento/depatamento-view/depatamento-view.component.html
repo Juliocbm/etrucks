@@ -1,0 +1,7 @@
+
+<app-layout titulo="Departamento">
+    <app-full-table  [data]="datosFiltrados" [actions]="tableActions"
+      [nombreMenu]="'Departamento'" [columnConfigs]="columnConfigs"
+      (refreshEvent)="retriveData()" [excelFileName]="'CatalogoDepartamento'" [tableConfigs]="tableConfigs" [showCreateButtonModal]="true"
+      [isLoading]="isLoading"></app-full-table>
+  </app-layout>

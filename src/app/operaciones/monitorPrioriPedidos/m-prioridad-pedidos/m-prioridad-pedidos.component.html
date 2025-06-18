@@ -1,0 +1,17 @@
+<app-layout title="Prioridad pedidos" >
+
+  <mat-card>
+    <app-full-table
+      [data]="datosFiltrados"
+      [nombreMenu]="'Prioridad Pedidos'"
+      [columnConfigs]="columnConfigs"
+      [showCreateButtonModal]="false"
+      [showExportarButton]="false"
+      [showConfColumnsButton]="false"
+      (refreshEvent)="getPrioridadPedidos()"
+      [tableConfigs]="tableConfigs"
+      [isLoading]="isLoading"
+    ></app-full-table>
+  </mat-card>
+
+</app-layout>

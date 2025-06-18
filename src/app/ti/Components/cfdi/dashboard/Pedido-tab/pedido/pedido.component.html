@@ -1,0 +1,149 @@
+<form [formGroup]="pedidoForm" style="margin-top: 15px;">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>General</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Shipment</mat-label>
+            <input matInput formControlName="shipment" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>ShipperAccount</mat-label>
+            <mat-select formControlName="shipperAccount">
+              <mat-option *ngFor="let item of shipperAccountOptions" [value]="item.value">
+          {{ item.key }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Observaciones del Pedido</mat-label>
+            <input matInput formControlName="observacionesPedido" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <!-- <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Nombre del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorNombre" />
+          </mat-form-field>
+        </div> -->
+     <!--    <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>RFC del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorRfc" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Calle del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorCalle" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Número Exterior del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorNoExterior" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Colonia del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorColonia" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Localidad del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorLocalidad" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>País del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorPais" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Código Postal del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorCp" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Régimen Fiscal del Emisor</mat-label>
+            <input matInput formControlName="cteEmisorRegimenFiscal" />
+          </mat-form-field>
+        </div> -->
+
+
+
+      </div>
+
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="example-card" style="margin-top: 20px;">
+    <mat-card-header>
+      <mat-card-title>Receptor</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>ID del Receptor</mat-label>
+            <input readonly="true" matInput type="number" formControlName="cteReceptorId" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Nombre del Receptor</mat-label>
+            <input readonly="true" matInput formControlName="cteReceptorNombre" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Código Postal del Receptor</mat-label>
+            <input readonly="true" matInput formControlName="cteReceptorCp" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Régimen Fiscal del Receptor</mat-label>
+            <input readonly="true" matInput formControlName="cteReceptorRegimenFiscal" />
+          </mat-form-field>
+        </div>
+       <!--  <div class="col-md-2" style="display:none;">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Domicilio del Receptor</mat-label>
+            <input readonly="true" matInput formControlName="cteReceptorDomicilio" />
+          </mat-form-field>
+        </div> -->
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>RFC del Receptor</mat-label>
+            <input readonly="true" matInput formControlName="cteReceptorRfc" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Uso CFDI del Receptor</mat-label>
+            <input readonly="true" matInput formControlName="cteReceptorUsoCfdi" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>

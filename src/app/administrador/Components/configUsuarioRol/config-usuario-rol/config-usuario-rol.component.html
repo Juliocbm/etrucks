@@ -1,0 +1,9 @@
+<app-layout titulo={{NOMBRE_PANTALLA}}>
+    
+  
+    <app-full-table  [data]="datosFiltrados" [actions]="tableActions"
+      [nombreMenu]="NOMBRE_PANTALLA" (cambiarEstatusEvent)="cambiarEstado($event)" [columnConfigs]="columnConfigs"
+      (refreshEvent)="retriveData()" [excelFileName]="'CatalogoUsuarios'" [tableConfigs]="tableConfigs" [showCreateButtonModal]="false"
+      ></app-full-table>
+  
+  </app-layout>

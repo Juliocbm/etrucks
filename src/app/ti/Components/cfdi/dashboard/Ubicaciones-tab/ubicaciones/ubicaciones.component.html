@@ -1,0 +1,229 @@
+<div class="tabla-contenedor">
+  <div *ngIf="this.datosUbicaciones === 0" class="overlay">
+    <div class="overlay-message">
+      No se encontraro ubicación de origen y destino en el ccp(dummy), corregirlo y asociarlo a una nueva guia.
+    </div>
+  </div>
+  <form  *ngIf="this.datosUbicaciones > 0" [formGroup]="ubicacionesForm" style="margin-top: 30px;">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Origen</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-2" style="display:none;">
+            <mat-form-field appearance="fill">
+              <mat-label>Id</mat-label>
+              <input matInput formControlName="id">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2" style="display:none;">
+            <mat-form-field appearance="fill">
+              <mat-label>Numero de guia</mat-label>
+              <input matInput formControlName="noGuia">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2" style="display:none;">
+            <mat-form-field appearance="fill">
+              <mat-label>Compania</mat-label>
+              <input matInput formControlName="compania">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Tipo de Ubicación Origen</mat-label>
+              <input matInput formControlName="tipoUbicacionOrigen">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre del Remitente</mat-label>
+              <input matInput formControlName="nombreRemitente">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>RFC del Remitente</mat-label>
+              <input maxlength="13" minlength="12" matInput formControlName="remitenteRfc">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Residencia Fiscal del Remitente</mat-label>
+              <input matInput formControlName="remitenteResidenciaFiscal">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>ID del Remitente</mat-label>
+              <input matInput formControlName="remitenteId">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Código Postal del Remitente</mat-label>
+              <input OnlyDigitBase maxlength="5" matInput formControlName="remitenteCp">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Estado del Remitente</mat-label>
+              <input onlyLetters toUpperCase  maxlength="3" matInput formControlName="remitenteEstado">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>País del Remitente</mat-label>
+              <input onlyLetters toUpperCase maxlength="3" matInput formControlName="remitentePais">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Municipio del Remitente</mat-label>
+              <input matInput formControlName="remitenteMunicipio">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Localidad del Remitente</mat-label>
+              <input matInput formControlName="remitenteLocalidad">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Número de Registro Identificador Tributario del Remitente</mat-label>
+              <input matInput formControlName="remitenteNumRegIdTrib">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha Programada de Despacho</mat-label>
+              <input matInput type="text" formControlName="fechaDespachoProgramado">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="example-card" style="margin-top: 15px;">
+      <mat-card-header>
+        <mat-card-title>Destino</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="row">
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Tipo de Ubicación Destino</mat-label>
+              <input matInput formControlName="tipoUbicacionDestino">
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre del Destinatario</mat-label>
+              <input matInput formControlName="nombreDestinatario">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>RFC del Destinatario</mat-label>
+              <input maxlength="13" minlength="12" matInput formControlName="destinatarioRfc">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Residencia Fiscal del Destinatario</mat-label>
+              <input matInput formControlName="destinatarioResidenciaFiscal">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>ID del Destinatario</mat-label>
+              <input matInput formControlName="destinatarioId">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Código Postal del Destinatario</mat-label>
+              <input OnlyDigitBase maxlength="5" matInput formControlName="destinatarioCp">
+            </mat-form-field>
+          </div>
+
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Estado del Destinatario</mat-label>
+              <input onlyLetters toUpperCase maxlength="3" matInput formControlName="destinatarioEstado">
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>País del Destinatario</mat-label>
+              <input onlyLetters toUpperCase maxlength="3" matInput formControlName="destinatarioPais">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Municipio del Destinatario</mat-label>
+              <input matInput formControlName="destinatarioMunicipio">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Localidad del Destinatario</mat-label>
+              <input matInput formControlName="destinatarioLocalidad">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Número de Registro Identificador Tributario del Destinatario</mat-label>
+              <input matInput formControlName="destinatarioNumRegIdTrib">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha Programada de Arribo</mat-label>
+              <input matInput type="text" formControlName="fechaArriboProgramado">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-2">
+            <mat-form-field appearance="fill">
+              <mat-label>Distancia Recorrida (en kilómetros)</mat-label>
+              <input matInput type="number" formControlName="distanciaRecorrida">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

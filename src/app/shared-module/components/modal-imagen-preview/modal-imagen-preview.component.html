@@ -1,0 +1,17 @@
+<div class="preview-container">
+  <div class="preview-header">
+    <h2 mat-dialog-title style="font-weight: bold">Vista Previa</h2>
+    <div class="preview-actions">
+      <button mat-icon-button (click)="onEdit()" matTooltip="Editar imagen">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="onClose()" matTooltip="Cerrar">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="image-container">
+    <img [src]="data.imageUrl" alt="Vista previa de la imagen" class="preview-image" *ngIf="data?.imageUrl">
+  </div>
+</div>

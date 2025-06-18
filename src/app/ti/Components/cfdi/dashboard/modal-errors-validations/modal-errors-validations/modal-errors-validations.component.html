@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Errores de Validación</h2>
+<mat-dialog-content>
+  <ul>
+    <li *ngFor="let error of data.errores">{{ error }}</li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cerrar</button>
+</mat-dialog-actions>

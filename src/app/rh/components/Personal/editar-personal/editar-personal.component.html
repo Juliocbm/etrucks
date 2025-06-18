@@ -1,0 +1,60 @@
+<app-layout titulo="Editar Personal">
+  <app-toolbar [showFilterActivos]="false" [showCreateButton]="false" [showFilterDate]="false" [showEditButton]="false" [showFilter]="false" [showExportButton]="false" (saveClicked)="onSubmit()"></app-toolbar>
+  <alert [type]="alertType" *ngIf="showAlert">{{ alertMessage }}</alert>
+
+  <form [formGroup]="personalForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" class="form-control" formControlName="nombre" required (input)="onInputToUppercase($event, 'nombre')">
+        </div>
+        <div class="form-group">
+          <label for="apellidoPaterno">Apellido Paterno</label>
+          <input type="text" id="apellidoPaterno" class="form-control" formControlName="apellidoPaterno" required (input)="onInputToUppercase($event, 'apellidoPaterno')">
+        </div>
+        <div class="form-group">
+          <label for="apellidoMaterno">Apellido Materno</label>
+          <input type="text" id="apellidoMaterno" class="form-control" formControlName="apellidoMaterno" required (input)="onInputToUppercase($event, 'apellidoMaterno')">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" formControlName="email">
+        </div>
+        <div class="form-group">
+          <label for="idSucursal">ID Sucursal</label>
+          <input type="text" id="idSucursal" class="form-control" formControlName="idSucursal">
+        </div>
+        <!-- <div class="form-group">
+          <label for="idCompania">ID Compañía</label>
+          <input type="number" id="idCompania" class="form-control" formControlName="idCompania" required>
+        </div> -->
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="idDepartamento">ID Departamento</label>
+          <input type="number" id="idDepartamento" class="form-control" formControlName="idDepartamento">
+        </div>
+        <div class="form-group">
+          <label for="idCategoria">Categoría</label>
+          <select id="idCategoria" class="form-control" formControlName="idCategoria" required>
+            <option value="0">Operador</option>
+            <option value="1">Permisionario</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="noNomina">Número de Nómina</label>
+          <input type="text" id="noNomina" class="form-control" formControlName="noNomina">
+        </div>
+        <div class="form-group">
+          <label for="activo">Activo</label>
+          <select id="activo" class="form-control" formControlName="activo">
+            <option value="true">Activo</option>
+            <option value="false">Inactivo</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Actualizar Personal</button>
+  </form>
+</app-layout>

@@ -1,0 +1,53 @@
+<div class="editor-container">
+  <div class="editor-header">
+    <h2 mat-dialog-title style="font-weight: bold" >Editar Imagen</h2>
+    <div class="editor-controls">
+      <button mat-icon-button (click)="zoomIn()" matTooltip="Acercar">
+        <mat-icon>zoom_in</mat-icon>
+      </button>
+      <button mat-icon-button (click)="zoomOut()" matTooltip="Alejar">
+        <mat-icon>zoom_out</mat-icon>
+      </button>
+      <button mat-icon-button (click)="rotateLeft()" matTooltip="Rotar izquierda">
+        <mat-icon>rotate_left</mat-icon>
+      </button>
+      <button mat-icon-button (click)="rotateRight()" matTooltip="Rotar derecha">
+        <mat-icon>rotate_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="cropper-container">
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="1"
+      [transform]="transform"
+      [roundCropper]="true"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded($event)"
+      (loadImageFailed)="loadImageFailed()"
+      [backgroundColor]="'#fff'"
+      [containWithinAspectRatio]="true"
+      outputType="both"
+      [resizeToWidth]="300"
+      [cropperMinWidth]="200"
+      [cropperMinHeight]="200"
+      [onlyScaleDown]="true"
+      [alignImage]="'center'"
+      [hideResizeSquares]="true"
+      style="display:flex;justify-content:center;align-items:center;width: 100%; height: 100%;"
+    ></image-cropper>
+  </div>
+
+  <div mat-dialog-actions class="editor-actions">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button 
+            color="primary" 
+            [disabled]="!isImageLoaded || !croppedImage" 
+            (click)="onSave()">
+      Guardar
+    </button>
+  </div>
+</div>

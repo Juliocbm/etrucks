@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Seleccione la flota por filtrar </h2>
+<mat-dialog-content class="mat-typography">
+  <!-- Dropdown de Flotas a seleccionar -->
+  <mat-form-field>
+    <mat-label>Flota</mat-label>
+    <mat-select [(ngModel)]="flotaSeleccionada">
+      <mat-option *ngFor="let flota of flotas" [value]="flota">{{ flota.nombre }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="flotaSeleccionada" cdkFocusInitial>Aceptar</button>
+</mat-dialog-actions>

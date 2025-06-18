@@ -1,0 +1,13 @@
+
+  <app-layout titulo={{MENU_ACTUAL.menu}}>
+    <app-full-tableV2
+      [data]="datosFiltrados" 
+      [actions]="tableActions"
+      [columnConfigs]="columnConfigs"
+      [tableConfigs]="tableConfigs" 
+      [showCreateButtonModal]="true"
+      [fetchDataFunction]="observableUsuarios"
+      [idMenu]="MENU_ACTUAL.idMenu"
+      excelFileName="UsuarioRoles"> 
+    </app-full-tableV2>
+  </app-layout>

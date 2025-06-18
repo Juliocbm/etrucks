@@ -1,0 +1,263 @@
+<div class="edi-tracker-container">
+  <!-- Componente Parse EDI (modal) -->
+  <app-parse-edi *ngIf="showParseEdi" 
+                (close)="toggleParseEdi()" 
+                (ediParsed)="onEdiParsed($event)"></app-parse-edi>
+  
+  <!-- Cabecera con buscador -->
+  <div class="search-header">
+    <div class="search-container">
+      
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar por Shipment, Origen o Destino</mat-label>
+        <input matInput 
+               type="text"
+               [(ngModel)]="searchInput"
+               (input)="onSearchChange(searchInput)"
+               placeholder="Ingrese Shipment ID o término de búsqueda">
+        <button *ngIf="searchInput" 
+                matSuffix 
+                mat-icon-button 
+                aria-label="Limpiar" 
+                (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-icon matSuffix *ngIf="!searchInput">search</mat-icon>
+      </mat-form-field>
+      
+      <!-- <div class="company-selector">
+        <span>Empresa:</span>
+        <div class="company-buttons">
+          <button mat-icon-button
+                  *ngFor="let company of companies"
+                  [class.selected]="selectedCompany?.id === company.id"
+                  (click)="selectCompany(company)"
+                  [matTooltip]="company.name">
+            <mat-icon>{{ company.icon }}</mat-icon>
+          </button>
+        </div>
+      </div> -->
+      
+      <div class="action-buttons">
+        <button mat-stroked-button 
+                class="search-btn"
+                color="primary"
+                [disabled]="!searchInput" 
+                (click)="searchShipment(searchInput)">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+        <button mat-stroked-button 
+                class="edi-btn"
+                color="accent"
+                (click)="toggleParseEdi()">
+          <mat-icon>file_upload</mat-icon>
+          Cargar EDI
+        </button>
+        <button mat-stroked-button 
+                class="report-btn"
+                color="accent"
+                [disabled]="!selectedShipment" 
+                (click)="generateReport()">
+          <mat-icon>description</mat-icon>
+          Reporte 214
+        </button>
+        <!-- Clear Search Button -->
+        <button mat-stroked-button 
+                class="clear-btn"
+                color="primary"
+                [disabled]="!searchInput" 
+                (click)="clearSearch()">
+          <mat-icon>clear</mat-icon>
+          Limpiar
+        </button>
+      </div>
+    </div>
+    
+    <!-- Resultados de la búsqueda -->
+    <div class="search-results" *ngIf="searchResults.length > 0">
+      <div class="results-header">
+        <span>Resultados de búsqueda</span>
+        <button mat-icon-button (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let result of searchResults" (click)="selectShipment(result)">
+          <mat-icon mat-list-icon>local_shipping</mat-icon>
+          <div mat-line>{{ result.shipment }}</div>
+          <div mat-line>
+            <span class="origin-dest">{{ result.origen }} → {{ result.destino }}</span>
+          </div>
+          <span class="result-extra-info">{{ result.equipo || 'Sin equipo' }}</span>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  
+  <!-- Estado vacío -->
+  <div class="empty-state" *ngIf="!selectedShipment && !isLoading">
+    <mat-icon>search</mat-icon>
+    <h2>Busque un shipment o cargue un archivo EDI</h2>
+    <p>Ingrese un número de shipment, ID EDI o cargue un archivo EDI para visualizar su información</p>
+  </div>
+  
+  <!-- Estado de carga -->
+  <div class="loading-state" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Cargando información...</p>
+  </div>
+  
+  <!-- Contenido principal - Solo visible cuando hay un shipment seleccionado y no está en carga -->
+  <div class="shipment-content" *ngIf="selectedShipment && !isLoading">
+
+    <!-- Informacion del shipment del scac y viajes como remitente y destinatario -->
+     <div class="shipment-info">
+        <!-- Información del shipment -->
+        <div class="shipment-header">
+          <!-- Logo del shipment -->
+          <div class="shipment-logo">
+            <div class="logo-circle">
+              <mat-icon>local_shipping</mat-icon>
+            </div>
+          </div>
+          <!-- Información del shipment -->
+          <div class="shipment-main-info">
+            <div class="shipment-id">
+              <div><strong>SCAC:</strong> {{ selectedShipment.cabecera.scac }}</div>
+              <div><strong>Shipment:</strong> {{ selectedShipment.cabecera.shipment_id }}</div>
+              <div><strong>Fecha:</strong> {{ selectedShipment.cabecera.fecha_ingreso | date:'dd/MM/yyyy HH:mm' }}</div>
+            </div>
+          </div>
+          <!-- Detalles del transporte -->
+          <div class="shipment-details">
+            <div class="detail-item">
+              <span class="detail-label">Pedido:</span>
+              <span class="detail-value">{{ selectedShipment.transporte.pedido }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Viaje:</span>
+              <span class="detail-value">{{ selectedShipment.transporte.viaje || 'No asignado' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Unidad:</span>
+              <span class="detail-value">{{ selectedShipment.transporte.unidad || 'No asignada' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Origen y Destino -->
+        <div class="origen-destino-container">
+          <div class="remitente-info">
+            <strong>Remitente:</strong> {{ selectedShipment.remitente.nombre }}
+            <div class="site-id">Site ID: {{ selectedShipment.remitente.site_id }}</div>
+            <div class="arrow-icon-container">
+              <mat-icon>arrow_forward</mat-icon>
+            </div>
+          </div>
+          <div class="destinatario-info">
+            <strong>Destinatario:</strong> {{ selectedShipment.destinatario.nombre }}
+            <div class="site-id">Site ID: {{ selectedShipment.destinatario.site_id }}</div>
+          </div>
+        </div>
+    </div>
+
+
+
+    <!-- Contenedor principal con mapa y paneles -->
+    <div class="content-container" [ngClass]="{'map-hidden': isMapHidden}">
+      <!-- Panel de mapa (central) -->
+      <div class="map-container" [ngClass]="{'hidden': isMapHidden}">
+        <app-trackin-edi [shipmentData]="selectedShipment"></app-trackin-edi>
+      </div>
+
+      <!-- Botón toggle del mapa -->
+      <div class="toggle-map-btn" [ngClass]="{'hidden': isMapHidden}" (click)="toggleMapVisibility()">
+        <mat-icon>{{ isMapHidden ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+      </div>
+
+      <!-- Panel lateral derecho con tabs -->
+      <div class="right-panel">
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+          <mat-tab label="Eventos">
+            <app-events-edi [eventos]="selectedShipment.eventos_app" 
+                          [eventosReportados]="selectedShipment.eventos_reportados"
+                          [estatusSeguimiento]="selectedShipment.estatus_seguimiento"></app-events-edi>
+          </mat-tab>
+          <mat-tab label="Stops">
+            <div class="stops-container">
+              <table mat-table [dataSource]="selectedShipment.stops" class="mat-elevation-z1 stops-table">
+                <ng-container matColumnDef="numero">
+                  <th mat-header-cell *matHeaderCellDef>No.</th>
+                  <td mat-cell *matCellDef="let stop">{{ stop.numero }}</td>
+                </ng-container>
+                <ng-container matColumnDef="cliente">
+                  <th mat-header-cell *matHeaderCellDef>Cliente</th>
+                  <td mat-cell *matCellDef="let stop">{{ stop.cliente }}</td>
+                </ng-container>
+                <ng-container matColumnDef="tipo">
+                  <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                  <td mat-cell *matCellDef="let stop">{{ stop.tipo }}</td>
+                </ng-container>
+                <ng-container matColumnDef="entrada">
+                  <th mat-header-cell *matHeaderCellDef>Entrada</th>
+                  <td mat-cell *matCellDef="let stop">{{ stop.entrada | date:'dd/MM/yyyy HH:mm' }}</td>
+                </ng-container>
+                <ng-container matColumnDef="salida">
+                  <th mat-header-cell *matHeaderCellDef>Salida</th>
+                  <td mat-cell *matCellDef="let stop">{{ stop.salida | date:'dd/MM/yyyy HH:mm' }}</td>
+                </ng-container>
+                <ng-container matColumnDef="lugar">
+                  <th mat-header-cell *matHeaderCellDef>Lugar</th>
+                  <td mat-cell *matCellDef="let stop">{{ stop.lugar }}</td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedStopColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedStopColumns;"></tr>
+              </table>
+              
+              <div class="empty-message" *ngIf="selectedShipment.stops.length === 0">
+                No hay paradas registradas para este shipment
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Detalles Técnicos">
+            <div class="tech-details-container">
+              <div class="tech-section">
+                <h3>Datos de Transporte</h3>
+                <div class="tech-item">
+                  <div class="tech-label"><strong>Inicio del viaje:</strong></div>
+                  <div class="tech-value">{{ selectedShipment.transporte.inicio_viaje || 'No iniciado' }}</div>
+                </div>
+                <div class="tech-item">
+                  <div class="tech-label"><strong>Fin del viaje:</strong></div>
+                  <div class="tech-value">{{ selectedShipment.transporte.fin_viaje || 'No finalizado' }}</div>
+                </div>
+                <div class="tech-item">
+                  <div class="tech-label"><strong>Duración:</strong></div>
+                  <div class="tech-value">{{ selectedShipment.transporte.rango_horas || 'No disponible' }}</div>
+                </div>
+                <div class="tech-item">
+                  <div class="tech-label"><strong>MAC de Satelital:</strong></div>
+                  <div class="tech-value">{{ selectedShipment.transporte.satelite_mac || 'No asignado' }}</div>
+                </div>
+              </div>
+              
+              <div class="tech-section" *ngIf="selectedShipment.remitente.geocerca">
+                <h3>Geocercas</h3>
+                <div class="tech-item">
+                  <div class="tech-label"><strong>Origen:</strong></div>
+                  <div class="tech-value">{{ selectedShipment.remitente.geocerca }}</div>
+                </div>
+                <div class="tech-item">
+                  <div class="tech-label"><strong>Destino:</strong></div>
+                  <div class="tech-value">{{ selectedShipment.destinatario.geocerca }}</div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>

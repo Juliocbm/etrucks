@@ -1,0 +1,37 @@
+<mat-card>
+  <h1 mat-dialog-title>{{data.name}}</h1>
+  <div mat-dialog-content style="display: grid;justify-content: stretch;margin-top:24px;" >
+
+    <!-- Mat Select por Sucursales -->
+    <mat-form-field>
+      <mat-label>Sucursales</mat-label>
+      <mat-select [(value)]="selected">
+        <mat-option *ngFor="let dato of data.datos2" [value]="dato" [disabled]="dato.conteo === 0">
+          {{dato.nombre}} - {{dato.conteo}} Pedidos
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Mat Select por Patio Operadores -->
+    <mat-form-field>
+      <mat-label>Patios</mat-label>
+      <mat-select [(value)]="resultSelected">
+        <mat-option *ngFor="let dato of data.datos" [value]="dato" [disabled]="dato.conteo === 0">
+          {{dato.descripcion}} - {{dato.conteo}} Operadores
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Checkbox de visibilidad de tablas -->
+    <div class="row">
+      <!-- <mat-checkbox>Check me!</mat-checkbox> -->
+      <mat-checkbox [(ngModel)]="data.filtro.Operadores">Mostrar Tabla Disponibilidad Operadores</mat-checkbox>
+      <mat-checkbox [(ngModel)]="data.filtro.Pedidos">Mostrar Tabla Prioridad Pedidos</mat-checkbox>
+    </div>
+  </div>
+
+  <div mat-dialog-actions style="display: flex; justify-content: flex-end;">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="{ sucursal: resultSelected, filtro: data.filtro, valor:selected }" cdkFocusInitial>Aceptar</button>
+  </div>
+</mat-card>

@@ -1,0 +1,9 @@
+.col-6 {
+  flex: 0 0 50%; /* 50% del ancho para ambas columnas cuando ambas están activadas */
+  max-width: 50%; /* 50% del ancho para ambas columnas cuando ambas están activadas */
+}
+
+.col-12 {
+  flex: 0 0 100%; /* 100% del ancho para una sola columna activa */
+  max-width: 100%; /* 100% del ancho para una sola columna activa */
+}
