@@ -3,6 +3,7 @@ import { finalize } from 'rxjs/operators';
 import { ColumnConfigsLiquidaciones, tableConfigsLiquidaciones } from '../../LiquidacionesConfig';
 import { ApiCfdiService } from '../../../../../DataAccess/api-cfdi.service';
 import { TableAction } from '../../../../../shared-module/Interfaces/TableAction';
+import { Liquidacion } from '../../../../../models/Cfdi/Liquidacion';
 import { LoadingService } from 'src/app/Services/loading.service';
 
 @Component({
@@ -14,10 +15,10 @@ export class ListadoLiquidacionesComponent implements OnInit {
   // Mapa para controlar las liquidaciones en proceso de timbrado
   private timbradoEnProceso: { [id: number]: boolean } = {};
 
-  descargaPdf(item: any): void {
+  descargaPdf(item: Liquidacion): void {
     throw new Error('Method not implemented.');
   }
-  descargaXml(item: any): void {
+  descargaXml(item: Liquidacion): void {
     throw new Error('Method not implemented.');
   }
 
@@ -54,22 +55,22 @@ export class ListadoLiquidacionesComponent implements OnInit {
       title: 'Descargar XML',
       icon: 'file_download',
       tooltip: 'Descarga XML',
-      callback: (item) => this.descargaXml(item)
+      callback: (item: Liquidacion) => this.descargaXml(item)
     },
     {
       name: 'Descarga',
       title: 'Descargar PDF',
       icon: 'file_download',
       tooltip: 'Descarga PDF',
-      callback: (item) => this.descargaPdf(item)
+      callback: (item: Liquidacion) => this.descargaPdf(item)
     },
     {
       name: 'Timbrar',
       title: 'Timbrar',
       icon: 'receipt_long',
       tooltip: 'Timbrar',
-      callback: (item) => this.timbrarLiquidacion(item.idLiquidacion),
-      showCondition: (item) => !this.timbradoEnProceso[item.idLiquidacion]
+      callback: (item: Liquidacion) => this.timbrarLiquidacion(item.idLiquidacion),
+      showCondition: (item: Liquidacion) => !this.timbradoEnProceso[item.idLiquidacion]
 
     }
   ];
