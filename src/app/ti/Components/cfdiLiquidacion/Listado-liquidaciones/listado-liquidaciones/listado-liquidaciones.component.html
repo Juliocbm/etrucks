@@ -1,5 +1,6 @@
 <app-layout titulo="Liquidaciones: Timbrado"> 
   <app-full-tableV2
+    #fullTable
     [fetchDataFunction]="apiCfdiLiq.getLiquidaciones.bind(apiCfdiLiq)"
     [showCreateButtonModal]="false"
     [showFilterInactivos]="false"

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { ColumnConfigsLiquidaciones, tableConfigsLiquidaciones } from '../../LiquidacionesConfig';
 import { ApiCfdiService } from '../../../../../DataAccess/api-cfdi.service';
 import { TableAction } from '../../../../../shared-module/Interfaces/TableAction';
 import { Liquidacion } from '../../../../../models/Cfdi/Liquidacion';
+import { FullTableV2Component } from '../../../../../shared-module/components/full-tableV2/full-table.component';
 
 @Component({
   selector: 'app-listado-liquidaciones',
@@ -14,6 +15,8 @@ import { Liquidacion } from '../../../../../models/Cfdi/Liquidacion';
 export class ListadoLiquidacionesComponent implements OnInit {
   // Mapa para controlar las liquidaciones en proceso de timbrado
   private timbradoEnProceso: { [id: number]: boolean } = {};
+
+  @ViewChild('fullTable') fullTable!: FullTableV2Component;
 
   selectedLiquidaciones: number[] = [];
   private selectedRows: Liquidacion[] = [];
@@ -111,6 +114,7 @@ export class ListadoLiquidacionesComponent implements OnInit {
       next: () => {
         this.selectedLiquidaciones = [];
         this.selectedRows = [];
+        this.fullTable.clearSelection();
       },
       error: (err) => console.error('Error en timbrado por lote', err),
     });
