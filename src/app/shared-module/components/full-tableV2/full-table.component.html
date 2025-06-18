@@ -417,6 +417,15 @@
                 </ng-template>
               </ng-container>
 
+              <ng-container *ngIf="columnConfigs[column]?.type === 'icon'">
+                <mat-icon
+                  [ngStyle]="{ color: getIconData(element, column).color }"
+                  matTooltip="{{ getIconData(element, column).tooltip }}"
+                >
+                  {{ getIconData(element, column).icon }}
+                </mat-icon>
+              </ng-container>
+
               <ng-container *ngIf="columnConfigs[column]?.type === 'select'">
                 <select
                   [(ngModel)]="element[column]"

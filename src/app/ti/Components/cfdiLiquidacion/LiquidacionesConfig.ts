@@ -37,12 +37,41 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
     },
     estatus: {
         displayName: 'Estatus',
-        type: 'number',
+        type: 'icon',
         showFilter: true,
         visible: true,
         widthColumn: '10px',
         bloquearSeleccion: (item) =>
-            ![0, 2, 4, 5].includes(item.estatus)
+            ![0, 2, 4, 5].includes(item.estatus),
+        customRender: (rowData) => {
+            let icon = 'error';
+            let color = 'red';
+            let tooltip = rowData.mensaje || 'Timbrado Fallido';
+            switch (rowData.estatus) {
+                case 0:
+                    icon = 'radio_button_unchecked';
+                    color = 'gray';
+                    tooltip = rowData.mensaje || 'Sin timbrar';
+                    break;
+                case 1:
+                    icon = 'autorenew';
+                    color = 'blue';
+                    tooltip = rowData.mensaje || 'En proceso de timbrado';
+                    break;
+                case 3:
+                    icon = 'check_circle';
+                    color = 'green';
+                    tooltip = rowData.mensaje || 'Liquidacion timbrada exitosamente';
+                    break;
+                default:
+                    // estatus 2,4,5 o cualquier otro valor
+                    icon = 'error';
+                    color = 'red';
+                    tooltip = rowData.mensaje || 'Timbrado Fallido';
+                    break;
+            }
+            return `${icon},${color},${tooltip}`;
+        }
     },
     mensaje: {
         displayName: 'Mensaje',

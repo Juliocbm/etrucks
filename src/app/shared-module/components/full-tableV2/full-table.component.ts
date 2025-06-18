@@ -676,6 +676,22 @@ export class FullTableV2Component
     return row.activo === false; // Por ejemplo, oculta el texto para los registros no activos
   }
 
+  getIconData(element: any, column: string): { icon: string; color: string; tooltip: string } {
+    let rawValue = '';
+    if (this.columnConfigs[column]?.customRender) {
+      rawValue = this.columnConfigs[column].customRender(element);
+    } else {
+      rawValue = element[column];
+    }
+
+    const parts = typeof rawValue === 'string' ? rawValue.split(',') : [];
+    return {
+      icon: parts[0]?.trim() || '',
+      color: parts[1]?.trim() || '',
+      tooltip: parts.slice(2).join(',').trim(),
+    };
+  }
+
   loadData = () => {
     if (this.formularioModificado) {
       this.originalData = [];
