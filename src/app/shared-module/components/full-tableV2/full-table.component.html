@@ -168,6 +168,21 @@
         [dataSource]="dataSource"
         class="mat-elevation-z0"
       >
+        <ng-container *ngIf="selectable" matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              [checked]="isSelectAll"
+              (change)="onCheckSelectAll($event)"
+            ></mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              (change)="toggleRowSelection(row, $event.checked)"
+              [checked]="selectedRows.has(row)"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+
         <!-- Columnas Dinámicas -->
         <ng-container *ngFor="let column of columnKeys" [matColumnDef]="column">
           <th

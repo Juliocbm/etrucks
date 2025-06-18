@@ -165,6 +165,15 @@ export class FullTableV2Component
 
   @Input() widthColumn: string = '20%';
 
+  // Selección de filas
+  @Input() selectable: boolean = false;
+  @Output() selectedRowsChange = new EventEmitter<any[]>();
+  selectedRows: Set<any> = new Set<any>();
+
+  private emitSelectedRows() {
+    this.selectedRowsChange.emit(Array.from(this.selectedRows));
+  }
+
   constructor(
     private excelService: ExportTableExcelService,
     public dialog: MatDialog,
@@ -274,6 +283,10 @@ export class FullTableV2Component
     } else {
       this.displayedColumns = [...visibleColumns, 'acciones'];
     }
+
+    if (this.selectable && !this.displayedColumns.includes('select')) {
+      this.displayedColumns = ['select', ...this.displayedColumns];
+    }
   }
 
   onValueChangeDateGeneral(value?: (Date | undefined)[]): void {
@@ -382,6 +395,10 @@ export class FullTableV2Component
     ) {
       // Cuando itemDefault cambia, asignamos sus valores al form
       this.loadData();
+    }
+
+    if (changes['selectable']) {
+      this.updateDisplayedColumns();
     }
   }
 
@@ -514,6 +531,16 @@ export class FullTableV2Component
   enviarItem(item: any) {
     this.rowSeleccionada = item;
     this.enviarItemEvent.emit(item);
+  }
+
+  toggleRowSelection(row: any, checked: boolean) {
+    if (checked) {
+      this.selectedRows.add(row);
+    } else {
+      this.selectedRows.delete(row);
+      this.isSelectAll = false;
+    }
+    this.emitSelectedRows();
   }
 
   refreshTable = () => {
@@ -652,6 +679,12 @@ console.log(items);
 
         this.dataSource.data = this.data;
 
+        if (this.selectable) {
+          this.selectedRows.clear();
+          this.isSelectAll = false;
+          this.emitSelectedRows();
+        }
+
         this.isLoading = false;
 
         // Estilos predeterminados o configuraciones
@@ -701,6 +734,14 @@ console.log(items);
 
   onCheckSelectAll(event: any) {
     this.isSelectAll = event.checked;
+    if (this.selectable) {
+      if (this.isSelectAll) {
+        this.dataSource.data.forEach((row) => this.selectedRows.add(row));
+      } else {
+        this.selectedRows.clear();
+      }
+      this.emitSelectedRows();
+    }
     this.onSelectAll.emit(event);
   }
 

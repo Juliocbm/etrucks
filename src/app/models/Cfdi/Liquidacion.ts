@@ -8,4 +8,6 @@ export interface Liquidacion {
   uuid: string | null;
   xml?: Blob | null;
   pdf?: Blob | null;
+  /** Indicador de procesamiento en UI */
+  timbrando?: boolean;
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 import { ColumnConfigsLiquidaciones, tableConfigsLiquidaciones } from '../../LiquidacionesConfig';
 import { ApiCfdiService } from '../../../../../DataAccess/api-cfdi.service';
 import { TableAction } from '../../../../../shared-module/Interfaces/TableAction';
 import { Liquidacion } from '../../../../../models/Cfdi/Liquidacion';
-import { LoadingService } from 'src/app/Services/loading.service';
 
 @Component({
   selector: 'app-listado-liquidaciones',
@@ -15,6 +15,9 @@ export class ListadoLiquidacionesComponent implements OnInit {
   // Mapa para controlar las liquidaciones en proceso de timbrado
   private timbradoEnProceso: { [id: number]: boolean } = {};
 
+  selectedLiquidaciones: number[] = [];
+  private selectedRows: Liquidacion[] = [];
+
   descargaPdf(item: Liquidacion): void {
     throw new Error('Method not implemented.');
   }
@@ -22,21 +25,22 @@ export class ListadoLiquidacionesComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  timbrarLiquidacion(idLiquidacion: number): void {
+  timbrarLiquidacion(item: Liquidacion): void {
+    const idLiquidacion = item.idLiquidacion;
     // Evitar múltiples peticiones para la misma liquidación
     if (this.timbradoEnProceso[idLiquidacion]) {
       return;
     }
 
     this.timbradoEnProceso[idLiquidacion] = true;
-    this.loading.open();
+    item.timbrando = true;
 
     this.apiCfdiLiq
       .timbrarLiquidacion(idLiquidacion)
       .pipe(
         finalize(() => {
-          this.loading.close();
           this.timbradoEnProceso[idLiquidacion] = false;
+          item.timbrando = false;
         })
       )
       .subscribe({
@@ -69,7 +73,7 @@ export class ListadoLiquidacionesComponent implements OnInit {
       title: 'Timbrar',
       icon: 'receipt_long',
       tooltip: 'Timbrar',
-      callback: (item: Liquidacion) => this.timbrarLiquidacion(item.idLiquidacion),
+      callback: (item: Liquidacion) => this.timbrarLiquidacion(item),
       showCondition: (item: Liquidacion) => !this.timbradoEnProceso[item.idLiquidacion]
 
     }
@@ -78,7 +82,35 @@ export class ListadoLiquidacionesComponent implements OnInit {
   ColumnConfigsLiquidaciones = ColumnConfigsLiquidaciones;
   tableConfigsLiquidaciones = tableConfigsLiquidaciones;
 
-  constructor(public apiCfdiLiq: ApiCfdiService, private loading: LoadingService) { }
+  constructor(public apiCfdiLiq: ApiCfdiService) { }
+
+  onSelectedRows(rows: Liquidacion[]) {
+    this.selectedRows = rows;
+    this.selectedLiquidaciones = rows.map((r) => r.idLiquidacion);
+  }
+
+  timbrarLote() {
+    if (this.selectedLiquidaciones.length === 0) return;
+
+    const requests = this.selectedRows.map((row) => {
+      this.timbradoEnProceso[row.idLiquidacion] = true;
+      row.timbrando = true;
+      return this.apiCfdiLiq.timbrarLiquidacion(row.idLiquidacion).pipe(
+        finalize(() => {
+          this.timbradoEnProceso[row.idLiquidacion] = false;
+          row.timbrando = false;
+        })
+      );
+    });
+
+    forkJoin(requests).subscribe({
+      next: () => {
+        this.selectedLiquidaciones = [];
+        this.selectedRows = [];
+      },
+      error: (err) => console.error('Error en timbrado por lote', err),
+    });
+  }
 
   ngOnInit() {
   }
