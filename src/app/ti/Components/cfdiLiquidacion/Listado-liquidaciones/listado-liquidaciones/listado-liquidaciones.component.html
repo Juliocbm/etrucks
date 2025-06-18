@@ -4,10 +4,10 @@
     [showCreateButtonModal]="false"
     [showFilterInactivos]="false"
     [nombreMenu]="'Liquidaciones'"
-    [nombreTabla]="'Liquidaciones'" 
+    [nombreTabla]="'Liquidaciones'"
     [columnConfigs]="ColumnConfigsLiquidaciones"
-    [excelFileName]="'LiquidacionesParaTimbrado'" 
-    [isReport]="false" 
+    [excelFileName]="'LiquidacionesParaTimbrado'"
+    [isReport]="false"
     [tableConfigs]="tableConfigsLiquidaciones"
     [mostrarFiltroGeneralFechas]="false"
     [showExportarButton]="false"
@@ -15,16 +15,16 @@
     [selectable]="true"
     [showSelectAll]="true"
     (selectedRowsChange)="onSelectedRows($event)"
-   >
-  </app-full-tableV2>
-
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="timbrarLote()"
-    [disabled]="selectedLiquidaciones.length === 0"
   >
-    Timbrar seleccionados
-  </button>
+    <button
+      extraHeaderButtons
+      mat-raised-button
+      color="primary"
+      (click)="timbrarLote()"
+      [disabled]="selectedLiquidaciones.length === 0"
+    >
+      Timbrar seleccionados
+    </button>
+  </app-full-tableV2>
 
 </app-layout>
