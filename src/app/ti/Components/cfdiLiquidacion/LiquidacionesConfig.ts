@@ -7,6 +7,13 @@ export const tableConfigsLiquidaciones: TableConfig = {
 };
 
 export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
+    select: {
+        displayName: '',
+        type: 'default',
+        showFilter: false,
+        visible: true,
+        widthColumn: '40px'
+    },
     idLiquidacion: {
         displayName: 'No. Liquidación',
         type: 'default',
@@ -77,5 +84,13 @@ export const ColumnConfigsLiquidaciones: { [key: string]: ColumnConfig } = {
         rowData.uuid == null
           ? 'Sin UUID'
           : rowData.uuid,
+    },
+    estatus: {
+        displayName: 'Estatus',
+        type: 'default',
+        showFilter: false,
+        visible: true,
+        widthColumn: '100px',
+        customRender: (rowData) => rowData.timbrando ? 'Timbrando...' : ''
     }
 };

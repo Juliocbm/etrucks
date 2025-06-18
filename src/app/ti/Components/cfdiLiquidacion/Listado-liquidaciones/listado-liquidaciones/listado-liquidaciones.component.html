@@ -1,8 +1,8 @@
 <app-layout titulo="Liquidaciones: Timbrado"> 
-  <app-full-tableV2 
+  <app-full-tableV2
     [fetchDataFunction]="apiCfdiLiq.getLiquidaciones.bind(apiCfdiLiq)"
-    [showCreateButtonModal]="false" 
-    [showFilterInactivos]="false" 
+    [showCreateButtonModal]="false"
+    [showFilterInactivos]="false"
     [nombreMenu]="'Liquidaciones'"
     [nombreTabla]="'Liquidaciones'" 
     [columnConfigs]="ColumnConfigsLiquidaciones"
@@ -12,7 +12,19 @@
     [mostrarFiltroGeneralFechas]="false"
     [showExportarButton]="false"
     [actions]="tableActions"
+    [selectable]="true"
+    [showSelectAll]="true"
+    (selectedRowsChange)="onSelectedRows($event)"
    >
   </app-full-tableV2>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="timbrarLote()"
+    [disabled]="selectedLiquidaciones.length === 0"
+  >
+    Timbrar seleccionados
+  </button>
 
 </app-layout>
