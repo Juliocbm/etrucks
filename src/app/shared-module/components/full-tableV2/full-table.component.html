@@ -418,12 +418,17 @@
               </ng-container>
 
               <ng-container *ngIf="columnConfigs[column]?.type === 'icon'">
-                <mat-icon
-                  [ngStyle]="{ color: getIconData(element, column).color }"
-                  matTooltip="{{ getIconData(element, column).tooltip }}"
-                >
-                  {{ getIconData(element, column).icon }}
-                </mat-icon>
+                <ng-container *ngIf="getIconData(element, column).icon === 'spinner'; else showIcon">
+                  <mat-spinner diameter="20"></mat-spinner>
+                </ng-container>
+                <ng-template #showIcon>
+                  <mat-icon
+                    [ngStyle]="{ color: getIconData(element, column).color }"
+                    matTooltip="{{ getIconData(element, column).tooltip }}"
+                  >
+                    {{ getIconData(element, column).icon }}
+                  </mat-icon>
+                </ng-template>
               </ng-container>
 
               <ng-container *ngIf="columnConfigs[column]?.type === 'select'">
