@@ -180,6 +180,7 @@
             <mat-checkbox
               (change)="toggleRowSelection(row, $event.checked)"
               [checked]="selectedRows.has(row)"
+              [disabled]="shouldBlockRow(row)"
             ></mat-checkbox>
           </td>
         </ng-container>
