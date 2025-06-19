@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { ColumnConfigsLiquidaciones, tableConfigsLiquidaciones } from '../../LiquidacionesConfig';
@@ -6,6 +7,7 @@ import { ApiCfdiService } from '../../../../../DataAccess/api-cfdi.service';
 import { TableAction } from '../../../../../shared-module/Interfaces/TableAction';
 import { Liquidacion } from '../../../../../models/Cfdi/Liquidacion';
 import { FullTableV2Component } from '../../../../../shared-module/components/full-tableV2/full-table.component';
+import { ModalErrorsValidationsComponent } from '../../../../cfdi/dashboard/modal-errors-validations/modal-errors-validations/modal-errors-validations.component';
 
 @Component({
   selector: 'app-listado-liquidaciones',
@@ -21,11 +23,36 @@ export class ListadoLiquidacionesComponent implements OnInit {
   selectedLiquidaciones: number[] = [];
   private selectedRows: Liquidacion[] = [];
 
-  descargaPdf(item: Liquidacion): void {
-    throw new Error('Method not implemented.');
+  verErrores(item: Liquidacion): void {
+    if (!item.errores || item.errores.length === 0) {
+      return;
+    }
+    this.dialog.open(ModalErrorsValidationsComponent, {
+      width: '50%',
+      data: { errores: item.errores }
+    });
   }
+
+  descargaPdf(item: Liquidacion): void {
+    this.downloadFile(item.pdf, `Liquidacion_${item.idLiquidacion}.pdf`);
+  }
+
   descargaXml(item: Liquidacion): void {
-    throw new Error('Method not implemented.');
+    this.downloadFile(item.xml, `Liquidacion_${item.idLiquidacion}.xml`);
+  }
+
+  private downloadFile(blob: Blob | null | undefined, name: string) {
+    if (!blob) {
+      return;
+    }
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   }
 
   timbrarLiquidacion(item: Liquidacion): void {
@@ -48,7 +75,26 @@ export class ListadoLiquidacionesComponent implements OnInit {
       )
       .subscribe({
       next: (response) => {
-        console.log('Liquidación timbrada exitosamente:', response);
+        if (!response) {
+          item.estatus = 2;
+          item.mensaje = 'Error desconocido';
+          return;
+        }
+
+        item.mensaje = response.mensaje;
+        item.errores = response.errores;
+
+        if (response.isSuccess) {
+          item.estatus = 3;
+          if (response.xmlByteArray) {
+            item.xml = this.apiCfdiLiq.base64ToBlob(response.xmlByteArray, 'application/xml');
+          }
+          if (response.pdfByteArray) {
+            item.pdf = this.apiCfdiLiq.base64ToBlob(response.pdfByteArray, 'application/pdf');
+          }
+        } else {
+          item.estatus = 2;
+        }
       },
       error: (error) => {
         console.error('Error al timbrar la liquidación:', error);
@@ -74,6 +120,14 @@ export class ListadoLiquidacionesComponent implements OnInit {
       isVisible: (item: Liquidacion) => item.estatus === 3
     },
     {
+      name: 'Errores',
+      title: 'Ver errores',
+      icon: 'error_outline',
+      tooltip: 'Ver errores',
+      callback: (item: Liquidacion) => this.verErrores(item),
+      isVisible: (item: Liquidacion) => !!item.errores && item.errores.length > 0
+    },
+    {
       name: 'Timbrar',
       title: 'Timbrar',
       icon: 'receipt_long',
@@ -89,7 +143,7 @@ export class ListadoLiquidacionesComponent implements OnInit {
   ColumnConfigsLiquidaciones = ColumnConfigsLiquidaciones;
   tableConfigsLiquidaciones = tableConfigsLiquidaciones;
 
-  constructor(public apiCfdiLiq: ApiCfdiService) { }
+  constructor(public apiCfdiLiq: ApiCfdiService, private dialog: MatDialog) { }
 
   onSelectedRows(rows: Liquidacion[]) {
     this.selectedRows = rows;
@@ -111,7 +165,28 @@ export class ListadoLiquidacionesComponent implements OnInit {
     });
 
     forkJoin(requests).subscribe({
-      next: () => {
+      next: (responses) => {
+        responses.forEach((res, idx) => {
+          const row = this.selectedRows[idx];
+          if (!res) {
+            row.estatus = 2;
+            row.mensaje = 'Error desconocido';
+            return;
+          }
+          row.mensaje = res.mensaje;
+          row.errores = res.errores;
+          if (res.isSuccess) {
+            row.estatus = 3;
+            if (res.xmlByteArray) {
+              row.xml = this.apiCfdiLiq.base64ToBlob(res.xmlByteArray, 'application/xml');
+            }
+            if (res.pdfByteArray) {
+              row.pdf = this.apiCfdiLiq.base64ToBlob(res.pdfByteArray, 'application/pdf');
+            }
+          } else {
+            row.estatus = 2;
+          }
+        });
         this.selectedLiquidaciones = [];
         this.selectedRows = [];
         this.fullTable.clearSelection();
