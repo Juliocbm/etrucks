@@ -12,4 +12,6 @@ export interface Liquidacion {
   pdf?: Blob | null;
   /** Indicador de procesamiento en UI */
   timbrando?: boolean;
+  /** Errores devueltos al intentar timbrar */
+  errores?: string[];
 }
